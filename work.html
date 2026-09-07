@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <title>Selected Works — Nabulsi.tech Digital Agency</title>
+  <meta name="description" content="Explore Nabulsi.tech's portfolio of award-winning digital projects — from immersive web experiences to bold brand identities."/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    .work-hero { padding-top: 140px; margin-bottom: clamp(180px, 20vh, 280px); }
+    .work-hero-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-gutter); align-items: end; }
+    @media(min-width:768px){ .work-hero-grid { grid-template-columns: 7fr 5fr; } }
+    .work-hero-desc { color: var(--color-on-surface-variant); max-width: 440px; padding-bottom: 16px; }
+
+    .project-grid { display: grid; grid-template-columns: 1fr; gap: 100px 32px; }
+    @media(min-width:768px){ .project-grid { grid-template-columns: repeat(12,1fr); } }
+    .project-full { grid-column: 1/-1; }
+    .project-half { grid-column: 1/-1; }
+    @media(min-width:768px){ .project-half { grid-column: span 6; } .project-half.offset { margin-top: 100px; } }
+
+    .project-img-wrap { overflow: hidden; border-radius: var(--radius-lg); margin-bottom: 32px; position: relative; }
+    .project-full .project-img-wrap { height: clamp(400px, 55vw, 820px); }
+    .project-half .project-img-wrap { aspect-ratio: 4/5; }
+    .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s linear; will-change: transform; }
+    .project-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 40%); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+    .project-card:hover .project-img-wrap::after { opacity: 1; }
+
+    .project-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+    .project-card:hover .project-name { color: var(--color-primary); }
+    .project-name { font-family: var(--font-headline); font-weight: 700; transition: color 0.3s ease; }
+    .project-full .project-name { font-size: clamp(32px, 4vw, 64px); line-height: 1.12; letter-spacing: -0.02em; }
+    .project-half .project-name { font-size: clamp(24px, 2.5vw, 32px); line-height: 1.25; }
+    .project-sub { color: var(--color-on-surface-variant); margin-top: 8px; }
+
+    .project-arrow { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--color-outline-variant); transition: border-color 0.3s ease, background 0.3s ease; flex-shrink: 0; }
+    .project-card:hover .project-arrow { border-color: var(--color-primary); background: var(--color-primary); }
+    .project-arrow .material-symbols-outlined { transform: rotate(-45deg); transition: transform 0.4s var(--ease-out-expo), color 0.3s ease; }
+    .project-card:hover .project-arrow .material-symbols-outlined { transform: rotate(0deg); color: #fff; }
+
+    .statement-section { padding: var(--space-stack-lg) 0; }
+    .statement-text { font-family: var(--font-headline); font-size: clamp(28px, 4.5vw, 60px); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; max-width: 1100px; }
+    .statement-link { margin-top: 48px; }
+
+    /* ---- Work Responsive ---- */
+    @media (max-width: 767px) {
+      .work-hero { padding-top: 100px; margin-bottom: 220px; }
+      .project-grid { gap: 48px 24px; }
+      .project-full .project-img-wrap { height: clamp(240px, 50vw, 400px); }
+      .project-half .project-img-wrap { aspect-ratio: 4/4; }
+      .project-arrow { width: 44px; height: 44px; }
+      .project-meta { gap: 12px; }
+      .statement-section { padding: 56px 0; }
+      .statement-link { margin-top: 28px; }
+    }
+    @media (max-width: 480px) {
+      .work-hero { padding-top: 90px; margin-bottom: 180px; }
+      .project-grid { gap: 36px; }
+      .project-full .project-img-wrap { height: clamp(200px, 55vw, 320px); }
+      .project-arrow { width: 40px; height: 40px; }
+    }
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .work-hero { margin-bottom: 240px; }
+      .project-half { grid-column: span 6; }
+      .project-half.offset { margin-top: 48px; }
+      .project-full .project-img-wrap { height: clamp(320px, 45vw, 560px); }
+    }
+    @media (min-width: 1024px) and (max-width: 1439px) {
+      .work-hero { margin-bottom: 240px; }
+    }
+    @media (max-width: 360px) {
+      .work-hero { padding-top: 80px; margin-bottom: 160px; }
+      .filter-bar { gap: 8px; }
+      .filter-btn { padding: 8px 16px; font-size: 12px; }
+    }
+
+    /* ============================================
+       3D WORKS SHOWCASE (coverflow)
+       ============================================ */
+    .wshow { position: relative; padding: 20px 0 70px; }
+    /* Color tint that follows the active project's colour */
+    .wshow-bg {
+      position: absolute; inset: -10% -8% 4%;
+      z-index: 0; border-radius: 48px; pointer-events: none;
+      background: transparent;
+      transition: background 0.9s ease;
+      will-change: background;
+    }
+    .wshow-stage, .wshow-cap, .wshow-controls { position: relative; z-index: 1; }
+    .wshow-stage { position: relative; height: clamp(440px, 62vh, 600px); perspective: 1700px; }
+    .wshow-track { position: absolute; inset: 0; transform-style: preserve-3d; }
+
+    .wshow-slide {
+      position: absolute; top: 50%; left: 50%;
+      width: clamp(290px, 32vw, 420px); height: clamp(400px, 56vh, 540px);
+      border-radius: 30px; color: #fff;
+      background: linear-gradient(160deg, var(--c), var(--c2));
+      box-shadow: 0 40px 90px rgba(0,0,0,0.22);
+      transform: translate(-50%,-50%);
+      transition: transform .85s cubic-bezier(.16,1,.3,1), opacity .6s ease, filter .6s ease;
+      will-change: transform, opacity; cursor: pointer; backface-visibility: hidden;
+    }
+    .wshow-slide::before { content:''; position:absolute; inset:0; border-radius: inherit; background: radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.18), transparent 60%); pointer-events:none; }
+
+    .ws-top, .ws-bottom { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-headline); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(24px, 2.2vw, 38px); z-index: 2; padding: 0 16px; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6); pointer-events: none; }
+    /* dark fade bands so the white labels stay readable over light poster images */
+    .ws-top { top: 0; padding: 22px 16px 46px; background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0)); border-radius: 30px 30px 0 0; }
+    .ws-bottom { bottom: 0; padding: 46px 16px 22px; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0)); border-radius: 0 0 30px 30px; }
+
+    .ws-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56%; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(0,0,0,0.28); z-index: 1; }
+    .ws-center img { width: 100%; height: 100%; object-fit: cover; }
+    .ws-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 52px; height: 52px; border-radius: 50%; border: none; background: rgba(255,255,255,0.9); display: grid; place-items: center; cursor: pointer; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
+    .ws-play .material-symbols-outlined { color: #111; font-size: 28px; margin-left: 2px; }
+    .ws-play::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.55); animation: wsPing 2.2s ease-out infinite; }
+    @keyframes wsPing { 0% { transform: scale(.9); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
+
+    /* floating mini cards (only on active slide) */
+    .ws-fcard { position: absolute; display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.96); border-radius: 14px; padding: 8px 13px 8px 8px; box-shadow: 0 14px 32px rgba(0,0,0,0.2); z-index: 4; opacity: 0; transition: opacity .5s ease; }
+    .ws-thumb { width: 36px; height: 36px; border-radius: 9px; background-size: cover; background-position: center; flex-shrink: 0; }
+    .ws-ft { font-size: 12px; font-weight: 700; color: #15151c; font-family: var(--font-headline); white-space: nowrap; }
+    .ws-fs { font-size: 10.5px; color: #6a6a78; font-weight: 600; margin-top: 1px; white-space: nowrap; }
+    .ws-fs .star { color: #FBBF24; }
+    .ws-f1 { top: 16%; left: -28px; } .ws-f2 { bottom: 15%; right: -28px; }
+
+    .ws-pill { position: absolute; top: 47%; right: -16px; background: rgba(255,255,255,0.96); color: #15151c; font-size: 11px; font-weight: 700; padding: 9px 15px; border-radius: 99px; box-shadow: 0 12px 28px rgba(0,0,0,0.2); z-index: 4; display: flex; align-items: center; gap: 6px; opacity: 0; transition: opacity .5s ease; }
+    .ws-icon { position: absolute; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.96); display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,0.22); z-index: 4; opacity: 0; transition: opacity .5s ease; }
+    .ws-i1 { top: 11%; right: 9%; } .ws-i2 { bottom: 21%; left: 5%; }
+    .ws-icon .material-symbols-outlined { font-size: 18px; color: var(--c); }
+
+    .wshow-slide.is-active .ws-fcard,
+    .wshow-slide.is-active .ws-pill,
+    .wshow-slide.is-active .ws-icon { opacity: 1; }
+    .wshow-slide.is-active .ws-f1   { animation: wsFloat 5s ease-in-out infinite; }
+    .wshow-slide.is-active .ws-f2   { animation: wsFloat 5.6s ease-in-out infinite .4s; }
+    .wshow-slide.is-active .ws-pill { animation: wsFloat 5.2s ease-in-out infinite .2s; }
+    @keyframes wsFloat { 0%,100% { transform: translateY(-5px); } 50% { transform: translateY(7px); } }
+
+    /* ===== CARD FLIP ON NAVIGATION ===== */
+    @keyframes wsFlipNext {
+      0%   { transform: translate(-50%,-50%) translateZ(90px) rotateY(92deg) scale(.9); opacity: .15; }
+      55%  { opacity: 1; }
+      100% { transform: translate(-50%,-50%) translateZ(0) rotateY(0deg) scale(1); opacity: 1; }
+    }
+    @keyframes wsFlipPrev {
+      0%   { transform: translate(-50%,-50%) translateZ(90px) rotateY(-92deg) scale(.9); opacity: .15; }
+      55%  { opacity: 1; }
+      100% { transform: translate(-50%,-50%) translateZ(0) rotateY(0deg) scale(1); opacity: 1; }
+    }
+    .wshow-slide.ws-flip-next { animation: wsFlipNext .72s cubic-bezier(.22,1,.36,1); }
+    .wshow-slide.ws-flip-prev { animation: wsFlipPrev .72s cubic-bezier(.22,1,.36,1); }
+    @media (prefers-reduced-motion: reduce) {
+      .wshow-slide.ws-flip-next, .wshow-slide.ws-flip-prev { animation: none; }
+    }
+
+    /* caption + controls */
+    .wshow-cap { text-align: center; margin-top: 26px; min-height: 64px; }
+    .wshow-cap h3 { font-family: var(--font-headline); font-weight: 800; font-size: clamp(22px, 3vw, 34px); }
+    .wshow-cap p { color: var(--color-on-surface-variant); margin-top: 6px; }
+    .wshow-controls { display: flex; align-items: center; justify-content: center; gap: 22px; margin-top: 14px; }
+    .wshow-btn { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--color-outline); background: var(--color-surface-container); color: var(--color-on-background); display: grid; place-items: center; cursor: pointer; transition: all .3s ease; }
+    .wshow-btn .material-symbols-outlined { font-size: 24px; color: var(--color-on-background); transition: color 0.3s ease; }
+    .wshow-btn:hover { background: var(--color-primary); border-color: var(--color-primary); transform: translateY(-2px); }
+    .wshow-btn:hover .material-symbols-outlined { color: #fff; }
+    .wshow-dots { display: flex; gap: 9px; align-items: center; }
+    .wshow-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--color-outline-variant); cursor: pointer; transition: all .3s ease; border: none; padding: 0; }
+    .wshow-dot.active { background: var(--color-primary); width: 26px; border-radius: 99px; }
+
+    @media (max-width: 767px) {
+      /* contain the coverflow so side cards never spill off-screen */
+      .wshow { overflow: hidden; padding: 12px 0 56px; }
+      .wshow-stage { height: clamp(360px, 58vh, 460px); }
+      .wshow-slide { width: min(74vw, 290px); height: clamp(340px, 56vh, 440px); }
+      .ws-top, .ws-bottom { font-size: 22px; }
+      /* the floating mini-cards/icons clutter & overflow on small screens — hide them */
+      .ws-fcard, .ws-pill, .ws-icon { display: none !important; }
+    }
+    @media (max-width: 480px) {
+      .wshow-slide { width: min(80vw, 260px); height: clamp(320px, 54vh, 400px); }
+    }
+  </style>
+</head>
+<body data-barba="wrapper">
+
+  <div class="scroll-progress"></div>
+
+
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="work.html" class="active">Work</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-logo">Nabulsi.tech</a>
+      <div class="navbar-links">
+        <a href="index.html">Home</a>
+        <a href="work.html" class="active">Work</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="contact.html" class="navbar-cta">
+        <svg class="wave-svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path d="M0,30 Q50,-5 100,30 L100,100 L0,100 Z" fill="#145CFF"/></svg>
+        <span>Talk</span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <main data-barba="container" data-barba-namespace="work" class="container">
+
+    <!-- HERO -->
+    <header class="work-hero">
+      <div class="work-hero-grid">
+        <div>
+          <span class="split-line stagger-1"><span class="split-line-inner display-xl"><span class="prismatic-text">Selected</span></span></span>
+          <span class="split-line stagger-2"><span class="split-line-inner display-xl">Works</span></span>
+        </div>
+        <div class="reveal" data-from="right">
+          <p class="body-lg work-hero-desc">
+            We architect digital tension — building uncompromising brand experiences that demand attention in a saturated landscape.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <!-- ===== 3D WORKS SHOWCASE ===== -->
+    <section class="wshow reveal" data-from="bottom" style="margin-bottom: var(--space-stack-md);">
+      <div class="wshow-bg" id="wshow-bg"></div>
+      <div class="wshow-stage">
+        <div class="wshow-track" id="wshow-track"></div>
+      </div>
+      <div class="wshow-cap"><h3></h3><p></p></div>
+      <div class="wshow-controls">
+        <button class="wshow-btn" id="wshow-prev" aria-label="Previous work"><span class="material-symbols-outlined">arrow_back</span></button>
+        <div class="wshow-dots" id="wshow-dots"></div>
+        <button class="wshow-btn" id="wshow-next" aria-label="Next work"><span class="material-symbols-outlined">arrow_forward</span></button>
+      </div>
+    </section>
+
+    <!-- PROJECT GRID (hidden — kept for reference) -->
+    <div style="display:none;">
+    <div class="project-grid" id="filterable-grid" style="padding-bottom:var(--space-stack-lg);">
+
+      <!-- Project 1: Aura Fashion Editorial -->
+      <article class="project-card tilt-card reveal project-item" data-category="web graphic">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuDJvJWI9aWuyZ3a1bVCNeuHyBWzS2TUezRse6Okc3B21eUKPjCUPENRwA6yHxIIDTa6l0g0ut8uJYfL2LP8denZ1fdikM5wG3WwIOF0TJcmZJhDBFybDgF31Fjj5HxLZjqD018N7HGO-ERwtUr6TSNUedJwi4j3KXlV75O91aiK9TGjp5qvobldMe6HeuRwz865hrgvHKcLXSQp85zB0gqAOg4QcJxWeUVLY7aBDw6MTk2i4QAbqW1ZASwccryyTsZ_qQZzzzeuowm7" alt="Abstract digital liquid forms" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">E-Commerce</span>
+                <span class="tag-glass">Branding</span>
+              </div>
+              <h3 class="headline-md">Aura Fashion Editorial</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 2: Nexus Platform (Web Dev) -->
+      <article class="project-card tilt-card reveal project-item" data-category="web">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="assets/web_dev_project_1779235767420.png" alt="SaaS Web Application Dashboard" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">Web Development</span>
+                <span class="tag-glass">UI/UX</span>
+              </div>
+              <h3 class="headline-md">Nexus Dashboard</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 3: Vivid Identity (Graphic Design) -->
+      <article class="project-card tilt-card reveal project-item" data-category="graphic">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="assets/graphic_design_project_1779235785632.png" alt="Bold Graphic Design Identity" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">Graphic Design</span>
+                <span class="tag-glass">Identity</span>
+              </div>
+              <h3 class="headline-md">Vivid Brand Identity</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 4: FitTrack (App Dev) -->
+      <article class="project-card tilt-card reveal project-item" data-category="app">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="assets/app_dev_project_1779235802659.png" alt="Sleek Mobile App UI" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">App Development</span>
+                <span class="tag-glass">Mobile</span>
+              </div>
+              <h3 class="headline-md">FitTrack App</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 5: SEO Dash -->
+      <article class="project-card tilt-card reveal project-item" data-category="seo">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="assets/seo_project_1779237509656.png" alt="SEO Dashboard" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">SEO</span>
+                <span class="tag-glass">Analytics</span>
+              </div>
+              <h3 class="headline-md">SEO Growth Engine</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 6: Cyberpunk Concept (Web Dev) -->
+      <article class="project-card tilt-card reveal project-item" data-category="web">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuAIWk338qTcGalo8Dwxp8RxemSCQ_sDeBx10YnE3jgh_dMa6EWCWKpo8GJI4uzZ4cfacWWTSjlsBut4jz2R3v8r-ZCrxI_KZR5iybqujW_CZjlsYyvfYnM_31kCKruipoiki1qX6sK8FgFjef9c3FrLyLZYRLrLOo3V2sIvPT3CMLpvxB2OqnOSXE7DisQ5q7Nydd1Ua_-0fHFumVFSjsjwpKDk6G_r1YkqR7ifYcQQv5B7fdoK0F5sdoyGArixS61oVg4iNVHdG6fh" alt="Cyberpunk Interface" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">Web Development</span>
+                <span class="tag-glass">Concept</span>
+              </div>
+              <h3 class="headline-md">Cyberpunk Interface</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 7: Volt Mobile Banking (App Dev) -->
+      <article class="project-card tilt-card reveal project-item" data-category="app">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="assets/app_dev_project_2_1779237525024.png" alt="Mobile Banking App" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">App Development</span>
+                <span class="tag-glass">FinTech</span>
+              </div>
+              <h3 class="headline-md">Volt Mobile Banking</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- Project 8: Lumiere Editorial (Graphic Design) -->
+      <article class="project-card tilt-card reveal project-item" data-category="graphic">
+        <div class="tilt-card-inner">
+          <div class="project-img-wrap parallax-container" style="height: clamp(240px, 30vw, 400px);">
+            <img src="assets/graphic_design_project_2_1779237542591.png" alt="Minimalist Editorial Design" class="parallax-img acid-img"/>
+          </div>
+          <div class="project-meta">
+            <div>
+              <div style="display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;">
+                <span class="tag-acid">Graphic Design</span>
+                <span class="tag-glass">Editorial</span>
+              </div>
+              <h3 class="headline-md">Lumiere Magazine</h3>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    </div><!-- /hidden grid -->
+
+    <!-- STATEMENT -->
+    <section class="statement-section">
+      <div class="divider" style="margin-bottom:64px;"></div>
+      <div class="reveal" data-from="left">
+        <p class="statement-text">
+          These are not just projects, they are stories of our clients, our work, and the impact we made.
+        </p>
+      </div>
+      <div class="statement-link reveal" data-from="left">
+        <a href="about.html" class="link-underline label-caps arrow-link">
+          Learn More About Us
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </a>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <!-- ===== CREATIVE FOOTER ===== -->
+  <footer class="footer-creative">
+    <div class="footer-creative-inner">
+      <!-- Huge Bold Typography -->
+      <div class="footer-cta reveal">
+        <h2 class="display-xl" style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
+          Let's Talk
+        </h2>
+        <a href="mailto:ramia@nabulsi.tech" class="magnetic" style="font-size: clamp(24px, 5vw, 64px); display: inline-block; border-bottom: 3px solid var(--color-primary); padding-bottom: 8px;">ramia@nabulsi.tech</a>
+      </div>
+
+      <!-- Links & Info -->
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="footer-heading">Studio</h4>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="services.html" class="footer-link">Services</a>
+          <a href="work.html" class="footer-link">Work</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Socials</h4>
+          <div class="footer-social-icons">
+            <a href="https://api.whatsapp.com/send/?phone=19012772195&text&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61566352892673" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/company/94871943/admin/dashboard/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/nabulsi.tech/" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 01-2.882 0 1.441 1.441 0 012.882 0z"/></svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="footer-logo">Nabulsi.tech</a>
+          <p class="text-muted" style="margin-top: 16px;">We help brands stand out through powerful design, strategy and storytelling.</p>
+          <p class="text-muted" style="margin-top: 12px; display: flex; align-items: center; gap: 8px; font-weight: 500;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+            Based in Delhi, India, Asia
+          </p>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nabulsi.tech Agency. All rights reserved.</p>
+        <p>Built with Passion</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Actions (Music & Back to top) -->
+  <div class="floating-actions">
+    <button class="fab" id="music-toggle" aria-label="Toggle Music" title="Play/Pause Background Music">
+      <div class="equalizer-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </button>
+    <button class="fab" id="back-to-top" aria-label="Back to Top">
+      <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+  </div>
+  
+  <audio id="bg-audio" loop>
+    <source src="assets/videoplayback.m4a" type="audio/mp4">
+  </audio>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="main.js?v=2"></script>
+  <script>
+  (function() {
+    'use strict';
+    // Lenis smooth scroll
+    const lenis = new Lenis({ duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => lenis.raf(time * 1000));
+    gsap.ticker.lagSmoothing(0);
+
+    // ====== HERO BOUNCING TITLE + RIGHT-TO-LEFT PARAGRAPH ======
+    // Set initial hidden state for title lines
+    gsap.set('.work-hero .split-line-inner', { y: '110%', opacity: 0 });
+    gsap.set('.work-hero-desc', { x: 120, opacity: 0 });
+
+    const heroTL = gsap.timeline({ defaults: { ease: 'power4.out' }, delay: 0.3 });
+
+    // "Selected" bounces in
+    heroTL.to('.work-hero .stagger-1 .split-line-inner', {
+      y: '0%',
+      opacity: 1,
+      duration: 1.4,
+      ease: 'elastic.out(1, 0.5)'
+    });
+
+    // "Works" bounces in
+    heroTL.to('.work-hero .stagger-2 .split-line-inner', {
+      y: '0%',
+      opacity: 1,
+      duration: 1.4,
+      ease: 'elastic.out(1, 0.5)'
+    }, '-=1.0');
+
+    // Paragraph slides in from RIGHT to LEFT
+    heroTL.to('.work-hero-desc', {
+      x: 0,
+      opacity: 1,
+      duration: 1.2,
+      ease: 'power3.out'
+    }, '-=0.8');
+
+    // Directional scroll reveals for .reveal elements
+    gsap.utils.toArray('.reveal').forEach(el => {
+      const dir = el.dataset.from || 'bottom';
+      const from = { opacity: 0 };
+      if (dir === 'left') { from.x = -80; from.y = 0; }
+      else if (dir === 'right') { from.x = 80; from.y = 0; }
+      else { from.y = 60; from.x = 0; }
+      gsap.fromTo(el, from, {
+        x: 0, y: 0, opacity: 1,
+        duration: 1.2, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+      });
+    });
+
+    // Project cards — alternate left/right entrance
+    const projectCards = gsap.utils.toArray('.project-card');
+    projectCards.forEach((card, i) => {
+      const fromX = i % 2 === 0 ? -60 : 60;
+      gsap.fromTo(card,
+        { x: fromX, y: 40, opacity: 0 },
+        { x: 0, y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+          scrollTrigger: { trigger: card, start: 'top 88%', toggleActions: 'play none none none' }
+        }
+      );
+    });
+
+    // Filter buttons
+    const filterBtns = document.querySelectorAll('.filter-btn');
+    const grid = document.getElementById('filterable-grid');
+    if (filterBtns.length && grid) {
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const filter = btn.dataset.filter;
+          grid.querySelectorAll('.project-item').forEach(item => {
+            if (filter === 'all' || item.dataset.category.includes(filter)) {
+              item.classList.remove('hidden');
+            } else {
+              item.classList.add('hidden');
+            }
+          });
+        });
+      });
+    }
+  })();
+  </script>
+
+  <!-- ===== 3D WORKS SHOWCASE SCRIPT ===== -->
+  <script>
+  (function () {
+    'use strict';
+    const track = document.getElementById('wshow-track');
+    const dotsWrap = document.getElementById('wshow-dots');
+    const prevBtn = document.getElementById('wshow-prev');
+    const nextBtn = document.getElementById('wshow-next');
+    const cap = document.querySelector('.wshow-cap');
+    const stage = document.querySelector('.wshow-stage');
+    const showBg = document.getElementById('wshow-bg');
+    if (!track || !dotsWrap || !prevBtn || !nextBtn) return;
+
+    // Tint the section background to the active project's colour
+    function hexToRgb(hex) {
+      hex = hex.replace('#', '');
+      if (hex.length === 3) hex = hex.split('').map(c => c + c).join('');
+      const n = parseInt(hex, 16);
+      return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
+    }
+    function paintBg() {
+      if (!showBg) return;
+      const { r, g, b } = hexToRgb(PROJECTS[active].c);
+      const dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const a1 = dark ? 0.44 : 0.34, a2 = dark ? 0.18 : 0.12;
+      showBg.style.background =
+        'radial-gradient(120% 92% at 50% 40%, rgba(' + r + ',' + g + ',' + b + ',' + a1 + ') 0%, ' +
+        'rgba(' + r + ',' + g + ',' + b + ',' + a2 + ') 50%, rgba(' + r + ',' + g + ',' + b + ',0) 78%)';
+    }
+
+    const PROJECTS = [
+      {
+        short: 'Logan', name: 'Logan College', cat: 'Education Branding', sub: 'Campaign', metric: 'Admissions Drive', rating: '5.0', c: '#e11d6b', c2: '#b01453', img: 'assets/clients/logan-college.jpg',
+        topStats: [['campaign', 'Growth', 'Admissions'], ['smart_display', 'Videos', 'AI-Powered'], ['brush', 'Branding', 'Consistent']],
+        servicesList: ['Social Media Management', 'AI-Based Video Creation', 'Graphic Designing', 'Social Media Creatives', 'Banners, Flags & Branding Collateral'],
+        impactList: ['Maintained a professional social media presence.', 'Produced AI-powered promotional videos.', 'Delivered consistent branding.', 'Supported admission campaigns with impactful creatives.']
+      },
+      {
+        short: 'Kanak', name: 'Kanak Cargo', cat: 'Logistics', sub: 'Social', metric: 'Brand Refresh', rating: '4.9', c: '#2f6df6', c2: '#1b4fd0', img: 'assets/clients/kanak-cargo.jpg',
+        topStats: [['design_services', 'Creatives', 'Branded'], ['chat', 'WhatsApp', 'Marketing'], ['visibility', 'Visuals', 'Consistent']],
+        servicesList: ['Graphic Designing', 'Social Media Creatives', 'Promotional Graphics', 'WhatsApp Marketing Designs'],
+        impactList: ['Delivered professionally branded creatives.', 'Improved visual consistency.', 'Created reusable marketing assets.', 'Enhanced brand communication.']
+      },
+      {
+        short: 'DIAS', name: 'Delhi Institute of Advanced Studies', cat: 'Brand Identity', sub: 'Branding', metric: 'Full Identity', rating: '5.0', c: '#145CFF', c2: '#6a1fc0', img: 'assets/clients/dias.jpg',
+        topStats: [['public', '360°', 'Digital Mgmt'], ['search', 'SEO', 'Visibility'], ['draw', '20+', 'Touchpoints']],
+        servicesList: ['360° Digital Marketing Management', 'Website Maintenance & Optimization', 'SEO', 'Social Media Management', 'Graphic Designing', 'Video Editing & AI-Based Content Creation', 'Brochure, Flyer & Admission Collateral Design', 'Event Branding'],
+        impactList: ['Managed the institute\'s complete digital marketing ecosystem under one agency.', 'Maintained a consistent brand identity across 20+ online and offline marketing touchpoints.', 'Improved website performance through continuous maintenance and optimization.', 'Strengthened online visibility with ongoing SEO implementation.', 'Delivered high-quality creative assets supporting admissions, events, and institutional branding.']
+      },
+      {
+        short: 'Grat.', name: 'Gratification Consultants', cat: 'Aviation & Aerospace', sub: 'Brochure', metric: 'Print + Digital', rating: '4.8', c: '#0ea5b7', c2: '#0a7e8c', img: 'assets/clients/gratification.jpg',
+        topStats: [['design_services', 'Engaging', 'Content'], ['view_carousel', 'Carousels', 'Storytelling'], ['video_library', 'Reels', 'Canva']],
+        servicesList: ['Social Media Graphic Designing', 'Carousel Design', 'Canva Reel Creation', 'Marketing Collateral Design', 'Client Branding Support'],
+        impactList: ['Delivered engaging content for Alberta Aviation.', 'Improved storytelling through reels and carousels.', 'Maintained consistent branding.', 'Supported client marketing with quality creatives.']
+      },
+      {
+        short: 'DIST', name: 'DIST Science & Tech', cat: 'Web Platform', sub: 'UI/UX', metric: 'Web Launch', rating: '4.8', c: '#14a06b', c2: '#0c7d52', img: 'assets/clients/dist.jpg',
+        topStats: [['language', 'Website', 'Managed'], ['groups', 'Leads', 'Generated'], ['campaign', 'Admissions', 'Supported']],
+        servicesList: ['Website Management', 'Website Updates & Maintenance', 'Social Media Management', 'Facebook & Instagram Lead Generation Campaigns', 'Graphic Designing for Admission Campaigns'],
+        impactList: ['Generated qualified student enquiries through Meta lead generation campaigns.', 'Improved online visibility during admission seasons.', 'Maintained an updated and professionally managed institutional website.', 'Delivered consistent branding across digital platforms.', 'Supported student admissions with performance-focused marketing campaigns.']
+      },
+      {
+        short: 'P2P', name: 'Person to Personality', cat: 'Personal Branding', sub: 'Social', metric: 'Audience Growth', rating: '4.9', c: '#f0612f', c2: '#cd4800', img: 'assets/clients/person-to-personality.jpg',
+        topStats: [['computer', 'Platform', 'Learning'], ['school', 'Courses', 'Integrated'], ['speed', 'Scalable', 'Optimized']],
+        servicesList: ['Website Development', 'Course Integration', 'Website Content Management', 'Website Updates', 'Responsive Website Optimization'],
+        impactList: ['Built a professional learning platform.', 'Improved course accessibility.', 'Organized educational content.', 'Developed a scalable website.']
+      }
+    ];
+
+    const n = PROJECTS.length;
+    let active = 0;
+
+    PROJECTS.forEach((p, i) => {
+      const s = document.createElement('div');
+      s.className = 'wshow-slide';
+      s.style.setProperty('--c', p.c);
+      s.style.setProperty('--c2', p.c2);
+      s.innerHTML =
+        '<div class="ws-top">' + p.short + '</div>' +
+        '<div class="ws-center"><img src="' + p.img + '" alt="' + p.name + '" loading="lazy">' +
+          '<button class="ws-play" aria-label="Preview"><span class="material-symbols-outlined">play_arrow</span></button></div>' +
+        '<div class="ws-bottom">Nabulsi.tech</div>' +
+        '<div class="ws-fcard ws-f1"><div class="ws-thumb" style="background-image:url(\'' + p.img + '\')"></div>' +
+          '<div><div class="ws-ft">' + p.cat + '</div><div class="ws-fs"><span class="star">★</span> ' + p.rating + '</div></div></div>' +
+        '<div class="ws-fcard ws-f2"><div class="ws-thumb" style="background-image:url(\'' + p.img + '\')"></div>' +
+          '<div><div class="ws-ft">' + p.metric + '</div><div class="ws-fs">' + p.sub + '</div></div></div>' +
+        '<div class="ws-pill"><span class="material-symbols-outlined" style="font-size:14px;color:' + p.c + '">bookmark</span> Case Study</div>' +
+        '<div class="ws-icon ws-i1"><span class="material-symbols-outlined">north_east</span></div>' +
+        '<div class="ws-icon ws-i2"><span class="material-symbols-outlined">favorite</span></div>';
+      s.addEventListener('click', () => { if (i !== active) go(i, dirTo(i)); });
+      
+      const playBtn = s.querySelector('.ws-play');
+      if (playBtn) {
+        playBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (typeof openDashboardModal === 'function') {
+            openDashboardModal(p);
+          }
+        });
+      }
+      
+      track.appendChild(s);
+
+      const d = document.createElement('button');
+      d.className = 'wshow-dot';
+      d.setAttribute('aria-label', 'Go to ' + p.name);
+      d.addEventListener('click', () => go(i, dirTo(i)));
+      dotsWrap.appendChild(d);
+    });
+
+    const slides = Array.prototype.slice.call(track.children);
+    const dots = Array.prototype.slice.call(dotsWrap.children);
+
+    function layout() {
+      const vw = window.innerWidth;
+      const stepX = vw < 600 ? 64 : vw < 1024 ? 56 : 52;   // % of slide width
+      const depth = vw < 600 ? 150 : 240;
+      const maxVisible = vw < 900 ? 1 : 2;
+      slides.forEach((el, i) => {
+        let off = i - active;
+        if (off > n / 2) off -= n;
+        if (off < -n / 2) off += n;
+        const abs = Math.abs(off), sign = Math.sign(off);
+        const tx = off * stepX;
+        const rotY = -sign * Math.min(abs, 1) * 38;
+        const tz = -abs * depth;
+        const scale = abs === 0 ? 1 : Math.max(0.7, 0.85 - (abs - 1) * 0.06);
+        const vis = abs <= maxVisible;
+        el.style.transform = 'translate(-50%,-50%) translateX(' + tx + '%) translateZ(' + tz + 'px) rotateY(' + rotY + 'deg) scale(' + scale + ')';
+        el.style.opacity = vis ? '1' : '0';
+        el.style.zIndex = String(100 - abs);
+        el.style.pointerEvents = vis ? 'auto' : 'none';
+        el.style.filter = abs === 0 ? 'none' : 'brightness(0.9)';
+        el.classList.toggle('is-active', abs === 0);
+        dots[i].classList.toggle('active', i === active);
+      });
+      if (cap) {
+        cap.querySelector('h3').textContent = PROJECTS[active].name;
+        cap.querySelector('p').textContent = PROJECTS[active].cat + '  ·  ' + PROJECTS[active].sub;
+      }
+      paintBg();
+    }
+
+    function go(i, dir) {
+      const target = (i + n) % n;
+      if (dir == null) dir = target === active ? 'next' : 'next';
+      active = target;
+      layout();
+      // Flip the newly centered card into place
+      const cur = slides[active];
+      cur.classList.remove('ws-flip-next', 'ws-flip-prev');
+      void cur.offsetWidth; // force reflow so the animation restarts
+      cur.classList.add(dir === 'prev' ? 'ws-flip-prev' : 'ws-flip-next');
+      resetAuto();
+    }
+
+    // pick shortest direction toward index i for nicer flips from dots/clicks
+    function dirTo(i) {
+      let off = ((i - active) % n + n) % n;
+      return off > n / 2 ? 'prev' : 'next';
+    }
+
+    prevBtn.addEventListener('click', () => go(active - 1, 'prev'));
+    nextBtn.addEventListener('click', () => go(active + 1, 'next'));
+    window.addEventListener('resize', layout);
+
+    // Autoplay (pause on hover)
+    let timer = null;
+    function startAuto() { if (!timer) timer = setInterval(() => go(active + 1, 'next'), 5000); }
+    function stopAuto() { clearInterval(timer); timer = null; }
+    function resetAuto() { stopAuto(); startAuto(); }
+    if (stage) {
+      stage.addEventListener('mouseenter', stopAuto);
+      stage.addEventListener('mouseleave', startAuto);
+    }
+
+    // Drag / swipe
+    let dragX = null;
+    stage && stage.addEventListener('pointerdown', e => { dragX = e.clientX; stopAuto(); });
+    window.addEventListener('pointerup', e => {
+      if (dragX === null) return;
+      const dx = e.clientX - dragX; dragX = null;
+      if (Math.abs(dx) > 50) go(active + (dx < 0 ? 1 : -1), dx < 0 ? 'next' : 'prev'); else startAuto();
+    });
+
+    // Keyboard
+    window.addEventListener('keydown', e => {
+      if (e.key === 'ArrowLeft') go(active - 1, 'prev');
+      else if (e.key === 'ArrowRight') go(active + 1, 'next');
+    });
+
+    layout();
+    startAuto();
+
+    // Re-tint when the site theme is toggled (light/dark)
+    new MutationObserver(paintBg).observe(document.documentElement, {
+      attributes: true, attributeFilter: ['data-theme']
+    });
+  })();
+  </script>
+
+  <!-- Project Preview Modal (glassy, card-coloured, theme-aware) -->
+  <div id="project-dashboard" class="wprev">
+    <div class="wprev-backdrop"></div>
+    <div class="wprev-panel">
+      <div class="wprev-head">
+        <div class="wprev-brand"><span class="wprev-dot"></span> Nabulsi.tech</div>
+        <button class="wprev-close" id="dash-close-btn" aria-label="Close"><span class="material-symbols-outlined">close</span></button>
+      </div>
+      <div class="wprev-title">
+        <h3 id="wprev-name">Project</h3>
+        <p id="wprev-cat">Category</p>
+      </div>
+      <div class="wprev-body" id="wprev-body"></div>
+    </div>
+  </div>
+
+  <style>
+    .wprev {
+      position: fixed; inset: 0; z-index: 10000;
+      display: grid; place-items: center;
+      padding: clamp(16px, 3vw, 40px);
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.45s ease;
+    }
+    .wprev.open { opacity: 1; pointer-events: auto; }
+    .wprev-backdrop {
+      position: absolute; inset: 0;
+      background: rgba(8, 6, 16, 0.5);
+      backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    }
+    /* glassy panel — tinted with the active card colour, adapts to site theme */
+    .wprev-panel {
+      --glass: rgba(255,255,255,0.9);
+      position: relative; z-index: 2;
+      width: min(780px, 94vw); max-height: 94vh; overflow-y: auto;
+      border-radius: 28px;
+      padding: clamp(18px, 2.5vw, 24px);
+      background: var(--glass);
+      border: 1px solid var(--wc-border, rgba(255,255,255,0.28));
+      box-shadow:
+        0 40px 110px rgba(0,0,0,0.4),
+        0 0 70px var(--wc-glow, rgba(20,92,255,0.18)),
+        inset 0 1px 0 rgba(255,255,255,0.4);
+      backdrop-filter: blur(26px) saturate(150%);
+      -webkit-backdrop-filter: blur(26px) saturate(150%);
+      transform: translateY(28px) scale(0.96); opacity: 0;
+      transition: transform 0.55s cubic-bezier(.22,1,.36,1), opacity 0.4s ease;
+    }
+    [data-theme="dark"] .wprev-panel { --glass: rgba(20,18,30,0.55); }
+    .wprev.open .wprev-panel { transform: none; opacity: 1; }
+
+    .wprev-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+    .wprev-brand {
+      display: flex; align-items: center; gap: 9px;
+      font-family: var(--font-headline); font-weight: 800; font-size: 16px;
+      letter-spacing: -0.02em; color: var(--color-on-background);
+    }
+    .wprev-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--wc, var(--color-primary)); box-shadow: 0 0 14px var(--wc, var(--color-primary)); }
+    .wprev-close {
+      width: 32px; height: 32px; border-radius: 50%; border: none; cursor: pointer;
+      display: grid; place-items: center;
+      background: var(--color-surface-variant); color: var(--color-on-background);
+      transition: background 0.3s ease, transform 0.3s ease;
+    }
+    .wprev-close:hover { transform: rotate(90deg); }
+
+    .wprev-title { margin-bottom: 14px; }
+    .wprev-title h3 {
+      font-family: var(--font-headline); font-weight: 800;
+      font-size: clamp(20px, 3vw, 26px); letter-spacing: -0.02em;
+      line-height: 1.15; color: var(--color-on-background); margin-bottom: 4px;
+    }
+    .wprev-title p {
+      font-family: var(--font-label); font-size: 11px; font-weight: 700;
+      letter-spacing: 0.14em; text-transform: uppercase; color: var(--wc, var(--color-primary));
+    }
+
+    .wprev-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 12px; }
+    .wprev-stat { min-width: 0; }
+    .wprev-stat {
+      border-radius: 16px; padding: 12px;
+      background: var(--wc-tile, rgba(127,127,140,0.06));
+      border: 1px solid var(--wc-border, rgba(255,255,255,0.18));
+    }
+    .wprev-stat .ic {
+      width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
+      background: var(--wc-chip, rgba(20,92,255,0.16)); color: var(--wc, var(--color-primary));
+      margin-bottom: 8px;
+    }
+    .wprev-stat .ic .material-symbols-outlined { font-size: 18px; }
+    .wprev-stat h4 { font-family: var(--font-headline); font-weight: 800; font-size: clamp(16px, 2.4vw, 20px); color: var(--color-on-background); margin-bottom: 2px; }
+    .wprev-stat p { font-family: var(--font-body); font-size: 10px; color: var(--color-on-surface-variant); }
+
+    .wprev-row { display: grid; grid-template-columns: 1.1fr 1fr; gap: 10px; }
+    .wprev-card {
+      border-radius: 16px; padding: 14px;
+      background: var(--wc-tile, rgba(127,127,140,0.06));
+      border: 1px solid var(--wc-border, rgba(255,255,255,0.18));
+    }
+    .wprev-card h5 {
+      font-family: var(--font-label); font-size: 10px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--color-on-surface-variant); margin-bottom: 10px;
+    }
+    .wprev-spark { width: 100%; height: 80px; }
+    .wprev-spark svg { width: 100%; height: 100%; display: block; }
+
+    .wprev-step { display: flex; align-items: center; gap: 10px; font-size: 12.5px; color: var(--color-on-background); margin-bottom: 14px; }
+    .wprev-step:last-child { margin-bottom: 0; }
+    .wprev-step .num { color: var(--color-on-surface-variant); font-weight: 700; font-size: 11px; width: 18px; }
+    .wprev-step .lbl { flex: 1; }
+    .wprev-step .track { width: 76px; height: 5px; border-radius: 4px; background: rgba(127,127,140,0.22); overflow: hidden; }
+    .wprev-step .fill { display: block; height: 100%; border-radius: 4px; }
+    .wprev-step .pct { width: 38px; text-align: right; font-weight: 700; color: var(--color-on-surface-variant); font-size: 11px; }
+
+    @media (max-width: 640px) {
+      .wprev { padding: 14px; }
+      .wprev-panel { width: 100%; max-height: 92vh; padding: 18px 16px; }
+      .wprev-row { grid-template-columns: 1fr; }
+      .wprev-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+      .wprev-stat { padding: 11px 9px; }
+      .wprev-stat .ic { width: 30px; height: 30px; margin-bottom: 7px; }
+      .wprev-stat h4 { font-size: 15px; }
+      .wprev-stat p { font-size: 9.5px; }
+    }
+    @media (max-width: 380px) {
+      .wprev-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+  </style>
+
+  <script>
+    (function () {
+      function hexToRgba(hex, alpha) {
+        hex = hex.replace('#', '');
+        if (hex.length === 3) hex = hex.split('').map(function (c) { return c + c; }).join('');
+        var n = parseInt(hex, 16);
+        return 'rgba(' + ((n >> 16) & 255) + ',' + ((n >> 8) & 255) + ',' + (n & 255) + ',' + alpha + ')';
+      }
+
+      // service-specific preview content (uses the project's own metric/rating where natural)
+      function previewFor(p) {
+        if (p.cat === 'SEO') return {
+          chartTitle: 'Keyword Rankings',
+          stats: [
+            ['trending_up', '+145%', 'Organic Traffic'],
+            ['visibility', '1.2M', 'Impressions'],
+            ['ads_click', (p.rating || '4.9') + '%', 'Avg CTR']
+          ],
+          steps: [['On-Page Optimization', 100], ['Backlink Acquisition', 75], ['Technical Audits', 90]],
+          path: 'M0,86 Q60,68 110,56 T220,38 T320,20 T400,10'
+        };
+        if (p.cat === 'Web Development' || p.cat === 'App Development') return {
+          chartTitle: 'Performance Over Time',
+          stats: [
+            ['speed', p.metric || '99.9%', 'Highlight'],
+            ['bolt', '14ms', 'Latency'],
+            ['verified', '0', 'Critical Bugs']
+          ],
+          steps: [['Unit & E2E Tests', 100], ['Build & Deploy', 100], ['Performance Budget', 92]],
+          path: 'M0,80 Q40,60 80,72 T160,44 T240,58 T320,28 T400,40'
+        };
+        return {
+          chartTitle: 'Engagement',
+          stats: [
+            ['bar_chart', p.metric || '+312%', 'Growth'],
+            ['group', '432', 'New Leads'],
+            ['star', p.rating || '5.0', 'Rating']
+          ],
+          steps: [['Brand Identity', 88], ['Visual System', 72], ['Asset Delivery', 95]],
+          path: 'M0,78 Q50,30 100,52 T200,78 T300,34 T400,58'
+        };
+      }
+
+      window.openDashboardModal = function (p) {
+        var modal = document.getElementById('project-dashboard');
+        var panel = modal.querySelector('.wprev-panel');
+        var body = document.getElementById('wprev-body');
+
+        // paint the panel in the active card's colour
+        panel.style.setProperty('--wc', p.c);
+        panel.style.setProperty('--wc-soft', hexToRgba(p.c, 0.20));
+        panel.style.setProperty('--wc-faint', hexToRgba(p.c, 0.10));
+        panel.style.setProperty('--wc-tile', hexToRgba(p.c, 0.08));
+        panel.style.setProperty('--wc-chip', hexToRgba(p.c, 0.16));
+        panel.style.setProperty('--wc-border', hexToRgba(p.c, 0.26));
+        panel.style.setProperty('--wc-glow', hexToRgba(p.c, 0.22));
+
+        document.getElementById('wprev-name').textContent = p.name;
+        document.getElementById('wprev-cat').textContent = p.cat + '  ·  ' + p.sub;
+
+        var d = previewFor(p);
+
+        var statsHtml = '';
+        if (p.topStats) {
+          statsHtml = p.topStats.map(function (s) {
+            return '<div class="wprev-stat"><div class="ic"><span class="material-symbols-outlined">' + s[0] + '</span></div>' +
+              '<h4>' + s[1] + '</h4><p>' + s[2] + '</p></div>';
+          }).join('');
+        }
+
+        var servicesHtml = '';
+        if (p.servicesList) {
+          servicesHtml = '<div style="margin-bottom:12px;"><h5>Services Delivered</h5><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;">' +
+            p.servicesList.map(function(s) {
+              return '<span style="background:var(--wc-tile);color:var(--wc);padding:4px 8px;border-radius:12px;font-size:10.5px;font-weight:600;border:1px solid var(--wc-border);">' + s + '</span>';
+            }).join('') + '</div></div>';
+        }
+
+        var impactHtml = '';
+        if (p.impactList) {
+          impactHtml = '<div><h5>Key Impact</h5><ul style="margin-top:8px;padding-left:14px;font-size:11px;color:var(--color-on-background);line-height:1.35;margin-bottom:0;">' +
+            p.impactList.map(function(s) {
+              return '<li style="margin-bottom:3px;">' + s + '</li>';
+            }).join('') + '</ul></div>';
+        }
+
+        body.innerHTML =
+          '<div class="wprev-grid">' + statsHtml + '</div>' +
+          '<div class="wprev-card">' +
+            servicesHtml + impactHtml +
+          '</div>';
+
+        modal.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      };
+
+      function closeModal() {
+        var modal = document.getElementById('project-dashboard');
+        if (modal) modal.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      document.addEventListener('DOMContentLoaded', function () {
+        var modal = document.getElementById('project-dashboard');
+        var closeBtn = document.getElementById('dash-close-btn');
+        if (closeBtn) closeBtn.addEventListener('click', closeModal);
+        if (modal) modal.querySelector('.wprev-backdrop').addEventListener('click', closeModal);
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+      });
+    })();
+  </script>
+
+</body>
+</html>

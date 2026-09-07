@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nabulsi.tech | Creative Technology</title>
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/5ac3fe7c6abd2f62067f266d89671492?family=HelveticaNowDisplay-Medium"/>
+  <link rel="stylesheet" href="https://db.onlinewebfonts.com/c/1aa3377e489837a26d019bba501e779d?family=HelveticaNowDisplayW01-Rg"/>
+  <link rel="stylesheet" href="styles.css"/>
+  <style>
+    :root {
+      --font-heading: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+      --font-body: 'Geist', 'Helvetica Neue', Arial, sans-serif;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: var(--font-body);
+      background: #F7F7F7;
+      color: #4F4F4F;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ===== BACKGROUND VIDEO ===== */
+    .bg-video {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 70% center;
+    }
+
+    /* ===== NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 10;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 20px;
+    }
+    @media (min-width: 640px) {
+      .navbar { padding: 20px 32px; }
+    }
+
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .nav-logo-text {
+      font-family: var(--font-heading);
+      font-size: 21px;
+      color: #000;
+      letter-spacing: -0.02em;
+      text-decoration: none;
+    }
+    @media (min-width: 640px) {
+      .nav-logo-text { font-size: 26px; }
+    }
+    .nav-logo-asterisk {
+      font-size: 25px;
+      color: #000;
+      user-select: none;
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    @media (min-width: 640px) {
+      .nav-logo-asterisk { font-size: 30px; }
+    }
+
+    .nav-links {
+      display: none;
+      align-items: center;
+      font-size: 23px;
+      color: #000;
+    }
+    @media (min-width: 768px) {
+      .nav-links { display: flex; }
+    }
+    .nav-links a {
+      color: #000;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .nav-links a:hover { opacity: 0.6; }
+    .nav-comma { margin: 0 2px; }
+
+    .nav-cta {
+      display: none;
+      font-size: 23px;
+      color: #000;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.6; }
+    @media (min-width: 768px) {
+      .nav-cta { display: inline; }
+    }
+
+    /* Hamburger */
+    .hamburger {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px;
+      z-index: 11;
+    }
+    @media (min-width: 768px) {
+      .hamburger { display: none; }
+    }
+    .hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: #000;
+      transition: transform 0.3s, opacity 0.3s;
+      transform-origin: center;
+    }
+    .hamburger.active span:nth-child(1) {
+      transform: rotate(45deg) translateY(7px);
+    }
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+    }
+    .hamburger.active span:nth-child(3) {
+      transform: rotate(-45deg) translateY(-7px);
+    }
+
+    /* Mobile overlay */
+    .mobile-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 9;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-left: 32px;
+      gap: 32px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .mobile-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    @media (min-width: 768px) {
+      .mobile-overlay { display: none !important; }
+    }
+    .mobile-overlay a {
+      font-size: 32px;
+      font-weight: 500;
+      color: #000;
+      text-decoration: none;
+    }
+    .mobile-overlay a.mobile-cta {
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      position: relative;
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 0 20px 48px;
+      overflow: hidden;
+    }
+    @media (min-width: 640px) {
+      .hero { padding: 0 32px 48px; }
+    }
+    @media (min-width: 768px) {
+      .hero {
+        justify-content: center;
+        padding: 0 40px 0;
+      }
+    }
+
+    .hero-content {
+      max-width: 580px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* Blurred intro */
+    .hero-intro {
+      pointer-events: none;
+      user-select: none;
+      margin-bottom: 20px;
+      font-size: clamp(18px, 4vw, 26px);
+      line-height: 1.3;
+      font-weight: 400;
+      color: #000;
+      filter: blur(4px);
+    }
+    @media (min-width: 640px) {
+      .hero-intro { margin-bottom: 24px; }
+    }
+
+    /* Typewriter */
+    .hero-typewriter {
+      color: #000;
+      margin-bottom: 20px;
+      font-size: clamp(18px, 4vw, 26px);
+      line-height: 1.35;
+      font-weight: 400;
+      min-height: 54px;
+    }
+    @media (min-width: 640px) {
+      .hero-typewriter { margin-bottom: 24px; }
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: #000;
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: blink 1s step-end infinite;
+    }
+
+    /* Pills container */
+    .hero-pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px 0;
+      opacity: 0;
+      transform: translateY(8px);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+    .hero-pills.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      color: #000;
+      border: 1px solid rgba(0,0,0,0.1);
+      border-radius: 9999px;
+      font-size: 13px;
+      padding: 0.3em 16px;
+      margin: 0 0.2em 0.4em;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.2s, color 0.2s;
+      text-decoration: none;
+      font-family: var(--font-body);
+    }
+    @media (min-width: 640px) {
+      .pill { font-size: 15px; padding: 0.3em 20px; }
+    }
+    .pill:hover {
+      background: #000;
+      color: #fff;
+    }
+
+    .pill-outline {
+      background: transparent;
+      color: #fff;
+      border-color: #fff;
+      gap: 8px;
+    }
+    @media (min-width: 640px) {
+      .pill-outline { gap: 12px; }
+    }
+    .pill-outline:hover {
+      background: #fff;
+      color: #000;
+    }
+    .pill-outline .email-text {
+      text-decoration: underline;
+      text-underline-offset: 1px;
+    }
+    .pill-outline svg {
+      width: 12px;
+      height: 12px;
+      flex-shrink: 0;
+    }
+
+    /* HOME THEME — keep this standalone experience aligned with index.html */
+    :root {
+      --paper: #F7F7F7;
+      --ink: #4F4F4F;
+      --brand: #145CFF;
+      --brand-600: #0B2D86;
+      --rule: rgba(79, 79, 79, 0.3);
+    }
+
+    body {
+      background: var(--paper) !important;
+      color: var(--ink) !important;
+      font-family: 'Geist', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif !important;
+    }
+
+    .bg-video {
+      opacity: 0.08;
+      filter: saturate(1.2) hue-rotate(155deg);
+      mix-blend-mode: multiply;
+    }
+
+    .navbar {
+      background: rgba(247, 247, 247, 0.92) !important;
+      border-bottom: 1px dashed var(--rule);
+      box-shadow: none;
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .nav-logo-text,
+    .nav-logo-asterisk,
+    .nav-links a,
+    .nav-cta {
+      color: var(--ink) !important;
+    }
+
+    .nav-logo-text,
+    .nav-cta,
+    .nav-links,
+    .mobile-overlay a {
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      letter-spacing: 0.04em;
+    }
+
+    .nav-logo-text:hover,
+    .nav-links a:hover,
+    .nav-cta:hover { color: var(--brand) !important; opacity: 1; }
+
+    .nav-logo-asterisk { color: var(--brand) !important; }
+
+    .hamburger span { background: var(--brand) !important; }
+
+    .mobile-overlay {
+      background: rgba(247, 247, 247, 0.98) !important;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+    }
+
+    .mobile-overlay a:hover,
+    .mobile-overlay a.mobile-cta { color: var(--brand) !important; }
+
+    .hero {
+      background-color: rgba(247, 247, 247, 0.86) !important;
+      background-image: radial-gradient(rgba(79, 79, 79, 0.18) 0.7px, transparent 0.7px);
+      background-size: 18px 18px;
+    }
+
+    .hero-intro,
+    .hero-typewriter { color: var(--ink) !important; }
+
+    .cursor { background: var(--brand) !important; }
+
+    .pill {
+      background: #fff !important;
+      color: var(--ink) !important;
+      border-color: var(--rule) !important;
+      border-radius: 4px;
+      font-family: 'Geist Mono', ui-monospace, monospace;
+      letter-spacing: 0.03em;
+    }
+
+    .pill:hover {
+      background: var(--brand) !important;
+      border-color: var(--brand) !important;
+      color: #fff !important;
+    }
+
+    .pill-outline {
+      background: transparent !important;
+      color: var(--brand) !important;
+      border-color: var(--brand) !important;
+    }
+
+    .pill-outline:hover {
+      background: var(--brand) !important;
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Video -->
+  <video class="bg-video" id="bg-video" autoplay loop muted playsinline preload="auto"
+    src="assets/V11-Nabulsi-tech-1.mov">
+  </video>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <a href="index.html" class="nav-logo-text">Nabulsi.tech</a>
+      <span class="nav-logo-asterisk">✳︎</span>
+    </div>
+    <div class="nav-links">
+      <a href="work.html">Work</a><span class="nav-comma">,&nbsp;</span>
+      <a href="services.html">Services</a><span class="nav-comma">,&nbsp;</span>
+      <a href="about.html">About</a><span class="nav-comma">,&nbsp;</span>
+      <a href="contact.html">Contact</a>
+    </div>
+    <a href="contact.html" class="nav-cta">Get in touch</a>
+    <button class="hamburger" id="hamburger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile Overlay -->
+  <div class="mobile-overlay" id="mobile-overlay">
+    <a href="work.html">Work</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html">Contact</a>
+    <a href="contact.html" class="mobile-cta">Get in touch</a>
+  </div>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <div class="hero-intro">
+        Hey there, meet Nabulsi.tech,<br>
+        a creative technology studio for ambitious ideas
+      </div>
+      <p class="hero-typewriter" id="typewriter"></p>
+      <div class="hero-pills" id="hero-pills">
+        <button class="pill">Pitch us an idea</button>
+        <button class="pill">Come work here</button>
+        <button class="pill">Send a brief hello</button>
+        <button class="pill">See how we operate</button>
+        <button class="pill pill-outline" id="copy-email">
+          <span>Reach us: <span class="email-text">ramia@nabulsi.tech</span></span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <script>
+    /* ===== HAMBURGER ===== */
+    const hamburger = document.getElementById('hamburger');
+    const mobileOverlay = document.getElementById('mobile-overlay');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.toggle('active');
+      mobileOverlay.classList.toggle('active');
+    });
+
+    /* ===== VIDEO MOUSE SCRUB ===== */
+    const video = document.getElementById('bg-video');
+    const SENSITIVITY = 0.8;
+    let prevX = null;
+    let targetTime = 0;
+    let isSeeking = false;
+
+    video.addEventListener('loadedmetadata', () => {
+      targetTime = 0;
+      video.currentTime = 0;
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!video.duration) return;
+      if (prevX === null) { prevX = e.clientX; return; }
+      const delta = e.clientX - prevX;
+      prevX = e.clientX;
+      const offset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
+      targetTime = Math.max(0, Math.min(video.duration, targetTime + offset));
+      if (!isSeeking) {
+        isSeeking = true;
+        video.currentTime = targetTime;
+      }
+    });
+
+    video.addEventListener('seeked', () => {
+      if (Math.abs(video.currentTime - targetTime) > 0.01) {
+        video.currentTime = targetTime;
+      } else {
+        isSeeking = false;
+      }
+    });
+
+    /* ===== TYPEWRITER ===== */
+    const typewriterEl = document.getElementById('typewriter');
+    const fullText = "Glad you stopped in. Good taste tends to find us. Now, what are we building?";
+    let charIndex = 0;
+    const speed = 38;
+    const startDelay = 600;
+
+    setTimeout(() => {
+      const interval = setInterval(() => {
+        charIndex++;
+        typewriterEl.innerHTML = fullText.slice(0, charIndex) +
+          (charIndex < fullText.length ? '<span class="cursor"></span>' : '');
+        if (charIndex >= fullText.length) clearInterval(interval);
+      }, speed);
+    }, startDelay);
+
+    /* ===== PILLS FADE IN (400ms after load, independent of typewriter) ===== */
+    setTimeout(() => {
+      document.getElementById('hero-pills').classList.add('visible');
+    }, 400);
+
+    /* ===== COPY EMAIL ===== */
+    document.getElementById('copy-email').addEventListener('click', () => {
+      navigator.clipboard.writeText('ramia@nabulsi.tech');
+    });
+  </script>
+</body>
+</html>

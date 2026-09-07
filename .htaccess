@@ -1,0 +1,43 @@
+# ===== Peculiex — static site (Hostinger / Apache) =====
+
+# Default document
+DirectoryIndex index.html
+
+# UTF-8
+AddDefaultCharset UTF-8
+
+# ----- GZIP compression -----
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ----- Browser caching -----
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/html                "access plus 0 seconds"
+  ExpiresByType text/css                 "access plus 1 month"
+  ExpiresByType application/javascript   "access plus 1 month"
+  ExpiresByType image/jpeg               "access plus 1 year"
+  ExpiresByType image/png                "access plus 1 year"
+  ExpiresByType image/webp               "access plus 1 year"
+  ExpiresByType image/svg+xml            "access plus 1 year"
+  ExpiresByType video/mp4                "access plus 1 year"
+  ExpiresByType audio/mp4                "access plus 1 year"
+  ExpiresByType font/woff2               "access plus 1 year"
+</IfModule>
+
+# ----- Correct MIME types -----
+<IfModule mod_mime.c>
+  AddType video/mp4 .mp4
+  AddType audio/mp4 .m4a
+  AddType image/svg+xml .svg
+</IfModule>
+
+# ----- Force HTTPS (uncomment AFTER you have enabled SSL in hPanel) -----
+# <IfModule mod_rewrite.c>
+#   RewriteEngine On
+#   RewriteCond %{HTTPS} off
+#   RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+# </IfModule>

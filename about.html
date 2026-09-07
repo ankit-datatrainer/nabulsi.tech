@@ -1,0 +1,1644 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <title>About — Nabulsi.tech Digital Agency</title>
+  <meta name="description"
+    content="Nabulsi.tech is a voice, a vibe, a vision — blending high-end editorial aesthetics with functional rawness to craft digital experiences that matter." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* =========================================================
+       ABOUT PAGE — DZiNR-INSPIRED POLISH
+       Smooth, intentional, generous whitespace, clean reveals
+       ========================================================= */
+
+    /* ===== HERO ===== */
+    .ab-hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 160px;
+      padding-bottom: 120px;
+      overflow: hidden;
+    }
+
+    .ab-hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 960px;
+    }
+
+    .ab-hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 56px;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+
+    .ab-hero-label span {
+      font-family: var(--font-label);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-on-surface-variant);
+    }
+
+    .ab-hero-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-primary);
+    }
+
+    .ab-hero-heading {
+      font-family: var(--font-headline);
+      font-size: clamp(48px, 8vw, 110px);
+      font-weight: 900;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
+      color: var(--color-on-background);
+      margin-bottom: 48px;
+    }
+
+    .ab-hero-line {
+      display: block;
+      overflow: hidden;
+    }
+
+    .ab-hero-line-inner {
+      display: block;
+      transform: translateY(110%);
+      will-change: transform;
+    }
+
+    .ab-hero-rule {
+      width: 64px;
+      height: 3px;
+      background: var(--color-on-background);
+      margin-bottom: 36px;
+      opacity: 0;
+      transform: scaleX(0);
+      transform-origin: left;
+    }
+
+    .ab-hero-desc {
+      font-family: var(--font-body);
+      font-size: clamp(17px, 1.6vw, 21px);
+      line-height: 1.7;
+      color: var(--color-on-surface-variant);
+      max-width: 560px;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    /* Scroll indicator */
+    .ab-hero-scroll-hint {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 5;
+      opacity: 0;
+    }
+
+    .ab-hero-scroll-hint span {
+      font-family: var(--font-label);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--color-outline);
+    }
+
+    .ab-hero-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: var(--color-outline-variant);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .ab-hero-scroll-line::after {
+      content: '';
+      position: absolute;
+      top: -100%;
+      left: 0;
+      width: 100%;
+      height: 50%;
+      background: var(--color-on-background);
+      animation: abScrollPulse 2.5s ease-in-out infinite;
+    }
+
+    @keyframes abScrollPulse {
+      0% {
+        top: -50%;
+      }
+
+      100% {
+        top: 120%;
+      }
+    }
+
+    /* ===== DIVIDER ===== */
+    .ab-divider {
+      height: 1px;
+      background: var(--color-surface-variant);
+      margin: 0 auto;
+    }
+
+    /* ===== PHILOSOPHY ===== */
+    .ab-philosophy {
+      padding: clamp(80px, 10vw, 140px) 0;
+    }
+
+    .ab-phil-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 40px;
+    }
+
+    @media(min-width:768px) {
+      .ab-phil-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+        align-items: start;
+      }
+    }
+
+    .ab-phil-left h2 {
+      font-family: var(--font-headline);
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-on-background);
+    }
+
+    .ab-phil-right {
+      padding-top: 8px;
+    }
+
+    .ab-phil-right p {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.4vw, 19px);
+      line-height: 1.75;
+      color: var(--color-on-surface-variant);
+    }
+
+    .ab-phil-right p em {
+      color: var(--color-primary);
+      font-style: italic;
+    }
+
+    /* ===== PROCESS ===== */
+    .ab-process {
+      padding: clamp(80px, 10vw, 140px) 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .ab-process-header {
+      margin-bottom: clamp(60px, 8vw, 100px);
+    }
+
+    .ab-process-header h2 {
+      font-family: var(--font-headline);
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-on-background);
+      margin-top: 20px;
+    }
+
+    .ab-process-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+    }
+
+    @media(min-width:768px) {
+      .ab-process-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 24px;
+      }
+    }
+
+    .ab-process-card {
+      position: relative;
+      padding: 48px 36px;
+      border-radius: 20px;
+      background: var(--color-surface-container-lowest);
+      border: 1px solid var(--color-surface-variant);
+      overflow: hidden;
+      transition: border-color 0.6s ease, box-shadow 0.6s ease, transform 0.6s var(--ease-out-expo);
+    }
+
+    .ab-process-card:hover {
+      border-color: rgba(0, 0, 0, 0.12);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.06);
+      transform: translateY(-6px);
+    }
+
+    .ab-process-num {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      font-family: var(--font-headline);
+      font-size: 56px;
+      font-weight: 900;
+      color: var(--color-on-background);
+      opacity: 0.15;
+      line-height: 1;
+      letter-spacing: -0.04em;
+    }
+
+    .ab-process-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
+      font-size: 26px;
+      transition: transform 0.6s var(--ease-out-expo);
+    }
+
+    .ab-process-card:hover .ab-process-icon {
+      transform: scale(1.08);
+    }
+
+    .ab-process-icon.primary {
+      background: rgba(20, 92, 255, 0.06);
+      color: var(--color-primary);
+      border: 1px solid rgba(20, 92, 255, 0.1);
+    }
+
+    .ab-process-icon.secondary {
+      background: rgba(205, 72, 0, 0.06);
+      color: var(--color-secondary-container);
+      border: 1px solid rgba(205, 72, 0, 0.1);
+    }
+
+    .ab-process-icon.tertiary {
+      background: rgba(86, 113, 0, 0.06);
+      color: var(--color-tertiary-container);
+      border: 1px solid rgba(86, 113, 0, 0.1);
+    }
+
+    .ab-process-card h3 {
+      font-family: var(--font-headline);
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+      color: var(--color-on-background);
+    }
+
+    .ab-process-card p {
+      color: var(--color-on-surface-variant);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    /* ===== NEW TESTIMONIALS (What Our Customers Says) ===== */
+    .ab-testimonials {
+      position: relative;
+      padding: clamp(80px, 10vw, 140px) 0;
+    }
+
+    /* Glowing Orbs Background */
+    .ab-testimonials::before,
+    .ab-testimonials::after,
+    .ab-testimonials-orb-3 {
+      content: '';
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      z-index: 0;
+      animation: floatOrbs 10s ease-in-out infinite alternate;
+      opacity: 0.5;
+      pointer-events: none;
+    }
+
+    .ab-testimonials::before {
+      width: 40vw;
+      height: 40vw;
+      background: rgba(255, 0, 100, 0.25);
+      /* Pink/Red */
+      top: -10%;
+      left: -10%;
+    }
+
+    .ab-testimonials::after {
+      width: 35vw;
+      height: 35vw;
+      background: rgba(0, 150, 255, 0.25);
+      /* Blue */
+      bottom: -10%;
+      right: -5%;
+      animation-delay: -3s;
+    }
+
+    .ab-testimonials-orb-3 {
+      width: 30vw;
+      height: 30vw;
+      background: rgba(0, 255, 100, 0.2);
+      /* Green */
+      top: 40%;
+      right: 40%;
+      animation-delay: -6s;
+    }
+
+    @keyframes floatOrbs {
+      0% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      100% {
+        transform: translate(10%, 15%) scale(1.1);
+      }
+    }
+
+    .ab-test-wrapper {
+      position: relative;
+      z-index: 1;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+
+    @media(min-width: 992px) {
+      .ab-test-wrapper {
+        grid-template-columns: 1fr 1fr;
+        gap: 80px;
+      }
+    }
+
+    .ab-test-content h2 {
+      font-family: var(--font-headline);
+      font-size: clamp(36px, 5vw, 64px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-on-background);
+      margin-bottom: 24px;
+    }
+
+    .ab-test-content p {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--color-on-background);
+      opacity: 0.8;
+      max-width: 480px;
+      margin-bottom: 40px;
+      line-height: 1.5;
+    }
+
+    /* Floating Cards Container */
+    .ab-test-cards-container {
+      position: relative;
+      width: 100%;
+      min-height: 480px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 24px;
+      padding: 20px 0;
+    }
+
+    .ab-test-arrow-svg {
+      position: absolute;
+      top: -20px;
+      right: 5%;
+      width: 100px;
+      opacity: 0.9;
+      animation: floatCard 4s ease-in-out infinite alternate;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    /* Floating Animation */
+    @keyframes floatCard {
+      0% {
+        transform: translateY(0px);
+      }
+
+      100% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .ab-test-single-card {
+      background: #ffffff;
+      border-radius: 24px;
+      padding: 24px;
+      width: 90%;
+      max-width: 440px;
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+      position: relative;
+      display: flex;
+      gap: 20px;
+      animation: floatCard 6s ease-in-out infinite alternate;
+    }
+
+    /* Staggering cards layout */
+    .ab-test-single-card:nth-child(2) {
+      margin-left: -15%;
+      animation-delay: -2s;
+    }
+
+    .ab-test-single-card:nth-child(3) {
+      margin-right: -10%;
+      animation-delay: -4s;
+    }
+
+    .ab-test-single-card:nth-child(4) {
+      animation-delay: -1s;
+    }
+
+    @media(max-width: 767px) {
+      .ab-test-single-card:nth-child(n) {
+        margin-left: 0;
+        margin-right: 0;
+        width: 100%;
+      }
+    }
+
+    /* Middle card accent */
+    .ab-test-single-card.accent-card {
+      border-left: 6px solid #a855f7;
+    }
+
+    .ab-test-avatar {
+      width: 64px;
+      height: 64px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      background: #f0f0f0;
+      border: 2px solid transparent;
+    }
+
+    .accent-card .ab-test-avatar {
+      background: #fdf2f8;
+      border-color: #fce7f3;
+    }
+
+    .ab-test-card-content {
+      flex-grow: 1;
+    }
+
+    .ab-test-card-content h4 {
+      font-size: 18px;
+      font-weight: 700;
+      color: #111;
+      margin-bottom: 4px;
+      font-family: var(--font-headline);
+    }
+
+    .ab-test-card-content p {
+      font-size: 15px;
+      color: #111;
+      line-height: 1.6;
+    }
+
+    .ab-test-quote-icon {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      width: 20px;
+      height: 20px;
+      color: #e5e5e5;
+    }
+
+    .accent-card .ab-test-quote-icon {
+      color: #a855f7;
+    }
+
+    /* ===== CTA ===== */
+    .ab-cta-section {
+      padding: clamp(40px, 6vw, 80px) 0 clamp(100px, 12vw, 180px);
+    }
+
+    .ab-cta {
+      position: relative;
+      background: var(--color-on-background);
+      border-radius: var(--radius-2xl);
+      overflow: hidden;
+      padding: clamp(64px, 9vw, 120px) clamp(24px, 5vw, 80px);
+      text-align: center;
+    }
+
+    .ab-cta-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    .ab-cta-inner h2 {
+      font-family: var(--font-headline);
+      font-size: clamp(36px, 5.5vw, 72px);
+      font-weight: 900;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      color: #fff;
+      margin-bottom: 20px;
+    }
+
+    .ab-cta-inner .body-lg {
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 44px;
+    }
+
+    /* ===== STAND OUT SECTION ===== */
+    .stand-out-section {
+      background: var(--color-on-background);
+      color: var(--color-background);
+    }
+
+    /* =========================================================
+       STAGGERED STATS GRID (DZiNR-inspired)
+       Cards step down sequentially in a clean grid
+       ========================================================= */
+    .ab-stats {
+      position: relative;
+      background: var(--color-background);
+      padding-bottom: clamp(60px, 8vw, 100px);
+      overflow: visible;
+    }
+
+    /* when pinned, fill the screen and centre the intro + cards (like .ab-process) */
+    @media (min-width: 768px) {
+      .ab-stats {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        padding-bottom: 0;
+      }
+
+      .ab-stats-intro {
+        padding: 0 0 clamp(32px, 4vw, 56px);
+      }
+    }
+
+    .ab-stats-intro {
+      padding: clamp(80px, 10vw, 140px) 0 clamp(48px, 6vw, 80px);
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    .ab-stats-intro h2 {
+      font-family: var(--font-headline);
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-on-background);
+      margin-top: 20px;
+      max-width: 18ch;
+    }
+
+    .ab-stats-grid-container {
+      padding: 0 max(24px, var(--margin-mobile));
+      margin: 0 auto;
+      max-width: 1320px;
+      box-sizing: border-box;
+    }
+
+    @media (min-width: 768px) {
+      .ab-stats-grid-container {
+        padding: 0 var(--margin-desktop);
+      }
+    }
+
+    .ab-stats-track {
+      display: grid;
+      grid-template-columns: repeat(1, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    /* Desktop layout: 4 aligned columns */
+    @media (min-width: 1024px) {
+      .ab-stats-track {
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 24px;
+      }
+    }
+
+    /* Tablet layout: 2x2 grid */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .ab-stats-track {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+    }
+
+    .ab-stat-card {
+      background: var(--color-surface-container-lowest);
+      border: 1px solid var(--color-surface-variant);
+      padding: clamp(24px, 2.5vw, 40px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.5s var(--ease-out-expo);
+      border-radius: 16px;
+    }
+
+    .ab-stat-card:hover {
+      border-color: rgba(0, 0, 0, 0.15);
+      box-shadow: 0 30px 70px rgba(0, 0, 0, 0.06);
+      transform: translateY(-6px);
+      z-index: 2;
+    }
+
+    .ab-stat-num {
+      font-family: var(--font-headline);
+      font-size: clamp(48px, 6vw, 84px);
+      font-weight: 900;
+      line-height: 0.86;
+      letter-spacing: -0.04em;
+      color: var(--color-on-background);
+      margin-bottom: auto;
+      /* Push body text to the bottom */
+    }
+
+    .ab-stat-body {
+      margin-top: 40px;
+    }
+
+    .ab-stat-body h3 {
+      font-family: var(--font-headline);
+      font-size: clamp(20px, 1.8vw, 24px);
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      color: var(--color-on-background);
+      margin-bottom: 12px;
+    }
+
+    .ab-stat-body p {
+      font-family: var(--font-body);
+      font-size: clamp(14px, 1vw, 15px);
+      line-height: 1.6;
+      color: var(--color-on-surface-variant);
+    }
+
+    /* =========================================================
+       WORD-BY-WORD QUOTE REVEAL  (DZiNR-inspired)
+       Words fill from light grey to solid as you scroll
+       ========================================================= */
+    .ab-quote {
+      padding: clamp(80px, 10vw, 140px) 0;
+      text-align: center;
+      overflow: visible;
+    }
+
+    .ab-quote-text {
+      font-family: 'Inter', var(--font-headline);
+      font-size: clamp(40px, 7vw, 120px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      color: var(--color-on-background);
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 0 4vw;
+      word-wrap: normal;
+      overflow-wrap: normal;
+    }
+
+    .ab-quote-mark {
+      display: inline-block;
+      font-weight: 700;
+      vertical-align: baseline;
+      font-size: 1.2em;
+      opacity: 0.3;
+      margin-right: 4px;
+    }
+
+    .ab-quote-text .ab-word {
+      color: rgba(0, 0, 0, 0.08);
+      will-change: color;
+      display: inline-block;
+      /* keep each word whole — never split mid-word */
+    }
+
+    /* dark mode: faint white ghost (fills to bright white on scroll) */
+    [data-theme="dark"] .ab-quote-text .ab-word {
+      color: rgba(255, 255, 255, 0.12);
+    }
+
+    /* On mobile the horizontal scroll is replaced by a vertical stack */
+    @media (max-width: 767px) {
+      .ab-stats-track {
+        grid-template-columns: 1fr;
+        gap: 18px;
+      }
+
+      .ab-stat-card {
+        width: auto;
+        height: auto;
+        padding: 36px 28px;
+      }
+    }
+
+    /* ===== ENSURE MINIMUM SIDE PADDING ON ALL SECTIONS ===== */
+    .ab-hero .container,
+    .ab-philosophy,
+    .ab-process,
+    .ab-testimonials,
+    .ab-cta-section,
+    .ab-divider {
+      padding-left: max(24px, var(--margin-mobile));
+      padding-right: max(24px, var(--margin-mobile));
+    }
+
+    @media (min-width: 768px) {
+
+      .ab-hero .container,
+      .ab-philosophy,
+      .ab-process,
+      .ab-testimonials,
+      .ab-cta-section,
+      .ab-divider {
+        padding-left: var(--margin-desktop);
+        padding-right: var(--margin-desktop);
+      }
+    }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* --- Large screens (1440px+) --- */
+    @media (min-width: 1440px) {
+      .ab-hero-inner {
+        max-width: 1060px;
+      }
+
+      .ab-cta-inner {
+        max-width: 780px;
+      }
+
+      .ab-process-grid {
+        gap: 32px;
+      }
+
+      .ab-test-grid {
+        gap: 40px;
+      }
+    }
+
+    /* --- Tablet (768px–1023px) --- */
+    @media (min-width: 768px) and (max-width: 1023px) {
+      .ab-process-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+      }
+
+      .ab-process-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 50%;
+      }
+
+      .ab-test-grid {
+        gap: 24px;
+      }
+
+      .ab-test-card:nth-child(2) {
+        margin-top: 32px;
+      }
+    }
+
+    /* --- Mobile shared (≤767px) --- */
+    @media (max-width: 767px) {
+      .ab-hero {
+        min-height: 85vh;
+        padding-top: 110px;
+      }
+
+      .ab-hero-heading {
+        margin-bottom: 32px;
+      }
+
+      .ab-hero-label {
+        margin-bottom: 36px;
+      }
+
+      .ab-process-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ab-process-card {
+        padding: 36px 28px;
+      }
+
+      .ab-process-card h3 {
+        font-size: 21px;
+      }
+
+      .ab-test-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .ab-test-card {
+        padding: 32px 24px;
+      }
+
+      .ab-test-card:nth-child(2) {
+        margin-top: 0;
+      }
+
+      .ab-test-text {
+        margin-bottom: 24px;
+      }
+
+      .ab-test-quote {
+        font-size: 52px;
+      }
+
+      .ab-cta {
+        padding: clamp(48px, 8vw, 80px) clamp(20px, 5vw, 48px);
+      }
+
+      .ab-cta-inner h2 {
+        font-size: clamp(28px, 7vw, 44px);
+      }
+
+      .stand-out-text-reveal {
+        white-space: normal !important;
+      }
+    }
+
+    /* --- Small mobile (≤480px) --- */
+    @media (max-width: 480px) {
+      .ab-hero {
+        min-height: 75vh;
+        padding-top: 90px;
+      }
+
+      .ab-hero-heading {
+        font-size: clamp(36px, 10vw, 48px);
+      }
+
+      .ab-cta {
+        border-radius: var(--radius-xl);
+      }
+
+      .ab-cta-inner h2 {
+        font-size: clamp(26px, 7vw, 36px);
+      }
+
+      .ab-cta .btn-white {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .ab-philosophy {
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+
+      .ab-process {
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+
+      .ab-testimonials {
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+
+      .ab-hero .container,
+      .ab-philosophy,
+      .ab-process,
+      .ab-testimonials,
+      .ab-cta-section {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .stand-out-text-reveal {
+        font-size: clamp(28px, 12vw, 60px) !important;
+      }
+    }
+
+    /* --- Extra-small (≤360px) --- */
+    @media (max-width: 360px) {
+      .ab-hero-heading {
+        font-size: 32px;
+      }
+
+      .ab-hero-desc {
+        font-size: 15px;
+      }
+
+      .ab-phil-left h2 {
+        font-size: 28px;
+      }
+
+      .ab-process-card {
+        padding: 28px 20px;
+      }
+
+      .ab-process-card h3 {
+        font-size: 19px;
+      }
+
+      .ab-test-card {
+        padding: 24px 16px;
+      }
+
+      .ab-test-text {
+        font-size: 17px;
+      }
+
+      .ab-cta-inner h2 {
+        font-size: 24px;
+      }
+
+      .ab-cta-inner .body-lg {
+        font-size: 14px;
+      }
+
+      .ab-cta .btn-white {
+        font-size: 13px;
+        padding: 14px 20px;
+      }
+
+      .ab-hero .container,
+      .ab-philosophy,
+      .ab-process,
+      .ab-testimonials,
+      .ab-cta-section {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .stand-out-text-reveal {
+        font-size: 24px !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="work.html">Work</a>
+    <a href="services.html">Services</a>
+    <a href="about.html" class="active">About</a>
+    <a href="contact.html">Contact</a>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-logo">Nabulsi.tech</a>
+      <div class="navbar-links">
+        <a href="index.html">Home</a>
+        <a href="work.html">Work</a>
+        <a href="services.html">Services</a>
+        <a href="about.html" class="active">About</a>
+        <a href="contact.html">Contact</a>
+      </div>
+      <a href="contact.html" class="navbar-cta magnetic">
+        <span class="magnetic-inner">Talk</span>
+        <svg class="wave-svg" viewBox="0 0 800 800" preserveAspectRatio="none">
+          <path d="M0,400 C150,300 350,500 500,400 C650,300 750,450 800,400 L800,800 L0,800 Z"
+            fill="var(--color-primary)" />
+        </svg>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+
+    <!-- ===== HERO ===== -->
+    <section class="ab-hero">
+      <div class="container">
+        <div class="ab-hero-inner">
+          <div class="ab-hero-label">
+            <span class="ab-hero-dot"></span>
+            <span>About Nabulsi.tech</span>
+          </div>
+          <h1 class="ab-hero-heading">
+            <span class="ab-hero-line"><span class="ab-hero-line-inner">It's a Voice,</span></span>
+            <span class="ab-hero-line"><span class="ab-hero-line-inner">a Vibe,</span></span>
+            <span class="ab-hero-line"><span class="ab-hero-line-inner">a Vision.</span></span>
+          </h1>
+          <div class="ab-hero-rule"></div>
+          <p class="ab-hero-desc">
+            We exist at the intersection of high-end editorial aesthetics and functional rawness — crafting digital
+            experiences that don't just perform, they resonate.
+          </p>
+        </div>
+      </div>
+      <div class="ab-hero-scroll-hint">
+        <div class="ab-hero-scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="ab-divider container"></div>
+
+    <!-- ===== OUR PHILOSOPHY ===== -->
+    <section class="ab-philosophy container">
+      <div class="ab-phil-grid">
+        <div class="ab-phil-left">
+          <span class="tag-acid ab-reveal" data-from="left">Our Philosophy</span>
+          <h2 class="ab-reveal" data-from="left">We don't follow trends. We set the standard.</h2>
+        </div>
+        <div class="ab-phil-right">
+          <p class="ab-reveal" data-from="right">
+            Every project begins with a single question: <em>what would make this unforgettable?</em> We combine
+            strategic rigor with creative audacity to deliver work that elevates brands beyond category norms.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="ab-divider container"></div>
+
+    <!-- ===== HORIZONTAL-SCROLL STATS ===== -->
+    <section class="ab-stats" id="ab-stats">
+      <div class="ab-stats-intro container">
+        <span class="tag-acid ab-reveal" data-from="left">By the Numbers</span>
+        <h2 class="ab-reveal" data-from="left">A track record built on outcomes, not promises.</h2>
+      </div>
+      <div class="ab-stats-grid-container">
+        <div class="ab-stats-track" id="ab-stats-track">
+          <div class="ab-stat-card">
+            <div class="ab-stat-num">50+</div>
+            <div class="ab-stat-body">
+              <h3>Ecommerce Brands</h3>
+              <p>We craft identities that feel right — not just good-looking, but meaningful, memorable and built to
+                last.</p>
+            </div>
+          </div>
+          <div class="ab-stat-card">
+            <div class="ab-stat-num">150+</div>
+            <div class="ab-stat-body">
+              <h3>Brand Identity Projects</h3>
+              <p>A brand is more than a logo. We help you show up the same way everywhere — online, offline, everywhere
+                between.</p>
+            </div>
+          </div>
+          <div class="ab-stat-card">
+            <div class="ab-stat-num">300+</div>
+            <div class="ab-stat-body">
+              <h3>Projects Completed</h3>
+              <p>Good work tells a story before anyone reads a word. We design experiences that stand out, feel great
+                and connect.</p>
+            </div>
+          </div>
+          <div class="ab-stat-card">
+            <div class="ab-stat-num">100+</div>
+            <div class="ab-stat-body">
+              <h3>Web Experiences</h3>
+              <p>Your website should work hard and look good. We build sites that are easy to use and ready to grow with
+                you.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== WORD-BY-WORD QUOTE REVEAL ===== -->
+    <section class="ab-quote container">
+      <p class="ab-quote-text">
+        <span class="ab-quote-mark">&ldquo;</span>&nbsp;People do not buy goods and services. They buy relations,
+        stories, and magic.&rdquo; &mdash; Seth Godin
+      </p>
+    </section>
+
+
+
+    <!-- ===== PRISMATIC PROCESS ===== -->
+    <section class="ab-process container">
+      <div class="ab-process-header">
+        <span class="tag-acid ab-reveal" data-from="left">Our Method</span>
+        <h2 class="ab-reveal" data-from="left">The Prismatic Process</h2>
+      </div>
+
+      <div class="ab-process-grid">
+        <div class="ab-process-card" data-step="1">
+          <div class="ab-process-num">01</div>
+          <div class="ab-process-icon primary">
+            <span class="material-symbols-outlined">explore</span>
+          </div>
+          <h3>Discovery</h3>
+          <p>We immerse ourselves in your brand DNA, mapping market landscapes and user psychologies to unearth the
+            white space where opportunity lives.</p>
+        </div>
+
+        <div class="ab-process-card" data-step="2">
+          <div class="ab-process-num">02</div>
+          <div class="ab-process-icon secondary">
+            <span class="material-symbols-outlined">strategy</span>
+          </div>
+          <h3>Strategy</h3>
+          <p>Translating raw insight into decisive direction — from technical architecture to visual identity systems —
+            every move calibrated for maximum impact.</p>
+        </div>
+
+        <div class="ab-process-card" data-step="3">
+          <div class="ab-process-num">03</div>
+          <div class="ab-process-icon tertiary">
+            <span class="material-symbols-outlined">code_blocks</span>
+          </div>
+          <h3>Development</h3>
+          <p>Engineering pixel-perfect, high-performance digital products with obsessive craft. No shortcuts, no
+            compromises — only polished execution.</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ===== TESTIMONIALS (What Our Customers Says) ===== -->
+    <section class="ab-testimonials container" style="position: relative;">
+      <!-- Glowing Orbs -->
+      <div class="ab-testimonials-orb-3"></div>
+
+      <div class="ab-test-wrapper">
+        <div class="ab-test-content ab-reveal" data-from="left">
+          <h2>What Our<br>Customers Says</h2>
+          <p>"Nabulsi.tech completely transformed our business. From building a flawless website and intuitive app to running highly profitable ad campaigns, they delivered beyond our expectations."</p>
+        </div>
+
+        <!-- Right Floating Cards -->
+        <div class="ab-test-cards-container ab-reveal" data-from="right">
+          <!-- Abstract arrow graphic -->
+          <svg class="ab-test-arrow-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 90 Q 30 10 90 20" stroke="#f97316" stroke-width="4" stroke-linecap="round" fill="none" />
+            <polygon points="90,20 75,10 80,30" fill="#f97316" />
+            <!-- Add a little star -->
+            <path d="M 20 40 L 25 55 L 40 60 L 25 65 L 20 80 L 15 65 L 0 60 L 15 55 Z" fill="#a855f7"
+              transform="scale(0.5) translate(40, -40)" />
+          </svg>
+
+          <!-- Card 1 -->
+          <div class="ab-test-single-card">
+            <img src="assets/clients/karan.png" alt="Karan Patel" class="ab-test-avatar">
+            <div class="ab-test-card-content">
+              <h4>Karan Patel</h4>
+              <p>The new website design is sleek, incredibly fast, and has drastically improved our conversion rates.</p>
+            </div>
+            <svg class="ab-test-quote-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+          </div>
+
+          <!-- Card 2 (Accent) -->
+          <div class="ab-test-single-card accent-card">
+            <img src="assets/clients/sneha.png" alt="Sneha Desai" class="ab-test-avatar">
+            <div class="ab-test-card-content">
+              <h4>Sneha Desai</h4>
+              <p>Nabulsi.tech built an intuitive, high-performance app for us that our users absolutely love. Truly outstanding work!</p>
+            </div>
+            <svg class="ab-test-quote-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+          </div>
+
+          <!-- Card 3 -->
+          <div class="ab-test-single-card">
+            <img src="assets/clients/aditya.png" alt="Aditya Verma" class="ab-test-avatar">
+            <div class="ab-test-card-content">
+              <h4>Aditya Verma</h4>
+              <p>Their ad campaigns are brilliant. We saw a huge spike in quality leads and our ROI skyrocketed within weeks.</p>
+            </div>
+            <svg class="ab-test-quote-icon" fill="currentColor" viewBox="0 0 24 24">
+              <path
+                d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== CTA (FLIP ON SCROLL) ===== -->
+    <section class="ab-cta-section container">
+      <div class="ab-cta-flip-container" style="perspective: 2000px;">
+        <div class="ab-cta ab-cta-flip" style="transform-style: preserve-3d; transform-origin: center center;">
+          <div class="ab-cta-inner">
+            <h2>Ready to stand<br>out?</h2>
+            <p class="body-lg">Let's build something unforgettable together.</p>
+            <a href="contact.html" class="btn-white magnetic">
+              <span class="magnetic-inner" style="display:flex;align-items:center;gap:8px;">
+                Start a Project <span class="material-symbols-outlined">north_east</span>
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== STAND OUT — SCROLL TEXT REVEAL ===== -->
+    <section class="stand-out-section" id="stand-out" style="height: 200vh; position: relative;">
+      <div
+        style="position: sticky; top: 0; height: 100vh; display: flex; align-items: center; justify-content: center; overflow: hidden; padding: 0 5vw;">
+        <div class="stand-out-text-reveal"
+          style="font-family: var(--font-headline); font-size: clamp(30px, 9vw, 150px); font-weight: 900; letter-spacing: -0.05em; line-height: 1; text-transform: uppercase; text-align: center; color: rgba(255,255,255,0.1); width: 100%; white-space: nowrap;">
+          Stand Out.
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer-creative">
+    <div class="footer-creative-inner">
+      <div class="footer-cta ab-reveal" data-from="bottom">
+        <h2 class="display-xl"
+          style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
+          Let's Talk
+        </h2>
+        <a href="mailto:ramia@nabulsi.tech" class="magnetic"
+          style="font-size: clamp(24px, 5vw, 64px); display: inline-block; border-bottom: 3px solid var(--color-primary); padding-bottom: 8px;">ramia@nabulsi.tech</a>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="footer-heading">Studio</h4>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="services.html" class="footer-link">Services</a>
+          <a href="work.html" class="footer-link">Work</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Socials</h4>
+          <div class="footer-social-icons">
+            <a href="https://api.whatsapp.com/send/?phone=19012772195&text&type=phone_number&app_absent=0"
+              target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61566352892673" target="_blank" rel="noopener noreferrer"
+              class="social-icon" aria-label="Facebook">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/94871943/admin/dashboard/" target="_blank"
+              rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/nabulsi.tech/" target="_blank" rel="noopener noreferrer" class="social-icon"
+              aria-label="Instagram">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 01-2.882 0 1.441 1.441 0 012.882 0z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="footer-logo">Nabulsi.tech</a>
+          <p class="text-muted" style="margin-top: 16px;">We help brands stand out through powerful design, strategy and
+            storytelling.</p>
+          <p class="text-muted"
+            style="margin-top: 12px; display: flex; align-items: center; gap: 8px; font-weight: 500;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Based in Delhi, India, Asia
+          </p>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nabulsi.tech Agency. All rights reserved.</p>
+        <p>Built with Passion</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <button class="fab" id="music-toggle" aria-label="Toggle Music" title="Play/Pause Background Music">
+      <div class="equalizer-icon">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+    </button>
+    <button class="fab" id="back-to-top" aria-label="Back to Top" title="Scroll to Top">
+      <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+  </div>
+
+  <audio id="bg-audio" loop>
+    <source src="assets/videoplayback.m4a" type="audio/mp4">
+  </audio>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+  <script>
+    (function () {
+      'use strict';
+
+      /* ========== LENIS SMOOTH SCROLL ========== */
+      const lenis = new Lenis({
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        orientation: 'vertical',
+        smoothWheel: true
+      });
+
+      // Connect Lenis to GSAP ScrollTrigger
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      /* ========== HERO ENTRANCE ========== */
+      const abHero = document.querySelector('.ab-hero');
+      if (abHero) {
+        const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+
+        tl.to('.ab-hero-label', {
+          opacity: 1, y: 0, duration: 1, delay: 0.2
+        })
+          .to('.ab-hero-line-inner', {
+            y: '0%', duration: 1.4, stagger: 0.1
+          }, '-=0.7')
+          .to('.ab-hero-rule', {
+            opacity: 1, scaleX: 1, duration: 1
+          }, '-=0.8')
+          .to('.ab-hero-desc', {
+            opacity: 1, y: 0, duration: 1.2
+          }, '-=0.7')
+          .to('.ab-hero-scroll-hint', {
+            opacity: 1, duration: 1
+          }, '-=0.5');
+      }
+
+      /* ========== DIRECTIONAL SCROLL REVEALS ========== */
+      // Elements come from left, right, bottom — feels alive on scroll
+      gsap.utils.toArray('.ab-reveal').forEach(el => {
+        const dir = el.dataset.from || 'bottom';
+        const from = { opacity: 0 };
+        if (dir === 'left') { from.x = -80; from.y = 0; }
+        else if (dir === 'right') { from.x = 80; from.y = 0; }
+        else { from.y = 60; from.x = 0; }
+
+        gsap.fromTo(el, from, {
+          x: 0, y: 0, opacity: 1,
+          duration: 1.2,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: el,
+            start: 'top 88%',
+            toggleActions: 'play none none none'
+          }
+        });
+      });
+
+      // Process cards — PIN the section, animate cards 1-by-1 on scroll
+      const processSection = document.querySelector('.ab-process');
+      const processCards = gsap.utils.toArray('.ab-process-card');
+      if (processSection && processCards.length) {
+        // Hide all cards at the start
+        gsap.set(processCards, { y: 120, opacity: 0 });
+
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: processSection,
+            start: 'top top',
+            end: '+=1200',
+            pin: true,
+            scrub: 1.5,
+            anticipatePin: 1
+          }
+        });
+
+        // Card 1 slides up
+        tl.to(processCards[0], { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+        tl.to({}, { duration: 0.5 });  // breathing room
+
+        // Card 2 slides up
+        if (processCards[1]) {
+          tl.to(processCards[1], { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+          tl.to({}, { duration: 0.5 });
+        }
+
+        // Card 3 slides up
+        if (processCards[2]) {
+          tl.to(processCards[2], { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+          tl.to({}, { duration: 0.8 });  // hold all 3 visible before unpin
+        }
+      }
+
+      // Testimonial cards — staggered reveal
+      const testGrid = document.querySelector('.ab-test-grid');
+      if (testGrid) {
+        const testCards = testGrid.querySelectorAll('.ab-test-card');
+        gsap.fromTo(testCards,
+          { y: 80, opacity: 0, scale: 0.97 },
+          {
+            y: 0, opacity: 1, scale: 1,
+            duration: 1.2,
+            ease: 'power3.out',
+            stagger: 0.15,
+            scrollTrigger: {
+              trigger: testGrid,
+              start: 'top 82%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      }
+
+      // Divider line reveal
+      gsap.utils.toArray('.ab-divider').forEach(div => {
+        gsap.fromTo(div,
+          { scaleX: 0 },
+          {
+            scaleX: 1,
+            duration: 1.5,
+            ease: 'power3.out',
+            transformOrigin: 'left center',
+            scrollTrigger: {
+              trigger: div,
+              start: 'top 90%',
+              toggleActions: 'play none none none'
+            }
+          }
+        );
+      });
+
+      /* ========== CTA FLIP ON SCROLL ========== */
+      const abFlip = document.querySelector('.ab-cta-flip');
+      if (abFlip) {
+        gsap.fromTo(abFlip,
+          { rotateX: 50, scale: 0.85, opacity: 0, y: 80 },
+          {
+            rotateX: 0, scale: 1, opacity: 1, y: 0,
+            ease: 'power3.out',
+            scrollTrigger: {
+              trigger: '.ab-cta-flip-container',
+              start: 'top 85%',
+              end: 'top 35%',
+              scrub: 1
+            }
+          }
+        );
+      }
+
+      /* ========== HORIZONTAL-SCROLL STATS ========== */
+      const statsSection = document.querySelector('.ab-stats');
+      const statsTrack = document.querySelector('#ab-stats-track');
+      const isMobile = window.matchMedia('(max-width: 767px)').matches;
+      /* Stat cards reveal one-by-one — same pinned scrub effect as the Process section */
+      if (statsSection && statsTrack) {
+        const statCards = gsap.utils.toArray('#ab-stats-track .ab-stat-card');
+        if (statCards.length) {
+          if (isMobile) {
+            // stacked on mobile — reveal each as it enters (no pin)
+            gsap.from(statCards, {
+              y: 60, opacity: 0, duration: 0.9, ease: 'power3.out', stagger: 0.18,
+              scrollTrigger: { trigger: statsTrack, start: 'top 85%', toggleActions: 'play none none none' }
+            });
+          } else {
+            // desktop/tablet — scroll-scrubbed reveal: cards arrive one-by-one as you scroll
+            gsap.set(statCards, { y: 110, opacity: 0 });
+            const stl = gsap.timeline({
+              scrollTrigger: {
+                trigger: statsSection,
+                start: 'top 72%',
+                end: 'bottom 92%',
+                scrub: 1
+              }
+            });
+            statCards.forEach((card, i) => {
+              stl.to(card, { y: 0, opacity: 1, duration: 1, ease: 'power2.out' });
+              stl.to({}, { duration: i === statCards.length - 1 ? 0.6 : 0.4 });
+            });
+          }
+        }
+      }
+      /* ========== WORD-BY-WORD QUOTE REVEAL ========== */
+      const quoteText = document.querySelector('.ab-quote-text');
+      if (quoteText) {
+        const words = [];
+        // Process direct child nodes: keep the © mark, wrap remaining words
+        Array.from(quoteText.childNodes).forEach(node => {
+          if (node.nodeType === Node.TEXT_NODE) {
+            const frag = document.createDocumentFragment();
+            node.textContent.split(/(\s+)/).forEach(token => {
+              if (token.trim() === '') {
+                if (token.length) frag.appendChild(document.createTextNode(' '));  // collapse whitespace run to one space
+              } else {
+                const span = document.createElement('span');
+                span.className = 'ab-word';
+                span.textContent = token;
+                frag.appendChild(span);
+                words.push(span);
+              }
+            });
+            quoteText.replaceChild(frag, node);
+          }
+        });
+
+        let quoteTween;
+        function buildQuoteReveal() {
+          if (quoteTween) {
+            if (quoteTween.scrollTrigger) quoteTween.scrollTrigger.kill();
+            quoteTween.kill();
+          }
+          // reset each word to its theme-aware faint ghost (from CSS)
+          gsap.set(words, { clearProps: 'color' });
+          const solidColor = getComputedStyle(document.documentElement)
+            .getPropertyValue('--color-on-background').trim() || '#191C1D';
+          quoteTween = gsap.to(words, {
+            color: solidColor,
+            stagger: 0.5,
+            ease: 'none',
+            scrollTrigger: {
+              trigger: '.ab-quote',
+              start: 'top 75%',
+              end: 'bottom 60%',
+              scrub: 0.6
+            }
+          });
+        }
+        buildQuoteReveal();
+        // rebuild with the correct colours when the site theme is toggled
+        new MutationObserver(buildQuoteReveal).observe(document.documentElement, {
+          attributes: true, attributeFilter: ['data-theme']
+        });
+      }
+
+      /* ========== STAND OUT — CHARACTER REVEAL ========== */
+      const standOutText = document.querySelector('.stand-out-text-reveal');
+      if (standOutText) {
+        const text = standOutText.textContent.trim();
+        standOutText.textContent = '';
+        const chars = [];
+        for (let i = 0; i < text.length; i++) {
+          const span = document.createElement('span');
+          span.textContent = text[i];
+          span.style.color = 'rgba(255,255,255,0.1)';
+          standOutText.appendChild(span);
+          chars.push(span);
+        }
+        gsap.to(chars, {
+          color: '#ffffff',
+          stagger: 0.1,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: '.stand-out-section',
+            start: 'top top',
+            end: 'bottom bottom',
+            scrub: 0.5
+          }
+        });
+      }
+
+      // recalculate all pin positions once everything (incl. multiple pins) is set up
+      if (typeof ScrollTrigger !== 'undefined') {
+        ScrollTrigger.refresh();
+        window.addEventListener('load', () => ScrollTrigger.refresh());
+      }
+
+    })();
+  </script>
+</body>
+
+</html>

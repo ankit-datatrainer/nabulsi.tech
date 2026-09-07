@@ -1,0 +1,18 @@
+# Local archives / build zips
+Agency Site.zip
+*.zip
+
+# Agent & IDE caches
+.agent/
+.claude/
+.vscode/
+__pycache__/
+*.pyc
+
+# OS & stray files
+.DS_Store
+Thumbs.db
+0
+
+# Temporary
+*.tmp

@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="icon" href="assets/favicon.png" type="image/png">
+  <title>Contact — Nabulsi.tech Digital Agency</title>
+  <meta name="description" content="Get in touch with Nabulsi.tech — let's build something bold together." />
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    /* ===== CONTACT PAGE STYLES ===== */
+
+    body {
+      background: var(--color-background) !important;
+    }
+
+    /* Background video – mouse-scrub controlled */
+    .contact-video-bg {
+      position: fixed;
+      inset: 0;
+      z-index: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: 70% center;
+      opacity: 0.08;
+    }
+
+    /* Light overlay for white theme */
+    .contact-video-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1;
+      background: var(--color-background);
+      opacity: 0.85;
+      pointer-events: none;
+    }
+
+    /* Main content wrapper */
+    .contact-page {
+      position: relative;
+      z-index: 2;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Hero area */
+    .contact-hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+
+    .contact-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+      width: 100%;
+    }
+
+    /* Heading row – full width */
+    .contact-head-row {
+      text-align: center;
+    }
+
+    .contact-head-row .contact-tag {
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-head-row .contact-heading {
+      max-width: 800px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .contact-head-row .contact-subheading {
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Content row – yeti + cal card side by side */
+    .contact-content-row {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 48px;
+      width: 100%;
+    }
+
+    @media (min-width: 768px) {
+      .contact-content-row {
+        grid-template-columns: 1fr 1fr;
+        gap: 48px;
+        align-items: stretch;
+      }
+    }
+
+    /* Left – info */
+    .contact-info-col {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .contact-tag {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-label);
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      background: var(--color-tertiary-fixed);
+      color: var(--color-on-tertiary-fixed);
+      padding: 8px 18px;
+      border-radius: var(--radius-full);
+      margin-bottom: 28px;
+      width: fit-content;
+    }
+
+    .contact-heading {
+      font-family: var(--font-headline);
+      font-size: clamp(36px, 7vw, 80px);
+      font-weight: 900;
+      line-height: 1;
+      letter-spacing: -0.04em;
+      color: var(--color-on-background);
+      margin-bottom: 20px;
+    }
+
+    .contact-subheading {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 2vw, 20px);
+      line-height: 1.6;
+      color: var(--color-on-surface-variant);
+      max-width: 420px;
+      margin-bottom: 36px;
+    }
+
+    /* Typewriter */
+    .contact-typewriter {
+      font-family: var(--font-body);
+      font-size: clamp(15px, 1.8vw, 18px);
+      line-height: 1.6;
+      color: var(--color-on-surface-variant);
+      min-height: 52px;
+      margin-bottom: 40px;
+    }
+
+    @keyframes contactCursorBlink {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0;
+      }
+    }
+
+    .contact-cursor {
+      display: inline-block;
+      width: 2px;
+      height: 1.1em;
+      background: var(--color-primary);
+      vertical-align: middle;
+      margin-left: 2px;
+      animation: contactCursorBlink 1s step-end infinite;
+    }
+
+    /* Email link */
+    .contact-email {
+      font-family: var(--font-headline);
+      font-size: clamp(22px, 4vw, 36px);
+      font-weight: 800;
+      color: var(--color-on-background);
+      text-decoration: none;
+      display: inline-block;
+      border-bottom: 3px solid var(--color-primary);
+      padding-bottom: 6px;
+      margin-bottom: 32px;
+      transition: opacity 0.3s;
+      letter-spacing: -0.02em;
+    }
+
+    .contact-email:hover {
+      opacity: 0.7;
+    }
+
+    /* Social links */
+    .contact-socials {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .contact-socials a {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-on-surface-variant);
+      text-decoration: none;
+      transition: color 0.3s;
+      width: fit-content;
+    }
+
+    .contact-socials a:hover {
+      color: var(--color-primary);
+    }
+
+    /* ===== YETI PANEL STYLES (COMMENTED OUT – REVERT BY UNCOMMENTING) =====
+    .yeti-panel {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      min-height: 540px;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+      background:
+        radial-gradient(120% 80% at 50% 120%, #7fc77a 0%, #8fd587 18%, rgba(143,213,135,0) 42%),
+        linear-gradient(180deg, #6cb8ff 0%, #a9d8ff 45%, #d8efff 75%, #eaf8ff 100%);
+      transition: background 0.6s ease;
+    }
+    .yeti-cloud { position: absolute; background: rgba(255,255,255,.85); border-radius:100px; filter:blur(2px); opacity:.9; animation:yetiCloud linear infinite; pointer-events:none; }
+    .yeti-cloud::before,.yeti-cloud::after { content:''; position:absolute; background:inherit; border-radius:50%; }
+    .yeti-cloud.c1 { width:90px; height:26px; top:16%; left:-120px; animation-duration:38s; }
+    .yeti-cloud.c1::before { width:44px; height:44px; top:-18px; left:14px; }
+    .yeti-cloud.c1::after  { width:32px; height:32px; top:-12px; left:48px; }
+    .yeti-cloud.c2 { width:70px; height:20px; top:30%; left:-160px; animation-duration:52s; animation-delay:8s; transform:scale(.85); }
+    .yeti-cloud.c2::before { width:34px; height:34px; top:-14px; left:10px; }
+    .yeti-cloud.c2::after  { width:26px; height:26px; top:-9px; left:38px; }
+    .yeti-cloud.c3 { width:110px; height:30px; top:9%; left:-200px; animation-duration:64s; animation-delay:3s; opacity:.7; }
+    .yeti-cloud.c3::before { width:50px; height:50px; top:-20px; left:18px; }
+    .yeti-cloud.c3::after  { width:38px; height:38px; top:-14px; left:56px; }
+    @keyframes yetiCloud { 0% { transform:translateX(0); } 100% { transform:translateX(calc(100%+100vw)); } }
+    .yeti-stars { position:absolute; inset:0; opacity:0; transition:opacity .6s ease; pointer-events:none; }
+    .yeti-stars i { position:absolute; width:2px; height:2px; background:#fff; border-radius:50%; animation:yetiTwinkle 3s ease-in-out infinite; }
+    @keyframes yetiTwinkle { 0%,100% { opacity:.25; } 50% { opacity:1; } }
+    .yeti-stage { position:relative; z-index:2; width:clamp(220px,70%,320px); margin-bottom:4px; animation:yetiBob 5s ease-in-out infinite; }
+    @keyframes yetiBob { 0%,100% { transform:translateY(0); } 50% { transform:translateY(-10px); } }
+    #yeti { width:100%; height:auto; display:block; overflow:visible; }
+    #yeti .yeti-pupil { transition:transform .12s ease-out; }
+    #yeti .yeti-lid { transform:scaleY(0); transform-origin:center; transform-box:fill-box; }
+    #yeti.blink .yeti-lid { animation:yetiBlink .28s ease; }
+    @keyframes yetiBlink { 0%,100% { transform:scaleY(0); } 45%,55% { transform:scaleY(1); } }
+    .yeti-tagline { position:absolute; left:clamp(20px,5%,40px); bottom:clamp(20px,5%,36px); z-index:3; font-family:var(--font-headline); font-weight:900; font-size:clamp(26px,4vw,44px); line-height:1.02; letter-spacing:-.02em; color:#fff; text-shadow:0 4px 24px rgba(0,0,0,.35); pointer-events:none; }
+    .yeti-tagline span { display:block; }
+    [data-theme="dark"] .yeti-panel { background:radial-gradient(120% 80% at 50% 120%,#1c3a2a 0%,#234a33 16%,rgba(35,74,51,0) 40%),linear-gradient(180deg,#0a1230 0%,#142251 45%,#243b73 78%,#2d4a86 100%); }
+    [data-theme="dark"] .yeti-cloud { opacity:.18; }
+    [data-theme="dark"] .yeti-stars { opacity:1; }
+    ===== END YETI STYLES ===== */
+
+    /* ===== LEFT: LOTTIE PANEL (animated background) ===== */
+    .lottie-panel {
+      position: relative;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      min-height: 620px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+      background-size: 300% 300%;
+      animation: lottieGradientShift 8s ease infinite;
+    }
+
+    @keyframes lottieGradientShift {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      50% {
+        background-position: 100% 50%;
+      }
+
+      100% {
+        background-position: 0% 50%;
+      }
+    }
+
+    /* Dark mode gradient */
+    [data-theme="dark"] .lottie-panel {
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      background-size: 300% 300%;
+      animation: lottieGradientShift 8s ease infinite;
+    }
+
+    /* Floating orbs */
+    .lottie-orb {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(40px);
+      opacity: 0.4;
+      animation: orbFloat 6s ease-in-out infinite;
+    }
+
+    .lottie-orb.orb-1 {
+      width: 220px;
+      height: 220px;
+      background: rgba(255, 255, 255, 0.25);
+      top: -50px;
+      left: -50px;
+      animation-duration: 7s;
+    }
+
+    .lottie-orb.orb-2 {
+      width: 160px;
+      height: 160px;
+      background: rgba(255, 200, 100, 0.3);
+      bottom: -40px;
+      right: -30px;
+      animation-duration: 9s;
+      animation-delay: 2s;
+    }
+
+    .lottie-orb.orb-3 {
+      width: 120px;
+      height: 120px;
+      background: rgba(100, 220, 255, 0.3);
+      top: 40%;
+      left: 65%;
+      animation-duration: 5s;
+      animation-delay: 1s;
+    }
+
+    @keyframes orbFloat {
+
+      0%,
+      100% {
+        transform: translate(0, 0) scale(1);
+      }
+
+      33% {
+        transform: translate(20px, -30px) scale(1.1);
+      }
+
+      66% {
+        transform: translate(-15px, 15px) scale(0.95);
+      }
+    }
+
+    /* Particle dots */
+    .lottie-particles {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .lottie-particles i {
+      position: absolute;
+      width: 3px;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.5);
+      border-radius: 50%;
+      animation: particleRise linear infinite;
+    }
+
+    @keyframes particleRise {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0;
+      }
+
+      10% {
+        opacity: 0.6;
+      }
+
+      90% {
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: translateY(-500px) scale(0.3);
+        opacity: 0;
+      }
+    }
+
+    /* Glass overlay ring */
+    .lottie-ring {
+      position: absolute;
+      width: 460px;
+      height: 460px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      animation: ringPulse 4s ease-in-out infinite;
+    }
+
+    .lottie-ring::after {
+      content: '';
+      position: absolute;
+      inset: 24px;
+      border-radius: 50%;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @keyframes ringPulse {
+
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+        opacity: 0.6;
+      }
+
+      50% {
+        transform: translate(-50%, -50%) scale(1.08);
+        opacity: 1;
+      }
+    }
+
+    /* Lottie player wrapper — fills the whole panel */
+    .lottie-anim-wrap {
+      position: relative;
+      z-index: 2;
+      width: clamp(300px, 90%, 520px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* Hidden initially — revealed by GSAP after 4s */
+      opacity: 0;
+      transform: scale(0.6);
+    }
+
+    .lottie-anim-wrap dotlottie-wc {
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.25));
+    }
+
+    /* Tagline on the panel */
+    .lottie-tagline {
+      position: absolute;
+      left: clamp(20px, 5%, 40px);
+      bottom: clamp(20px, 5%, 36px);
+      z-index: 3;
+      font-family: var(--font-headline);
+      font-weight: 900;
+      font-size: clamp(26px, 4vw, 44px);
+      line-height: 1.02;
+      letter-spacing: -0.02em;
+      color: #fff;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
+
+    .lottie-tagline span {
+      display: block;
+    }
+
+    /* ===== RIGHT: Cal.com card (theme aware) ===== */
+    .contact-form-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .contact-form-head {
+      margin-bottom: 22px;
+    }
+
+    .contact-cal-card {
+      background: var(--color-surface-container-lowest);
+      border: 1px solid var(--color-surface-variant);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      height: 620px;
+      flex: none;
+      position: relative;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.12);
+      transition: background 0.5s ease, border-color 0.5s ease;
+    }
+
+    .contact-cal-card iframe {
+      display: block;
+      width: 100% !important;
+      border: none;
+    }
+
+    /* Cal.com inline embed wrapper – fixed-height box that scrolls internally,
+       so opening a meeting does NOT expand the card / push the page layout. */
+    #cal-inline {
+      width: 100%;
+      height: 100%;
+      overflow-y: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    /* Lenis disables pointer-events on ALL iframes while smooth-scrolling
+       (.lenis.lenis-smooth iframe { pointer-events: none }). That blocks every
+       click inside the Cal.com embed. Re-enable it for the booking iframe. */
+    .lenis.lenis-smooth #cal-inline iframe,
+    #cal-inline iframe,
+    .contact-cal-card iframe {
+      pointer-events: auto !important;
+    }
+
+    /* Mouse hint */
+    .contact-mouse-hint {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      font-family: var(--font-label);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-on-surface-variant);
+      opacity: 0.4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      pointer-events: none;
+      transition: opacity 0.6s;
+    }
+
+    .contact-mouse-hint svg {
+      width: 16px;
+      height: 16px;
+      opacity: 0.5;
+    }
+
+    .contact-mouse-hint.faded {
+      opacity: 0;
+    }
+
+    /* Footer – keep standard theme, just ensure z-index above video */
+    .footer-creative {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 767px) {
+      .contact-hero {
+        padding-top: 100px;
+        padding-bottom: 48px;
+      }
+
+      .contact-grid {
+        gap: 36px;
+      }
+
+      .contact-content-row {
+        gap: 36px;
+      }
+
+      .contact-heading {
+        font-size: clamp(28px, 8vw, 48px);
+      }
+
+      .contact-email {
+        font-size: clamp(18px, 5vw, 28px);
+      }
+
+      .contact-cal-card {
+        height: 560px;
+      }
+
+      .lottie-panel {
+        min-height: 420px;
+      }
+
+      .lottie-anim-wrap {
+        width: 80%;
+      }
+
+      .lottie-ring {
+        width: 320px;
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .contact-hero {
+        padding-top: 90px;
+      }
+
+      .contact-heading {
+        font-size: clamp(24px, 7vw, 36px);
+        margin-bottom: 16px;
+      }
+
+      .contact-subheading {
+        margin-bottom: 24px;
+      }
+
+      .contact-cal-card {
+        height: 520px;
+        border-radius: var(--radius-md);
+      }
+
+      .lottie-panel {
+        min-height: 340px;
+        border-radius: var(--radius-md);
+      }
+
+      .lottie-anim-wrap {
+        width: 75%;
+      }
+
+      .lottie-ring {
+        width: 260px;
+        height: 260px;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .contact-tag {
+        font-size: 11px;
+        padding: 5px 12px;
+      }
+    }
+  </style>
+</head>
+
+<body data-barba="wrapper">
+
+  <!-- Scroll Progress Bar -->
+  <div class="scroll-progress"></div>
+
+  <!-- Background Video (mouse-scrub) -->
+  <video class="contact-video-bg" id="contact-video" autoplay loop muted playsinline preload="auto"
+    src="assets/nabulsi-showreel.mp4">
+  </video>
+  <div class="contact-video-overlay"></div>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+    <a href="index.html">Home</a>
+    <a href="work.html">Work</a>
+    <a href="services.html">Services</a>
+    <a href="about.html">About</a>
+    <a href="contact.html" class="active">Contact</a>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar" id="navbar">
+    <div class="navbar-inner">
+      <a href="index.html" class="navbar-logo">Nabulsi.tech</a>
+      <div class="navbar-links">
+        <a href="index.html">Home</a>
+        <a href="work.html">Work</a>
+        <a href="services.html">Services</a>
+        <a href="about.html">About</a>
+        <a href="contact.html" class="active">Contact</a>
+      </div>
+      <a href="contact.html" class="navbar-cta magnetic">
+        <span class="magnetic-inner">Talk</span>
+        <svg class="wave-svg" viewBox="0 0 800 800" preserveAspectRatio="none">
+          <path d="M0,400 C150,300 350,500 500,400 C650,300 750,450 800,400 L800,800 L0,800 Z"
+            fill="var(--color-primary)" />
+        </svg>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <main data-barba="container" data-barba-namespace="contact">
+
+    <div class="contact-page">
+      <section class="contact-hero container">
+        <div class="contact-grid">
+
+          <!-- Row 1: Full-width heading -->
+          <div class="contact-head-row">
+            <span class="contact-tag">Get In Touch</span>
+            <h1 class="contact-heading">Let's Build Bold Together</h1>
+            <p class="contact-subheading">Book a time below or email us at
+              <a href="mailto:ramia@nabulsi.tech"
+                style="color:var(--color-primary);font-weight:600;">ramia@nabulsi.tech</a>.
+              <br />Or call <a href="tel:+19012772195"
+                style="color:var(--color-primary);font-weight:600;">+1 (901) 277-2195</a>.
+              Let's create something remarkable.
+            </p>
+          </div>
+
+          <!-- Row 2: Yeti (left) + Cal card (right) -->
+          <div class="contact-content-row">
+
+            <!-- ===== YETI PANEL HTML (COMMENTED OUT – UNCOMMENT TO REVERT) =====
+            <div class="yeti-panel">
+              <div class="yeti-cloud c1"></div>
+              <div class="yeti-cloud c2"></div>
+              <div class="yeti-cloud c3"></div>
+              <div class="yeti-stars" id="yeti-stars"></div>
+              <div class="yeti-stage">
+                <svg id="yeti" viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" aria-label="Nabulsi.tech Yeti">
+                  <ellipse cx="160" cy="330" rx="86" ry="12" fill="rgba(0,0,0,0.12)"/>
+                  <path d="M70 215 q-34 8 -30 58 q2 24 24 22 q16 -2 18 -22 z" fill="#ffffff"/>
+                  <path d="M250 215 q34 8 30 58 q-2 24 -24 22 q-16 -2 -18 -22 z" fill="#ffffff"/>
+                  <path d="M112 96 q-12 -34 -34 -40 q18 22 16 50 z" fill="#dfeaf2"/>
+                  <path d="M208 96 q12 -34 34 -40 q-18 22 -16 50 z" fill="#dfeaf2"/>
+                  <ellipse cx="160" cy="222" rx="108" ry="112" fill="#ffffff"/>
+                  <ellipse cx="160" cy="252" rx="78" ry="74" fill="#eaf4fb"/>
+                  <ellipse cx="120" cy="322" rx="26" ry="16" fill="#cfe6f5"/>
+                  <ellipse cx="200" cy="322" rx="26" ry="16" fill="#cfe6f5"/>
+                  <ellipse cx="160" cy="168" rx="82" ry="74" fill="#bfe3fb"/>
+                  <ellipse cx="160" cy="150" rx="82" ry="56" fill="#ffffff"/>
+                  <circle cx="118" cy="186" r="13" fill="#a9d8f5" opacity="0.6"/>
+                  <circle cx="202" cy="186" r="13" fill="#a9d8f5" opacity="0.6"/>
+                  <ellipse cx="134" cy="166" rx="22" ry="26" fill="#0f2a44"/>
+                  <ellipse cx="186" cy="166" rx="22" ry="26" fill="#0f2a44"/>
+                  <g class="yeti-pupil" data-eye="l">
+                    <circle cx="134" cy="166" r="20" fill="#11334f"/>
+                    <circle cx="140" cy="160" r="6.5" fill="#ffffff"/>
+                    <circle cx="129" cy="174" r="3" fill="#ffffff" opacity="0.7"/>
+                  </g>
+                  <g class="yeti-pupil" data-eye="r">
+                    <circle cx="186" cy="166" r="20" fill="#11334f"/>
+                    <circle cx="192" cy="160" r="6.5" fill="#ffffff"/>
+                    <circle cx="181" cy="174" r="3" fill="#ffffff" opacity="0.7"/>
+                  </g>
+                  <ellipse class="yeti-lid" cx="134" cy="166" rx="23" ry="27" fill="#bfe3fb"/>
+                  <ellipse class="yeti-lid" cx="186" cy="166" rx="23" ry="27" fill="#bfe3fb"/>
+                  <ellipse cx="160" cy="196" rx="7" ry="5" fill="#7fa8c4"/>
+                  <path d="M142 206 q18 18 36 0" stroke="#7fa8c4" stroke-width="4" fill="none" stroke-linecap="round"/>
+                </svg>
+              </div>
+              <div class="yeti-tagline">
+                <span>EXPLORE.</span>
+                <span>LEARN.</span>
+                <span>GROW.</span>
+              </div>
+            </div>
+            ===== END YETI HTML ===== -->
+
+            <!-- Left: Lottie Animation panel -->
+            <div class="lottie-panel">
+              <!-- Animated orbs -->
+              <div class="lottie-orb orb-1"></div>
+              <div class="lottie-orb orb-2"></div>
+              <div class="lottie-orb orb-3"></div>
+
+              <!-- Particles -->
+              <div class="lottie-particles" id="lottie-particles"></div>
+
+              <!-- Glass ring -->
+              <div class="lottie-ring"></div>
+
+              <!-- Lottie animation -->
+              <div class="lottie-anim-wrap">
+                <dotlottie-wc src="https://lottie.host/2801a26b-0bcc-4af8-b8f7-f8c7a25d3909/CPegSNQvdT.lottie" autoplay
+                  loop></dotlottie-wc>
+              </div>
+
+              <div class="lottie-tagline">
+                <span>EXPLORE.</span>
+                <span>LEARN.</span>
+                <span>GROW.</span>
+              </div>
+            </div>
+
+            <!-- Right: Cal.com card -->
+            <div class="contact-form-col">
+              <div class="contact-cal-card">
+                <div id="cal-inline"></div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </div>
+
+  </main>
+
+  <!-- Mouse hint -->
+  <div class="contact-mouse-hint" id="mouse-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path d="M5 12h14M12 5l-3 3 3 3" />
+    </svg>
+    Move mouse to explore
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer-creative">
+    <div class="footer-creative-inner">
+      <div class="footer-cta reveal">
+        <h2 class="display-xl"
+          style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
+          Let's Talk
+        </h2>
+        <a href="mailto:ramia@nabulsi.tech" class="magnetic"
+          style="font-size: clamp(24px, 5vw, 64px); display: inline-block; border-bottom: 3px solid var(--color-primary); padding-bottom: 8px;">ramia@nabulsi.tech</a>
+      </div>
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h4 class="footer-heading">Studio</h4>
+          <a href="about.html" class="footer-link">About</a>
+          <a href="services.html" class="footer-link">Services</a>
+          <a href="work.html" class="footer-link">Work</a>
+          <a href="contact.html" class="footer-link">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4 class="footer-heading">Socials</h4>
+          <div class="footer-social-icons">
+            <a href="https://api.whatsapp.com/send/?phone=19012772195&text&type=phone_number&app_absent=0"
+              target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z" />
+              </svg>
+            </a>
+            <a href="https://www.facebook.com/profile.php?id=61566352892673" target="_blank" rel="noopener noreferrer"
+              class="social-icon" aria-label="Facebook">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.469h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.469h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+              </svg>
+            </a>
+            <a href="https://www.linkedin.com/company/94871943/admin/dashboard/" target="_blank"
+              rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
+              </svg>
+            </a>
+            <a href="https://www.instagram.com/nabulsi.tech/" target="_blank" rel="noopener noreferrer" class="social-icon"
+              aria-label="Instagram">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4zm7.846-10.405a1.441 1.441 0 01-2.882 0 1.441 1.441 0 012.882 0z" />
+              </svg>
+            </a>
+          </div>
+        </div>
+        <div class="footer-col footer-col-brand">
+          <a href="index.html" class="footer-logo">Nabulsi.tech</a>
+          <p class="text-muted" style="margin-top: 16px;">We help brands stand out through powerful design, strategy and
+            storytelling.</p>
+          <p class="text-muted"
+            style="margin-top: 12px; display: flex; align-items: center; gap: 8px; font-weight: 500;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Based in Delhi, India, Asia
+          </p>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2026 Nabulsi.tech Agency. All rights reserved.</p>
+        <p>Built with Passion</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <button class="fab" id="music-toggle" aria-label="Toggle Music" title="Play/Pause Background Music">
+      <div class="equalizer-icon">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+    </button>
+    <button class="fab" id="back-to-top" aria-label="Back to Top" title="Scroll to Top">
+      <span class="material-symbols-outlined">arrow_upward</span>
+    </button>
+  </div>
+
+  <audio id="bg-audio" loop>
+    <source src="assets/videoplayback.m4a" type="audio/mp4">
+  </audio>
+
+  <!-- Lottie Web Component -->
+  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.14/dist/dotlottie-wc.js" type="module"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+  <script src="main.js"></script>
+
+  <script>
+    /* ===== LENIS + ENTRANCE ANIMATIONS ===== */
+    (function () {
+      'use strict';
+      const lenis = new Lenis({ duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
+      lenis.on('scroll', ScrollTrigger.update);
+      gsap.ticker.add((time) => lenis.raf(time * 1000));
+      gsap.ticker.lagSmoothing(0);
+
+      // Contact page entrance timeline
+      const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
+      tl.fromTo('.contact-head-row', { y: 60, opacity: 0 }, { y: 0, opacity: 1, duration: 1.2, delay: 0.2 })
+        .fromTo('.lottie-panel', { x: -80, opacity: 0, scale: 0.96 }, { x: 0, opacity: 1, scale: 1, duration: 1.2 }, '-=0.6')
+        .fromTo('.contact-cal-card', { x: 80, opacity: 0, scale: 0.96 }, { x: 0, opacity: 1, scale: 1, duration: 1.2, clearProps: 'transform' }, '-=1.0');
+
+      // Delayed Lottie animation reveal — waits 4 seconds, then scales up beautifully
+      gsap.to('.lottie-anim-wrap', {
+        opacity: 1,
+        scale: 1,
+        duration: 1.6,
+        delay: 4,
+        ease: 'elastic.out(1, 0.5)',
+      });
+
+      // Ring also reveals with the animation
+      gsap.fromTo('.lottie-ring',
+        { scale: 0.4, opacity: 0 },
+        { scale: 1, opacity: 0.6, duration: 1.4, delay: 4.2, ease: 'power3.out' }
+      );
+
+      // Footer reveals
+      gsap.utils.toArray('.reveal').forEach(el => {
+        gsap.fromTo(el, { y: 60, opacity: 0 }, {
+          y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
+          scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
+        });
+      });
+    })();
+  </script>
+  <script>
+    /* ===== VIDEO MOUSE-SCRUB ===== */
+    (function () {
+      const video = document.getElementById('contact-video');
+      const hint = document.getElementById('mouse-hint');
+      const SENSITIVITY = 0.8;
+      let prevX = null;
+      let targetTime = 0;
+      let isSeeking = false;
+      let hasMoved = false;
+
+      video.addEventListener('loadedmetadata', function () {
+        targetTime = 0;
+        video.currentTime = 0;
+      });
+
+      window.addEventListener('mousemove', function (e) {
+        if (!video.duration) return;
+
+        // Fade out hint after first move
+        if (!hasMoved && hint) {
+          hasMoved = true;
+          setTimeout(function () { hint.classList.add('faded'); }, 1500);
+        }
+
+        if (prevX === null) { prevX = e.clientX; return; }
+        var delta = e.clientX - prevX;
+        prevX = e.clientX;
+        var offset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
+        targetTime = Math.max(0, Math.min(video.duration, targetTime + offset));
+
+        if (!isSeeking) {
+          isSeeking = true;
+          video.currentTime = targetTime;
+        }
+      });
+
+      video.addEventListener('seeked', function () {
+        if (Math.abs(video.currentTime - targetTime) > 0.01) {
+          video.currentTime = targetTime;
+        } else {
+          isSeeking = false;
+        }
+      });
+
+      /* ===== CONTACT TYPEWRITER ===== */
+      var tw = document.getElementById('contact-typewriter');
+      if (tw) {
+        var text = "Whether you're ready to start a project, explore a partnership, or just say hello — we'd love to hear from you. Let's create something remarkable.";
+        var i = 0;
+        setTimeout(function () {
+          var interval = setInterval(function () {
+            i++;
+            tw.innerHTML = text.slice(0, i) + (i < text.length ? '<span class="contact-cursor"></span>' : '');
+            if (i >= text.length) clearInterval(interval);
+          }, 28);
+        }, 800);
+      }
+    })();
+  </script>
+  <!-- ===== YETI JS (COMMENTED OUT – UNCOMMENT TO REVERT) =====
+  <script>
+    (function() {
+      const yeti = document.getElementById('yeti');
+      if (yeti) {
+        const pupils = Array.prototype.slice.call(yeti.querySelectorAll('.yeti-pupil'));
+        const centers = { l: { x: 134, y: 166 }, r: { x: 186, y: 166 } };
+        const MAX = 6;
+        function moveEyes(e) {
+          const rect = yeti.getBoundingClientRect();
+          if (!rect.width) return;
+          const sx = rect.width / 320, sy = rect.height / 340;
+          pupils.forEach(function(p) {
+            const c = centers[p.getAttribute('data-eye')];
+            const ex = rect.left + c.x * sx;
+            const ey = rect.top + c.y * sy;
+            const ang = Math.atan2(e.clientY - ey, e.clientX - ex);
+            const d = Math.min(1, Math.hypot(e.clientX - ex, e.clientY - ey) / 240);
+            p.setAttribute('transform',
+              'translate(' + (Math.cos(ang) * MAX * d).toFixed(2) + ',' +
+                             (Math.sin(ang) * MAX * d).toFixed(2) + ')');
+          });
+        }
+        window.addEventListener('mousemove', moveEyes);
+        setInterval(function() {
+          yeti.classList.add('blink');
+          setTimeout(function() { yeti.classList.remove('blink'); }, 320);
+        }, 4800);
+      }
+      const stars = document.getElementById('yeti-stars');
+      if (stars) {
+        let html = '';
+        for (let i = 0; i < 42; i++) {
+          html += '<i style="left:' + (Math.random() * 100).toFixed(1) + '%;top:' +
+                  (Math.random() * 72).toFixed(1) + '%;animation-delay:' +
+                  (Math.random() * 3).toFixed(2) + 's"></i>';
+        }
+        stars.innerHTML = html;
+      }
+    })();
+  </script>
+  ===== END YETI JS ===== -->
+
+  <script>
+    /* ===== LOTTIE PANEL: particles + Cal.com theme sync ===== */
+    (function () {
+      // Generate rising particles
+      var particleContainer = document.getElementById('lottie-particles');
+      if (particleContainer) {
+        var html = '';
+        for (var i = 0; i < 28; i++) {
+          var left = (Math.random() * 100).toFixed(1);
+          var dur = (5 + Math.random() * 8).toFixed(1);
+          var delay = (Math.random() * 6).toFixed(2);
+          var size = (2 + Math.random() * 3).toFixed(1);
+          html += '<i style="left:' + left + '%;bottom:-10px;width:' + size + 'px;height:' + size + 'px;animation-duration:' + dur + 's;animation-delay:' + delay + 's"></i>';
+        }
+        particleContainer.innerHTML = html;
+      }
+
+      /* ===== Cal.com official inline embed (reliable booking clicks) ===== */
+      (function (C, A, L) {
+        let p = function (a, ar) { a.q.push(ar); };
+        let d = C.document;
+        C.Cal = C.Cal || function () {
+          let cal = C.Cal; let ar = arguments;
+          if (!cal.loaded) { cal.ns = {}; cal.q = cal.q || []; d.head.appendChild(d.createElement("script")).src = A; cal.loaded = true; }
+          if (ar[0] === L) {
+            const api = function () { p(api, arguments); };
+            const namespace = ar[1];
+            api.q = api.q || [];
+            if (typeof namespace === "string") { cal.ns[namespace] = cal.ns[namespace] || api; p(cal.ns[namespace], ar); p(cal, ["initNamespace", namespace]); }
+            else p(cal, ar);
+            return;
+          }
+          p(cal, ar);
+        };
+      })(window, "https://app.cal.com/embed/embed.js", "init");
+
+      function currentCalTheme() {
+        return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
+      }
+      Cal("init");
+      Cal("inline", {
+        elementOrSelector: "#cal-inline",
+        calLink: "nabulsi-tech",
+        layout: "month_view",
+        config: { theme: currentCalTheme() }
+      });
+      Cal("ui", { theme: currentCalTheme(), hideEventTypeDetails: false, layout: "month_view" });
+
+      // keep the embed in sync with the site theme toggle
+      new MutationObserver(function () {
+        try { Cal("ui", { theme: currentCalTheme(), layout: "month_view" }); } catch (e) { }
+      }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+    })();
+  </script>
+</body>
+
+</html>
