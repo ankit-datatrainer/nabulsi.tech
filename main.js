@@ -1407,6 +1407,7 @@ function initThreeJSBackground() {
 // 2. LENIS SMOOTH SCROLL
 let lenis;
 function initLenis() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches || matchMedia('(pointer: coarse)').matches) return;
   if (typeof Lenis !== 'undefined') {
     lenis = new Lenis({
       duration: 1.2,
@@ -1420,7 +1421,7 @@ function initLenis() {
       lenis.raf(time);
       requestAnimationFrame(raf);
     }
-    requestAnimationFrame(raf);
+    if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') requestAnimationFrame(raf);
     
     if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       lenis.on('scroll', ScrollTrigger.update);
@@ -1467,7 +1468,6 @@ function initBarba() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  initThreeJSBackground();
   initLenis();
-  initBarba();
+  // Native navigation preserves the page-specific scripts on every route.
 });

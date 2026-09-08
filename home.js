@@ -587,16 +587,42 @@
 
     var tick = function () {
       var now = new Date();
-      var ist = new Date(now.getTime() + (now.getTimezoneOffset() + 330) * 60000);
-      var h = String(ist.getHours()).padStart(2, "0");
-      var m = String(ist.getMinutes()).padStart(2, "0");
-      el.textContent = h + ":" + m + " IST";
+      try {
+        var timeStr = now.toLocaleTimeString("en-US", {
+          timeZone: "America/Chicago",
+          hour: "2-digit",
+          minute: "2-digit",
+          hour12: false
+        });
+        el.textContent = timeStr + " CT";
+      } catch (e) {
+        var ctOffset = -300; // fallback US Central Time
+        var ct = new Date(now.getTime() + (now.getTimezoneOffset() + ctOffset) * 60000);
+        var h = String(ct.getHours()).padStart(2, "0");
+        var m = String(ct.getMinutes()).padStart(2, "0");
+        el.textContent = h + ":" + m + " CT";
+      }
     };
     tick();
     window.setInterval(tick, 15000);
   }
 
-  /* ------------------------------------------------------------- 14. BOOT */
+  /* ------------------------------------------------------------- 14. WHATSAPP FAB */
+  function whatsappFab() {
+    if (document.querySelector(".wa-fab")) return;
+    var a = document.createElement("a");
+    a.className = "wa-fab";
+    a.href = "https://api.whatsapp.com/send/?phone=19012772195&text&type=phone_number&app_absent=0";
+    a.target = "_blank";
+    a.rel = "noopener noreferrer";
+    a.setAttribute("aria-label", "Chat on WhatsApp");
+    a.innerHTML =
+      '<svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16.04 4C9.95 4 5 8.95 5 15.04c0 2.13.6 4.13 1.64 5.82L5 28l7.34-1.6a11 11 0 0 0 3.7.64h.01C22.13 27.04 27 22.09 27 16S22.13 4 16.04 4zm0 20.2c-1.16 0-2.3-.31-3.29-.9l-.24-.14-3.9.85.83-3.8-.16-.25a8.2 8.2 0 1 1 6.76 4.24zm4.5-6.14c-.25-.12-1.47-.72-1.7-.8-.23-.08-.4-.12-.56.12-.16.25-.64.8-.79.97-.14.16-.29.18-.54.06-.25-.12-1.05-.39-2-1.23-.74-.66-1.24-1.47-1.38-1.72-.14-.25-.02-.38.11-.5.11-.11.25-.29.37-.43.12-.14.16-.25.25-.41.08-.16.04-.31-.02-.43-.06-.12-.56-1.35-.77-1.85-.2-.48-.41-.42-.56-.43-.15-.01-.32-.01-.48-.01-.16 0-.43.06-.65.31-.22.25-.86.84-.86 2.05s.88 2.38 1 2.54c.12.16 1.73 2.64 4.19 3.7.59.26 1.04.4 1.4.52.59.19 1.12.16 1.54.1.47-.07 1.47-.6 1.68-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.28z"/></svg>' +
+      '<span class="wa-label">Chat with us</span>';
+    document.body.appendChild(a);
+  }
+
+  /* ------------------------------------------------------------- 15. BOOT */
   function boot() {
     document.documentElement.classList.add("js-ready");
 
@@ -606,6 +632,7 @@
     initProgress();
     initMenu();
     initCursor();
+    whatsappFab();
 
     initLoader(function () {
       initHero();

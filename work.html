@@ -23,7 +23,7 @@
     .project-full .project-img-wrap { height: clamp(400px, 55vw, 820px); }
     .project-half .project-img-wrap { aspect-ratio: 4/5; }
     .project-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.1s linear; will-change: transform; }
-    .project-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.3) 0%, transparent 40%); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
+    .project-img-wrap::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,102,255,0.3) 0%, transparent 40%); opacity: 0; transition: opacity 0.5s ease; pointer-events: none; }
     .project-card:hover .project-img-wrap::after { opacity: 1; }
 
     .project-meta { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
@@ -36,7 +36,7 @@
     .project-arrow { display: inline-flex; align-items: center; justify-content: center; width: 56px; height: 56px; border-radius: 50%; border: 1px solid var(--color-outline-variant); transition: border-color 0.3s ease, background 0.3s ease; flex-shrink: 0; }
     .project-card:hover .project-arrow { border-color: var(--color-primary); background: var(--color-primary); }
     .project-arrow .material-symbols-outlined { transform: rotate(-45deg); transition: transform 0.4s var(--ease-out-expo), color 0.3s ease; }
-    .project-card:hover .project-arrow .material-symbols-outlined { transform: rotate(0deg); color: #fff; }
+    .project-card:hover .project-arrow .material-symbols-outlined { transform: rotate(0deg); color: #ffffff; }
 
     .statement-section { padding: var(--space-stack-lg) 0; }
     .statement-text { font-family: var(--font-headline); font-size: clamp(28px, 4.5vw, 60px); font-weight: 700; line-height: 1.1; letter-spacing: -0.03em; max-width: 1100px; }
@@ -93,37 +93,37 @@
     .wshow-slide {
       position: absolute; top: 50%; left: 50%;
       width: clamp(290px, 32vw, 420px); height: clamp(400px, 56vh, 540px);
-      border-radius: 30px; color: #fff;
+      border-radius: 30px; color: #ffffff;
       background: linear-gradient(160deg, var(--c), var(--c2));
-      box-shadow: 0 40px 90px rgba(0,0,0,0.22);
+      box-shadow: 0 40px 90px rgba(8,102,255,0.22);
       transform: translate(-50%,-50%);
       transition: transform .85s cubic-bezier(.16,1,.3,1), opacity .6s ease, filter .6s ease;
       will-change: transform, opacity; cursor: pointer; backface-visibility: hidden;
     }
     .wshow-slide::before { content:''; position:absolute; inset:0; border-radius: inherit; background: radial-gradient(120% 80% at 50% 0%, rgba(255,255,255,0.18), transparent 60%); pointer-events:none; }
 
-    .ws-top, .ws-bottom { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-headline); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(24px, 2.2vw, 38px); z-index: 2; padding: 0 16px; color: #fff; text-shadow: 0 2px 14px rgba(0,0,0,0.8), 0 0 6px rgba(0,0,0,0.6); pointer-events: none; }
+    .ws-top, .ws-bottom { position: absolute; left: 0; right: 0; text-align: center; font-family: var(--font-headline); font-weight: 800; letter-spacing: -0.02em; font-size: clamp(24px, 2.2vw, 38px); z-index: 2; padding: 0 16px; color: #ffffff; text-shadow: 0 2px 14px rgba(8,102,255,0.8), 0 0 6px rgba(8,102,255,0.6); pointer-events: none; }
     /* dark fade bands so the white labels stay readable over light poster images */
-    .ws-top { top: 0; padding: 22px 16px 46px; background: linear-gradient(to bottom, rgba(0,0,0,0.55), rgba(0,0,0,0)); border-radius: 30px 30px 0 0; }
-    .ws-bottom { bottom: 0; padding: 46px 16px 22px; background: linear-gradient(to top, rgba(0,0,0,0.55), rgba(0,0,0,0)); border-radius: 0 0 30px 30px; }
+    .ws-top { top: 0; padding: 22px 16px 46px; background: linear-gradient(to bottom, rgba(8,102,255,0.55), rgba(8,102,255,0)); border-radius: 30px 30px 0 0; }
+    .ws-bottom { bottom: 0; padding: 46px 16px 22px; background: linear-gradient(to top, rgba(8,102,255,0.55), rgba(8,102,255,0)); border-radius: 0 0 30px 30px; }
 
-    .ws-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56%; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(0,0,0,0.28); z-index: 1; }
+    .ws-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 56%; aspect-ratio: 3/4; border-radius: 18px; overflow: hidden; box-shadow: 0 18px 44px rgba(8,102,255,0.28); z-index: 1; }
     .ws-center img { width: 100%; height: 100%; object-fit: cover; }
-    .ws-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 52px; height: 52px; border-radius: 50%; border: none; background: rgba(255,255,255,0.9); display: grid; place-items: center; cursor: pointer; z-index: 3; box-shadow: 0 8px 24px rgba(0,0,0,0.3); }
-    .ws-play .material-symbols-outlined { color: #111; font-size: 28px; margin-left: 2px; }
+    .ws-play { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 52px; height: 52px; border-radius: 50%; border: none; background: rgba(255,255,255,0.9); display: grid; place-items: center; cursor: pointer; z-index: 3; box-shadow: 0 8px 24px rgba(8,102,255,0.3); }
+    .ws-play .material-symbols-outlined { color: #0866ff; font-size: 28px; margin-left: 2px; }
     .ws-play::after { content: ''; position: absolute; inset: -8px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.55); animation: wsPing 2.2s ease-out infinite; }
     @keyframes wsPing { 0% { transform: scale(.9); opacity: .8; } 100% { transform: scale(1.6); opacity: 0; } }
 
     /* floating mini cards (only on active slide) */
-    .ws-fcard { position: absolute; display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.96); border-radius: 14px; padding: 8px 13px 8px 8px; box-shadow: 0 14px 32px rgba(0,0,0,0.2); z-index: 4; opacity: 0; transition: opacity .5s ease; }
+    .ws-fcard { position: absolute; display: flex; align-items: center; gap: 9px; background: rgba(255,255,255,0.96); border-radius: 14px; padding: 8px 13px 8px 8px; box-shadow: 0 14px 32px rgba(8,102,255,0.2); z-index: 4; opacity: 0; transition: opacity .5s ease; }
     .ws-thumb { width: 36px; height: 36px; border-radius: 9px; background-size: cover; background-position: center; flex-shrink: 0; }
-    .ws-ft { font-size: 12px; font-weight: 700; color: #15151c; font-family: var(--font-headline); white-space: nowrap; }
-    .ws-fs { font-size: 10.5px; color: #6a6a78; font-weight: 600; margin-top: 1px; white-space: nowrap; }
-    .ws-fs .star { color: #FBBF24; }
+    .ws-ft { font-size: 12px; font-weight: 700; color: #0866ff; font-family: var(--font-headline); white-space: nowrap; }
+    .ws-fs { font-size: 10.5px; color: #0866ff; font-weight: 600; margin-top: 1px; white-space: nowrap; }
+    .ws-fs .star { color: #0866ff; }
     .ws-f1 { top: 16%; left: -28px; } .ws-f2 { bottom: 15%; right: -28px; }
 
-    .ws-pill { position: absolute; top: 47%; right: -16px; background: rgba(255,255,255,0.96); color: #15151c; font-size: 11px; font-weight: 700; padding: 9px 15px; border-radius: 99px; box-shadow: 0 12px 28px rgba(0,0,0,0.2); z-index: 4; display: flex; align-items: center; gap: 6px; opacity: 0; transition: opacity .5s ease; }
-    .ws-icon { position: absolute; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.96); display: grid; place-items: center; box-shadow: 0 10px 24px rgba(0,0,0,0.22); z-index: 4; opacity: 0; transition: opacity .5s ease; }
+    .ws-pill { position: absolute; top: 47%; right: -16px; background: rgba(255,255,255,0.96); color: #0866ff; font-size: 11px; font-weight: 700; padding: 9px 15px; border-radius: 99px; box-shadow: 0 12px 28px rgba(8,102,255,0.2); z-index: 4; display: flex; align-items: center; gap: 6px; opacity: 0; transition: opacity .5s ease; }
+    .ws-icon { position: absolute; width: 38px; height: 38px; border-radius: 50%; background: rgba(255,255,255,0.96); display: grid; place-items: center; box-shadow: 0 10px 24px rgba(8,102,255,0.22); z-index: 4; opacity: 0; transition: opacity .5s ease; }
     .ws-i1 { top: 11%; right: 9%; } .ws-i2 { bottom: 21%; left: 5%; }
     .ws-icon .material-symbols-outlined { font-size: 18px; color: var(--c); }
 
@@ -160,7 +160,7 @@
     .wshow-btn { width: 54px; height: 54px; border-radius: 50%; border: 1px solid var(--color-outline); background: var(--color-surface-container); color: var(--color-on-background); display: grid; place-items: center; cursor: pointer; transition: all .3s ease; }
     .wshow-btn .material-symbols-outlined { font-size: 24px; color: var(--color-on-background); transition: color 0.3s ease; }
     .wshow-btn:hover { background: var(--color-primary); border-color: var(--color-primary); transform: translateY(-2px); }
-    .wshow-btn:hover .material-symbols-outlined { color: #fff; }
+    .wshow-btn:hover .material-symbols-outlined { color: #ffffff; }
     .wshow-dots { display: flex; gap: 9px; align-items: center; }
     .wshow-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--color-outline-variant); cursor: pointer; transition: all .3s ease; border: none; padding: 0; }
     .wshow-dot.active { background: var(--color-primary); width: 26px; border-radius: 99px; }
@@ -178,6 +178,7 @@
       .wshow-slide { width: min(80vw, 260px); height: clamp(320px, 54vh, 400px); }
     }
   </style>
+  <link rel="stylesheet" href="studio.css" />
 </head>
 <body data-barba="wrapper">
 
@@ -218,10 +219,10 @@
     <!-- HERO -->
     <header class="work-hero">
       <div class="work-hero-grid">
-        <div>
+        <h1 class="studio-work-title">
           <span class="split-line stagger-1"><span class="split-line-inner display-xl"><span class="prismatic-text">Selected</span></span></span>
           <span class="split-line stagger-2"><span class="split-line-inner display-xl">Works</span></span>
-        </div>
+        </h1>
         <div class="reveal" data-from="right">
           <p class="body-lg work-hero-desc">
             We architect digital tension — building uncompromising brand experiences that demand attention in a saturated landscape.
@@ -422,7 +423,10 @@
         <h2 class="display-xl" style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
           Let's Talk
         </h2>
-        <a href="mailto:ramia@nabulsi.tech" class="magnetic" style="font-size: clamp(24px, 5vw, 64px); display: inline-block; border-bottom: 3px solid var(--color-primary); padding-bottom: 8px;">ramia@nabulsi.tech</a>
+        <div class="footer-cta-emails">
+          <a href="mailto:ramia@nabulsi.tech" class="magnetic" style="font-size: clamp(20px, 4.2vw, 56px); display: inline-block; border-bottom: 3px solid var(--color-primary); padding-bottom: 8px;">ramia@nabulsi.tech</a>
+          <a href="mailto:ankit@nabulsi.tech" class="magnetic" style="font-size: clamp(20px, 4.2vw, 56px); display: inline-block; border-bottom: 3px solid var(--color-primary); padding-bottom: 8px;">ankit@nabulsi.tech</a>
+        </div>
       </div>
 
       <!-- Links & Info -->
@@ -456,7 +460,7 @@
           <p class="text-muted" style="margin-top: 16px;">We help brands stand out through powerful design, strategy and storytelling.</p>
           <p class="text-muted" style="margin-top: 12px; display: flex; align-items: center; gap: 8px; font-weight: 500;">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-            Based in Delhi, India, Asia
+            Based in Arlington, TN 38002, USA
           </p>
         </div>
       </div>
@@ -808,7 +812,7 @@
     .wprev.open { opacity: 1; pointer-events: auto; }
     .wprev-backdrop {
       position: absolute; inset: 0;
-      background: rgba(8, 6, 16, 0.5);
+      background: rgba(8,102,255, 0.5);
       backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
     }
     /* glassy panel — tinted with the active card colour, adapts to site theme */
@@ -821,15 +825,15 @@
       background: var(--glass);
       border: 1px solid var(--wc-border, rgba(255,255,255,0.28));
       box-shadow:
-        0 40px 110px rgba(0,0,0,0.4),
-        0 0 70px var(--wc-glow, rgba(20,92,255,0.18)),
+        0 40px 110px rgba(8,102,255,0.4),
+        0 0 70px var(--wc-glow, rgba(8,102,255,0.18)),
         inset 0 1px 0 rgba(255,255,255,0.4);
       backdrop-filter: blur(26px) saturate(150%);
       -webkit-backdrop-filter: blur(26px) saturate(150%);
       transform: translateY(28px) scale(0.96); opacity: 0;
       transition: transform 0.55s cubic-bezier(.22,1,.36,1), opacity 0.4s ease;
     }
-    [data-theme="dark"] .wprev-panel { --glass: rgba(20,18,30,0.55); }
+    [data-theme="dark"] .wprev-panel { --glass: rgba(8,102,255,0.55); }
     .wprev.open .wprev-panel { transform: none; opacity: 1; }
 
     .wprev-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
@@ -862,12 +866,12 @@
     .wprev-stat { min-width: 0; }
     .wprev-stat {
       border-radius: 16px; padding: 12px;
-      background: var(--wc-tile, rgba(127,127,140,0.06));
+      background: var(--wc-tile, rgba(8,102,255,0.06));
       border: 1px solid var(--wc-border, rgba(255,255,255,0.18));
     }
     .wprev-stat .ic {
       width: 32px; height: 32px; border-radius: 10px; display: grid; place-items: center;
-      background: var(--wc-chip, rgba(20,92,255,0.16)); color: var(--wc, var(--color-primary));
+      background: var(--wc-chip, rgba(8,102,255,0.16)); color: var(--wc, var(--color-primary));
       margin-bottom: 8px;
     }
     .wprev-stat .ic .material-symbols-outlined { font-size: 18px; }
@@ -877,7 +881,7 @@
     .wprev-row { display: grid; grid-template-columns: 1.1fr 1fr; gap: 10px; }
     .wprev-card {
       border-radius: 16px; padding: 14px;
-      background: var(--wc-tile, rgba(127,127,140,0.06));
+      background: var(--wc-tile, rgba(8,102,255,0.06));
       border: 1px solid var(--wc-border, rgba(255,255,255,0.18));
     }
     .wprev-card h5 {
@@ -892,7 +896,7 @@
     .wprev-step:last-child { margin-bottom: 0; }
     .wprev-step .num { color: var(--color-on-surface-variant); font-weight: 700; font-size: 11px; width: 18px; }
     .wprev-step .lbl { flex: 1; }
-    .wprev-step .track { width: 76px; height: 5px; border-radius: 4px; background: rgba(127,127,140,0.22); overflow: hidden; }
+    .wprev-step .track { width: 76px; height: 5px; border-radius: 4px; background: rgba(8,102,255,0.22); overflow: hidden; }
     .wprev-step .fill { display: block; height: 100%; border-radius: 4px; }
     .wprev-step .pct { width: 38px; text-align: right; font-weight: 700; color: var(--color-on-surface-variant); font-size: 11px; }
 
@@ -1023,5 +1027,6 @@
     })();
   </script>
 
+  <script src="studio.js"></script>
 </body>
 </html>

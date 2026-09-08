@@ -1,25 +1,25 @@
 /* ==========================================================================
    NABULSI.TECH — HOME PAGE
    Design system mirrored from the a-lign.studio type/colour scale:
-   Geist typeface, cobalt brand #145CFF, ink #4f4f4f, paper #f7f7f7,
+   Geist typeface, cobalt brand #0866ff, ink #0866ff, paper #ffffff,
    dashed wireframe frames + grey skeleton bars as the core visual motif.
    ========================================================================== */
 
 /* ---------- 1. TOKENS ---------------------------------------------------- */
 :root {
   /* Swatches */
-  --brand: #145CFF;
-  --brand-600: #0B2D86;
-  --ink: #4f4f4f;
-  --paper: #f7f7f7;
-  --ink-o01: rgba(79, 79, 79, 0.01);
-  --ink-o05: rgba(79, 79, 79, 0.05);
-  --ink-o10: #e6e6e6;
-  --ink-o20: #d5d5d5;
-  --ink-o30: rgba(79, 79, 79, 0.3);
-  --ink-o50: rgba(79, 79, 79, 0.5);
-  --ink-o75: rgba(79, 79, 79, 0.75);
-  --ink-800: #2f2b2d;
+  --brand: #0866ff;
+  --brand-600: #0866ff;
+  --ink: #0866ff;
+  --paper: #ffffff;
+  --ink-o01: rgba(8,102,255, 0.01);
+  --ink-o05: rgba(8,102,255, 0.05);
+  --ink-o10: #ffffff;
+  --ink-o20: #0866ff;
+  --ink-o30: rgba(8,102,255, 0.3);
+  --ink-o50: rgba(8,102,255, 0.5);
+  --ink-o75: rgba(8,102,255, 0.75);
+  --ink-800: #0866ff;
 
   /* Type */
   --font: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -185,7 +185,7 @@ button {
 /* Buttons */
 .btn {
   --btn-bg: var(--brand);
-  --btn-fg: #fff;
+  --btn-fg: #ffffff;
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -237,7 +237,7 @@ button {
 }
 
 .btn--paper {
-  --btn-bg: #fff;
+  --btn-bg: #ffffff;
   --btn-fg: var(--ink);
 }
 
@@ -455,7 +455,7 @@ button {
   font-weight: 600;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #fff;
+  color: #ffffff;
   opacity: 0;
   transition: opacity 0.3s linear;
 }
@@ -581,7 +581,7 @@ button {
   font-weight: 500;
   line-height: var(--lh-90);
   letter-spacing: var(--ls-display);
-  color: #575757;
+  color: #0866ff;
   margin-bottom: clamp(20px, 2.6vw, 34px);
 }
 
@@ -614,7 +614,7 @@ button {
   overflow: hidden;
   border-radius: var(--radius-sm);
   background: var(--ink-o10);
-  box-shadow: 0 18px 50px -18px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 18px 50px -18px rgba(8,102,255, 0.28);
 }
 
 .hero__fig img {
@@ -1046,7 +1046,7 @@ button {
   top: 10px;
   left: 10px;
   padding: 0.5em 0.75em;
-  background: rgba(247, 247, 247, 0.92);
+  background: rgba(255,255,255, 0.92);
   backdrop-filter: blur(8px);
   border-radius: var(--radius-sm);
   font-size: var(--fs-micro);
@@ -1337,9 +1337,9 @@ button {
   flex-direction: column;
   gap: clamp(20px, 2.4vw, 30px);
   padding: clamp(22px, 2.4vw, 34px);
-  background: #fff;
+  background: #ffffff;
   border-radius: var(--radius);
-  box-shadow: 0 20px 44px -28px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 20px 44px -28px rgba(8,102,255, 0.2);
 }
 
 .tcard::before {
@@ -1601,11 +1601,11 @@ button {
   align-items: stretch;
   gap: 6px;
   padding: 6px;
-  background: rgba(233, 233, 233, 0.72);
+  background: rgba(255,255,255, 0.72);
   backdrop-filter: blur(18px) saturate(150%);
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   border-radius: var(--radius);
-  box-shadow: 0 18px 44px -20px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 18px 44px -20px rgba(8,102,255, 0.28);
 }
 
 .dock__btn {
@@ -1615,7 +1615,7 @@ button {
   gap: 0.5em;
   min-height: 42px;
   padding: 0 1.15em;
-  background: #fff;
+  background: #ffffff;
   color: var(--ink);
   border-radius: var(--radius-sm);
   font-size: var(--fs-micro);
@@ -1648,7 +1648,7 @@ button {
 
 .dock__btn--brand {
   background: var(--brand);
-  color: #fff;
+  color: #ffffff;
 }
 
 .dock__btn--brand:hover {
@@ -1829,6 +1829,117 @@ button {
   }
 
   .hero__scroll i::after {
+    display: none;
+  }
+}
+
+/* ===== WhatsApp floating button (left side, site-wide) ===== */
+.wa-fab {
+  position: fixed;
+  left: clamp(16px, 3vw, 28px);
+  bottom: clamp(18px, 3vw, 30px);
+  z-index: 9999;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #0866ff;
+  color: #ffffff;
+  text-decoration: none;
+  box-shadow: 0 12px 30px rgba(8,102,255, 0.45);
+  animation: waPulse 2.4s ease-in-out infinite;
+  transition: transform 0.3s cubic-bezier(.22, 1, .36, 1), box-shadow 0.3s ease;
+}
+
+.wa-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 16px 40px rgba(8,102,255, 0.6);
+}
+
+.wa-fab svg {
+  width: 30px;
+  height: 30px;
+  position: relative;
+  z-index: 2;
+}
+
+.wa-fab::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid rgba(8,102,255, 0.55);
+  animation: waRing 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+.wa-fab::after {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  box-shadow: 0 0 22px 4px var(--brand, #0866ff);
+  opacity: 0.28;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wa-label {
+  position: absolute;
+  left: 70px;
+  white-space: nowrap;
+  background: var(--ink, #0866ff);
+  color: var(--paper, #ffffff);
+  padding: 8px 14px;
+  border-radius: 10px;
+  font-family: var(--font-mono, monospace);
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateX(-8px);
+  transition: opacity .3s ease, transform .3s ease;
+  pointer-events: none;
+  box-shadow: 0 8px 22px rgba(8,102,255, 0.18);
+}
+
+.wa-fab:hover .wa-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+@keyframes waPulse {
+  0%, 100% {
+    box-shadow: 0 12px 30px rgba(8,102,255, 0.42);
+  }
+  50% {
+    box-shadow: 0 14px 38px rgba(8,102,255, 0.68);
+  }
+}
+
+@keyframes waRing {
+  0% {
+    transform: scale(1);
+    opacity: 0.7;
+  }
+  100% {
+    transform: scale(1.85);
+    opacity: 0;
+  }
+}
+
+@media (max-width: 768px) {
+  .wa-fab {
+    width: 52px;
+    height: 52px;
+    left: 16px;
+    bottom: 16px;
+  }
+  .wa-fab svg {
+    width: 27px;
+    height: 27px;
+  }
+  .wa-label {
     display: none;
   }
 }
