@@ -148,17 +148,19 @@
 
   /* --------------------------------------------------------- 2. HERO INTRO */
   function initHero() {
-    if (!motion) return;
-
     var titleLines = $$('.hero__title .line > i');
     var figs = $$(".hero__fig");
     var skelBars = $$(".hero .skel i");
 
+    figs.forEach(function (f) { f.style.opacity = "1"; f.style.visibility = "visible"; });
+
+    if (!motion) return;
+
     gsap.set(titleLines, { yPercent: 115 });
     gsap.set("#hero-sub", { y: 26, opacity: 0 });
     gsap.set("#hero-cta", { y: 26, opacity: 0 });
-    gsap.set(figs, { opacity: 0, scale: 1.14, y: 34 });
-    gsap.set(".hero__fig .frame", { opacity: 0, scale: 0.94 });
+    gsap.set(figs, { opacity: 1, scale: 1, y: 0 });
+    gsap.set(".hero__fig .frame", { opacity: 1, scale: 1 });
     gsap.set(skelBars, { scaleX: 0 });
     gsap.set(".hero__scroll", { opacity: 0 });
     gsap.set("#ticker", { opacity: 0, y: 20 });
@@ -168,11 +170,6 @@
     tl.to(titleLines, { yPercent: 0, duration: 1.35, stagger: 0.09 })
       .to("#hero-sub", { y: 0, opacity: 1, duration: 1 }, "-=0.9")
       .to("#hero-cta", { y: 0, opacity: 1, duration: 1 }, "-=0.85")
-      .to(figs, {
-        opacity: 1, scale: 1, y: 0, duration: 1.5,
-        stagger: { each: 0.11, from: "random" }
-      }, "-=1.15")
-      .to(".hero__fig .frame", { opacity: 1, scale: 1, duration: 1.1, stagger: 0.09 }, "-=1.25")
       .to(skelBars, { scaleX: 1, duration: 0.9, stagger: 0.035 }, "-=1.3")
       .to(".hero__scroll", { opacity: 1, duration: 0.8 }, "-=0.6")
       .to("#ticker", { opacity: 1, y: 0, duration: 0.9 }, "-=0.7")

@@ -94,13 +94,13 @@ function initApp() {
 
     // --- Orbit icons (brand-palette service glyphs) ---
     const LOADER_ICONS = [
-      '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="#145CFF" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="#145CFF" stroke-width="2" stroke-linecap="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="6" stroke="#FF9D50" stroke-width="2"/><path d="M20 20l-3.5-3.5" stroke="#FF9D50" stroke-width="2" stroke-linecap="round"/></svg>',
       '<svg viewBox="0 0 24 24" fill="none"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2" stroke="#CD4800" stroke-width="2" stroke-linecap="round"/></svg>',
       '<svg viewBox="0 0 24 24" fill="none"><rect x="3" y="4" width="18" height="14" rx="2" stroke="#567100" stroke-width="2"/><path d="M3 8h18" stroke="#567100" stroke-width="2"/><path d="M9 12l-2 2 2 2M13 12l2 2-2 2" stroke="#567100" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>',
-      '<svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.4" stroke="#145CFF" stroke-width="2"/><circle cx="18" cy="6" r="2.4" stroke="#145CFF" stroke-width="2"/><circle cx="18" cy="18" r="2.4" stroke="#145CFF" stroke-width="2"/><path d="M8 11l8-4M8 13l8 4" stroke="#145CFF" stroke-width="1.6"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none"><circle cx="6" cy="12" r="2.4" stroke="#FF9D50" stroke-width="2"/><circle cx="18" cy="6" r="2.4" stroke="#FF9D50" stroke-width="2"/><circle cx="18" cy="18" r="2.4" stroke="#FF9D50" stroke-width="2"/><path d="M8 11l8-4M8 13l8 4" stroke="#FF9D50" stroke-width="1.6"/></svg>',
       '<svg viewBox="0 0 24 24" fill="none"><path d="M3 11l18-7-7 18-2.5-7.5L3 11z" stroke="#CD4800" stroke-width="2" stroke-linejoin="round"/></svg>',
       '<svg viewBox="0 0 24 24" fill="none"><rect x="5" y="3" width="14" height="18" rx="2" stroke="#567100" stroke-width="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke="#567100" stroke-width="1.8" stroke-linecap="round"/></svg>',
-      '<svg viewBox="0 0 24 24" fill="none"><path d="M4 16l5-5 3 3 7-8" stroke="#145CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" stroke="#145CFF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+      '<svg viewBox="0 0 24 24" fill="none"><path d="M4 16l5-5 3 3 7-8" stroke="#FF9D50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M16 6h4v4" stroke="#FF9D50" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
       '<svg viewBox="0 0 24 24" fill="none"><path d="M9 8l-4 4 4 4M15 8l4 4-4 4" stroke="#CD4800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
     ];
 

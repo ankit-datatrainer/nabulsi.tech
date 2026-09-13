@@ -134,7 +134,7 @@
   /* ---- services shown on the screen ---- */
   const SERVICES = [
     { title: "Branding", tag: "Brand Systems", accent: "#CD4800" },
-    { title: "SEO", tag: "Rank & Dominate", accent: "#145CFF" },
+    { title: "SEO", tag: "Rank & Dominate", accent: "#FF9D50" },
     { title: "Social Media", tag: "Organic Growth", accent: "#567100" },
     { title: "Web Development", tag: "Built to Convert", accent: "#1f9ad6" },
     { title: "Graphic Design", tag: "Iconic Identity", accent: "#c264ff" },

@@ -1,25 +1,23 @@
 /* ==========================================================================
    NABULSI.TECH — HOME PAGE
-   Design system mirrored from the a-lign.studio type/colour scale:
-   Geist typeface, cobalt brand #0866ff, ink #0866ff, paper #ffffff,
-   dashed wireframe frames + grey skeleton bars as the core visual motif.
+   Design system: Geist typeface, warm orange brand #FF9D50, ink #111827, paper #ffffff.
    ========================================================================== */
 
 /* ---------- 1. TOKENS ---------------------------------------------------- */
 :root {
   /* Swatches */
-  --brand: #0866ff;
-  --brand-600: #0866ff;
-  --ink: #0866ff;
+  --brand: #FF9D50;
+  --brand-600: #e8883b;
+  --ink: #111827;
   --paper: #ffffff;
-  --ink-o01: rgba(8,102,255, 0.01);
-  --ink-o05: rgba(8,102,255, 0.05);
-  --ink-o10: #ffffff;
-  --ink-o20: #0866ff;
-  --ink-o30: rgba(8,102,255, 0.3);
-  --ink-o50: rgba(8,102,255, 0.5);
-  --ink-o75: rgba(8,102,255, 0.75);
-  --ink-800: #0866ff;
+  --ink-o01: rgba(17, 24, 39, 0.01);
+  --ink-o05: rgba(17, 24, 39, 0.05);
+  --ink-o10: #f3f4f6;
+  --ink-o20: #e5e7eb;
+  --ink-o30: rgba(17, 24, 39, 0.3);
+  --ink-o50: rgba(17, 24, 39, 0.5);
+  --ink-o75: rgba(17, 24, 39, 0.75);
+  --ink-800: #1f2937;
 
   /* Type */
   --font: "Geist", "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -581,7 +579,7 @@ button {
   font-weight: 500;
   line-height: var(--lh-90);
   letter-spacing: var(--ls-display);
-  color: #0866ff;
+  color: var(--ink-800);
   margin-bottom: clamp(20px, 2.6vw, 34px);
 }
 
@@ -614,7 +612,7 @@ button {
   overflow: hidden;
   border-radius: var(--radius-sm);
   background: var(--ink-o10);
-  box-shadow: 0 18px 50px -18px rgba(8,102,255, 0.28);
+  box-shadow: 0 18px 50px -18px rgba(0, 0, 0, 0.16);
 }
 
 .hero__fig img {
@@ -1339,7 +1337,7 @@ button {
   padding: clamp(22px, 2.4vw, 34px);
   background: #ffffff;
   border-radius: var(--radius);
-  box-shadow: 0 20px 44px -28px rgba(8,102,255, 0.2);
+  box-shadow: 0 20px 44px -28px rgba(0, 0, 0, 0.12);
 }
 
 .tcard::before {
@@ -1605,7 +1603,7 @@ button {
   backdrop-filter: blur(18px) saturate(150%);
   -webkit-backdrop-filter: blur(18px) saturate(150%);
   border-radius: var(--radius);
-  box-shadow: 0 18px 44px -20px rgba(8,102,255, 0.28);
+  box-shadow: 0 18px 44px -20px rgba(0, 0, 0, 0.14);
 }
 
 .dock__btn {
@@ -1844,17 +1842,17 @@ button {
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: #0866ff;
+  background: #25D366;
   color: #ffffff;
   text-decoration: none;
-  box-shadow: 0 12px 30px rgba(8,102,255, 0.45);
+  box-shadow: 0 12px 30px rgba(37, 211, 102, 0.45);
   animation: waPulse 2.4s ease-in-out infinite;
   transition: transform 0.3s cubic-bezier(.22, 1, .36, 1), box-shadow 0.3s ease;
 }
 
 .wa-fab:hover {
   transform: scale(1.1);
-  box-shadow: 0 16px 40px rgba(8,102,255, 0.6);
+  box-shadow: 0 16px 40px rgba(37, 211, 102, 0.6);
 }
 
 .wa-fab svg {
@@ -1869,7 +1867,7 @@ button {
   position: absolute;
   inset: 0;
   border-radius: 50%;
-  border: 2px solid rgba(8,102,255, 0.55);
+  border: 2px solid rgba(37, 211, 102, 0.55);
   animation: waRing 2.4s ease-out infinite;
   pointer-events: none;
 }
@@ -1879,7 +1877,7 @@ button {
   position: absolute;
   inset: -6px;
   border-radius: 50%;
-  box-shadow: 0 0 22px 4px var(--brand, #0866ff);
+  box-shadow: 0 0 22px 4px rgba(37, 211, 102, 0.6);
   opacity: 0.28;
   pointer-events: none;
   z-index: 0;
@@ -1889,8 +1887,8 @@ button {
   position: absolute;
   left: 70px;
   white-space: nowrap;
-  background: var(--ink, #0866ff);
-  color: var(--paper, #ffffff);
+  background: #111827;
+  color: #ffffff;
   padding: 8px 14px;
   border-radius: 10px;
   font-family: var(--font-mono, monospace);
@@ -1900,7 +1898,7 @@ button {
   transform: translateX(-8px);
   transition: opacity .3s ease, transform .3s ease;
   pointer-events: none;
-  box-shadow: 0 8px 22px rgba(8,102,255, 0.18);
+  box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
 }
 
 .wa-fab:hover .wa-label {
@@ -1910,10 +1908,10 @@ button {
 
 @keyframes waPulse {
   0%, 100% {
-    box-shadow: 0 12px 30px rgba(8,102,255, 0.42);
+    box-shadow: 0 12px 30px rgba(37, 211, 102, 0.42);
   }
   50% {
-    box-shadow: 0 14px 38px rgba(8,102,255, 0.68);
+    box-shadow: 0 14px 38px rgba(37, 211, 102, 0.68);
   }
 }
 
