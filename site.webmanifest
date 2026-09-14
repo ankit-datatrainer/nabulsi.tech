@@ -1,0 +1,25 @@
+{
+  "name": "Nabulsi.tech",
+  "short_name": "Nabulsi.tech",
+  "icons": [
+    {
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/favicon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#FF9D50",
+  "background_color": "#ffffff",
+  "display": "standalone"
+}
