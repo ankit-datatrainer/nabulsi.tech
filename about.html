@@ -314,6 +314,321 @@
       line-height: 1.7;
     }
 
+    /* ===== LEADERSHIP / FOUNDERS ===== */
+    .ab-founders {
+      padding: clamp(80px, 10vw, 140px) 0;
+    }
+
+    .ab-founders-header {
+      margin-bottom: clamp(48px, 6vw, 72px);
+    }
+
+    .ab-founders-header h2 {
+      font-family: var(--font-headline);
+      font-size: clamp(32px, 4.5vw, 56px);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--color-on-background);
+      margin-top: 16px;
+    }
+
+    .ab-founders-intro {
+      font-family: var(--font-body);
+      font-size: clamp(16px, 1.3vw, 19px);
+      line-height: 1.7;
+      color: var(--color-on-surface-variant);
+      max-width: 640px;
+      margin-top: 18px;
+    }
+
+    .ab-founders-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 32px;
+    }
+
+    @media (min-width: 860px) {
+      .ab-founders-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 36px;
+      }
+    }
+
+    .ab-founder-card {
+      position: relative;
+      background: var(--color-surface-container-lowest);
+      border: 1px solid var(--color-surface-variant);
+      border-radius: 24px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      transition: border-color 0.5s ease, box-shadow 0.5s ease, transform 0.6s var(--ease-out-expo);
+    }
+
+    .ab-founder-card:hover {
+      border-color: rgba(255, 157, 80, 0.4);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.07);
+      transform: translateY(-6px);
+    }
+
+    .ab-founder-media {
+      position: relative;
+      width: 100%;
+      height: 420px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: var(--color-surface-container);
+    }
+
+    @media (max-width: 1024px) {
+      .ab-founder-media {
+        height: 360px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .ab-founder-media {
+        height: 310px;
+      }
+    }
+
+    .ab-founder-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center top;
+      transition: transform 0.8s var(--ease-out-expo);
+      display: block;
+    }
+
+    .ab-founder-card:hover .ab-founder-img {
+      transform: scale(1.04);
+    }
+
+    .ab-founder-media-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0) 55%, rgba(17, 24, 39, 0.4) 100%);
+      pointer-events: none;
+    }
+
+    .ab-founder-badge-floating {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      background: rgba(17, 24, 39, 0.72);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 9999px;
+      color: #FFFFFF;
+      font-family: var(--font-label);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      z-index: 2;
+    }
+
+    .ab-founder-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--color-primary);
+      box-shadow: 0 0 8px var(--color-primary);
+    }
+
+    .ab-founder-body {
+      padding: 28px 12px 12px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+
+    .ab-founder-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .ab-founder-title-badge {
+      display: inline-flex;
+      align-items: center;
+      font-family: var(--font-label);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-primary);
+      background: rgba(255, 157, 80, 0.1);
+      border: 1px solid rgba(255, 157, 80, 0.25);
+      padding: 4px 10px;
+      border-radius: 6px;
+    }
+
+    .ab-founder-status {
+      font-family: var(--font-label);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--color-on-surface-variant);
+      opacity: 0.85;
+    }
+
+    .ab-founder-name {
+      font-family: var(--font-headline);
+      font-size: clamp(26px, 2.3vw, 32px);
+      font-weight: 800;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      color: var(--color-on-background);
+      margin-bottom: 6px;
+    }
+
+    .ab-founder-role {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 16px;
+    }
+
+    .ab-founder-desc {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.72;
+      color: var(--color-on-surface-variant);
+      margin-bottom: 24px;
+      flex-grow: 1;
+    }
+
+    .ab-founder-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-top: 20px;
+      border-top: 1px solid var(--color-surface-variant);
+      flex-wrap: wrap;
+    }
+
+    .ab-founder-socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ab-founder-linkedin {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: #111827;
+      color: #FFFFFF !important;
+      border-radius: 50px;
+      font-family: var(--font-headline);
+      font-size: 13px;
+      font-weight: 600;
+      text-decoration: none;
+      border: 1px solid rgba(17, 24, 39, 0.1);
+      transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .ab-founder-linkedin:hover {
+      background: #0077b5;
+      border-color: #0077b5;
+      color: #FFFFFF !important;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 119, 181, 0.3);
+    }
+
+    .ab-founder-linkedin svg {
+      width: 15px;
+      height: 15px;
+      fill: currentColor;
+    }
+
+    .ab-founder-linkedin .material-symbols-outlined {
+      font-size: 15px;
+      transition: transform 0.3s ease;
+    }
+
+    .ab-founder-linkedin:hover .material-symbols-outlined {
+      transform: translate(2px, -2px);
+    }
+
+    .ab-founder-email {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 16px;
+      border-radius: 50px;
+      font-family: var(--font-label);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-on-background);
+      background: rgba(255, 157, 80, 0.08);
+      border: 1px solid rgba(255, 157, 80, 0.22);
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+
+    .ab-founder-email:hover {
+      background: rgba(255, 157, 80, 0.16);
+      border-color: var(--color-primary);
+      color: var(--color-primary);
+      transform: translateY(-2px);
+    }
+
+    .ab-founder-email .material-symbols-outlined {
+      font-size: 15px;
+      color: var(--color-primary);
+    }
+
+    /* Dark Mode Overrides */
+    [data-theme="dark"] .ab-founder-card {
+      background: #16181C;
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    [data-theme="dark"] .ab-founder-card:hover {
+      border-color: rgba(255, 157, 80, 0.4);
+      box-shadow: 0 24px 64px rgba(0, 0, 0, 0.4), 0 0 30px rgba(255, 157, 80, 0.12);
+    }
+
+    [data-theme="dark"] .ab-founder-name {
+      color: #ECEDEF;
+    }
+
+    [data-theme="dark"] .ab-founder-desc {
+      color: #B7BCC4;
+    }
+
+    [data-theme="dark"] .ab-founder-linkedin {
+      background: #23262B;
+      border-color: rgba(255, 255, 255, 0.12);
+    }
+
+    [data-theme="dark"] .ab-founder-linkedin:hover {
+      background: #0077B5;
+      border-color: #0077B5;
+    }
+
+    [data-theme="dark"] .ab-founder-email {
+      color: #ECEDEF;
+      background: rgba(255, 157, 80, 0.1);
+      border-color: rgba(255, 157, 80, 0.28);
+    }
+
     /* ===== NEW TESTIMONIALS (What Our Customers Says) ===== */
     .ab-testimonials {
       position: relative;
@@ -762,6 +1077,7 @@
     .ab-hero .container,
     .ab-philosophy,
     .ab-process,
+    .ab-founders,
     .ab-testimonials,
     .ab-cta-section,
     .ab-divider {
@@ -774,6 +1090,7 @@
       .ab-hero .container,
       .ab-philosophy,
       .ab-process,
+      .ab-founders,
       .ab-testimonials,
       .ab-cta-section,
       .ab-divider {
@@ -923,9 +1240,15 @@
         padding-bottom: 64px;
       }
 
+      .ab-founders {
+        padding-top: 64px;
+        padding-bottom: 64px;
+      }
+
       .ab-hero .container,
       .ab-philosophy,
       .ab-process,
+      .ab-founders,
       .ab-testimonials,
       .ab-cta-section {
         padding-left: 20px;
@@ -983,6 +1306,7 @@
       .ab-hero .container,
       .ab-philosophy,
       .ab-process,
+      .ab-founders,
       .ab-testimonials,
       .ab-cta-section {
         padding-left: 16px;
@@ -1180,6 +1504,100 @@
       </div>
     </section>
 
+    <!-- Divider -->
+    <div class="ab-divider container"></div>
+
+    <!-- ===== LEADERSHIP / FOUNDERS ===== -->
+    <section class="ab-founders container" id="founders">
+      <div class="ab-founders-header">
+        <span class="tag-acid ab-reveal" data-from="left">Leadership</span>
+        <h2 class="ab-reveal" data-from="left">The Minds Behind the Vision</h2>
+        <p class="ab-founders-intro ab-reveal" data-from="left">
+          United by a passion for relentless craft and digital distinction, our founders combine high-impact creative strategy with robust engineering architecture to build digital experiences that resonate.
+        </p>
+      </div>
+
+      <div class="ab-founders-grid">
+        <!-- Ramya Isha (Founder & CEO) -->
+        <article class="ab-founder-card ab-reveal" data-from="left">
+          <div class="ab-founder-media">
+            <img src="assets/ramya-isha.jpg" alt="Ramya Isha — Founder & CEO" class="ab-founder-img" loading="lazy">
+            <div class="ab-founder-media-overlay"></div>
+            <div class="ab-founder-badge-floating">
+              <span class="ab-founder-badge-dot"></span>
+              <span>Founder</span>
+            </div>
+          </div>
+          <div class="ab-founder-body">
+            <div class="ab-founder-meta">
+              <span class="ab-founder-title-badge">Founder &amp; CEO</span>
+              <span class="ab-founder-status">Vision &amp; Strategy</span>
+            </div>
+            <h3 class="ab-founder-name">Ramya Isha</h3>
+            <div class="ab-founder-role">Founder &amp; Chief Executive Officer</div>
+            <p class="ab-founder-desc">
+              As Founder and CEO of Nabulsi.tech, Ramya guides the studio's overarching vision, creative direction, and strategic client partnerships. With an obsessive eye for editorial aesthetics and market resonance, she transforms bold ideas into category-defining digital brands that inspire and scale globally.
+            </p>
+            <div class="ab-founder-footer">
+              <div class="ab-founder-socials">
+                <a href="https://www.linkedin.com/company/94871943/" target="_blank" rel="noopener noreferrer" class="ab-founder-linkedin magnetic" aria-label="Ramya Isha LinkedIn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  <span>Connect on LinkedIn</span>
+                  <span class="material-symbols-outlined">north_east</span>
+                </a>
+              </div>
+              <a href="mailto:ramia@nabulsi.tech" class="ab-founder-email magnetic" title="Email Ramya Isha">
+                <span class="material-symbols-outlined">mail</span>
+                <span>ramia@nabulsi.tech</span>
+              </a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Ankit Kumar (Co-Founder & CTO) -->
+        <article class="ab-founder-card ab-reveal" data-from="right">
+          <div class="ab-founder-media">
+            <img src="assets/ankit-kumar.jpg" alt="Ankit Kumar — Co-Founder & CTO" class="ab-founder-img" loading="lazy">
+            <div class="ab-founder-media-overlay"></div>
+            <div class="ab-founder-badge-floating">
+              <span class="ab-founder-badge-dot"></span>
+              <span>Co-Founder</span>
+            </div>
+          </div>
+          <div class="ab-founder-body">
+            <div class="ab-founder-meta">
+              <span class="ab-founder-title-badge">Co-Founder &amp; CTO</span>
+              <span class="ab-founder-status">Tech &amp; Engineering</span>
+            </div>
+            <h3 class="ab-founder-name">Ankit Kumar</h3>
+            <div class="ab-founder-role">Co-Founder &amp; Chief Technology Officer</div>
+            <p class="ab-founder-desc">
+              As Co-Founder and CTO of Nabulsi.tech, Ankit spearheads technical architecture, system design, and product engineering. Blending deep full-stack mastery with performance precision, he leads the development of lightning-fast web applications, creative interactive technology, and rock-solid infrastructure.
+            </p>
+            <div class="ab-founder-footer">
+              <div class="ab-founder-socials">
+                <a href="https://www.linkedin.com/company/94871943/" target="_blank" rel="noopener noreferrer" class="ab-founder-linkedin magnetic" aria-label="Ankit Kumar LinkedIn">
+                  <svg viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                  </svg>
+                  <span>Connect on LinkedIn</span>
+                  <span class="material-symbols-outlined">north_east</span>
+                </a>
+              </div>
+              <a href="mailto:ankit@nabulsi.tech" class="ab-founder-email magnetic" title="Email Ankit Kumar">
+                <span class="material-symbols-outlined">mail</span>
+                <span>ankit@nabulsi.tech</span>
+              </a>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- Divider -->
+    <div class="ab-divider container"></div>
 
     <!-- ===== TESTIMONIALS (What Our Customers Says) ===== -->
     <section class="ab-testimonials container" style="position: relative;">
