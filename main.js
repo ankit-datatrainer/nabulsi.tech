@@ -1200,8 +1200,16 @@ function initApp() {
     // Show the button immediately
     musicToggleBtn.classList.add('visible');
 
-    // Set volume to 30%
+    // Set volume strictly to 30% and ensure looping
     bgAudio.volume = 0.3;
+    bgAudio.loop = true;
+
+    // Prevent any system/browser default from raising the volume above 30%
+    bgAudio.addEventListener('volumechange', () => {
+      if (bgAudio.volume > 0.3) {
+        bgAudio.volume = 0.3;
+      }
+    });
 
     // --- Cross-page persistence via localStorage ---
     const MUSIC_KEY = 'nabulsi_music_playing';
@@ -1209,12 +1217,29 @@ function initApp() {
     const isExplicitlyPaused = localStorage.getItem(MUSIC_KEY) === 'false';
     const savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY) || '0');
 
-    if (savedTime && !isNaN(savedTime)) {
-      bgAudio.currentTime = savedTime;
+    // Safely apply saved playback timestamp across page loads
+    const applySavedTime = () => {
+      try {
+        if (savedTime && !isNaN(savedTime) && isFinite(savedTime)) {
+          if (bgAudio.duration && savedTime >= bgAudio.duration) {
+            bgAudio.currentTime = 0;
+          } else {
+            bgAudio.currentTime = savedTime;
+          }
+        }
+      } catch (e) {}
+    };
+
+    if (bgAudio.readyState >= 1) {
+      applySavedTime();
+    } else {
+      bgAudio.addEventListener('loadedmetadata', applySavedTime, { once: true });
+      bgAudio.addEventListener('canplay', applySavedTime, { once: true });
     }
 
     function startMusic() {
       bgAudio.volume = 0.3;
+      bgAudio.loop = true;
       const playPromise = bgAudio.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
@@ -1225,6 +1250,7 @@ function initApp() {
           const onFirstGesture = () => {
             if (localStorage.getItem(MUSIC_KEY) !== 'false') {
               bgAudio.volume = 0.3;
+              bgAudio.loop = true;
               bgAudio.play().then(() => {
                 musicToggleBtn.classList.add('playing');
                 localStorage.setItem(MUSIC_KEY, 'true');
@@ -1244,20 +1270,25 @@ function initApp() {
     // If user hasn't explicitly clicked pause, auto-play immediately on load
     if (!isExplicitlyPaused) {
       startMusic();
+    } else {
+      musicToggleBtn.classList.remove('playing');
     }
 
-    // Save position periodically so page navigation doesn't lose it
-    setInterval(() => {
-      if (!bgAudio.paused) {
+    // Continuously save current playback position
+    bgAudio.addEventListener('timeupdate', () => {
+      if (!bgAudio.paused && bgAudio.currentTime > 0) {
         localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
       }
-    }, 500);
-
-    // Save state before leaving the page
-    window.addEventListener('beforeunload', () => {
-      localStorage.setItem(MUSIC_KEY, String(!bgAudio.paused));
-      localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
     });
+
+    const persistState = () => {
+      if (bgAudio) {
+        localStorage.setItem(MUSIC_KEY, String(!bgAudio.paused));
+        localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
+      }
+    };
+    window.addEventListener('beforeunload', persistState);
+    window.addEventListener('pagehide', persistState);
 
     bgAudio.addEventListener('play', () => {
       localStorage.setItem(MUSIC_KEY, 'true');
@@ -1270,7 +1301,8 @@ function initApp() {
     });
 
     // Toggle on click
-    musicToggleBtn.addEventListener('click', () => {
+    musicToggleBtn.addEventListener('click', (e) => {
+      e.preventDefault();
       if (!bgAudio.paused) {
         // Currently playing → pause
         bgAudio.pause();
@@ -1279,6 +1311,7 @@ function initApp() {
       } else {
         // Currently paused → play
         bgAudio.volume = 0.3;
+        bgAudio.loop = true;
         bgAudio.play().then(() => {
           musicToggleBtn.classList.add('playing');
           localStorage.setItem(MUSIC_KEY, 'true');

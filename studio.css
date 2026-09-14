@@ -329,15 +329,79 @@ body[data-barba] .content-text { color: #111827 !important; font-size: clamp(20p
 }
 
 .fab svg {
-  width: 22px;
-  height: 22px;
-  stroke: #ffffff;
-  stroke-width: 2.5;
+  width: 22px !important;
+  height: 22px !important;
+  stroke: #ffffff !important;
+  stroke-width: 2.5 !important;
+  display: block !important;
 }
 
+/* Equalizer Icon & Animated Bars */
+.equalizer-icon {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 3.5px !important;
+  width: 26px !important;
+  height: 24px !important;
+  pointer-events: none !important;
+}
+
+.equalizer-icon .bar {
+  display: block !important;
+  width: 3.5px !important;
+  background: #ffffff !important;
+  border-radius: 99px !important;
+  transition: height 0.3s ease, opacity 0.3s ease !important;
+}
+
+/* Paused / resting state - crisp white equalizer bars */
+.equalizer-icon .bar:nth-child(1) { height: 9px !important; }
+.equalizer-icon .bar:nth-child(2) { height: 19px !important; }
+.equalizer-icon .bar:nth-child(3) { height: 13px !important; }
+.equalizer-icon .bar:nth-child(4) { height: 7px !important; }
+
+/* Playing state with active equalizer animation */
 .fab.playing {
   background: #e8883b !important;
-  box-shadow: 0 0 0 4px rgba(255, 157, 80, 0.3), 0 8px 24px rgba(255, 157, 80, 0.5) !important;
+  box-shadow: 0 0 0 4px rgba(255, 157, 80, 0.35), 0 8px 24px rgba(255, 157, 80, 0.55) !important;
+}
+
+.fab.playing .equalizer-icon .bar:nth-child(1) {
+  animation: eqBar1 0.85s ease-in-out infinite alternate !important;
+}
+.fab.playing .equalizer-icon .bar:nth-child(2) {
+  animation: eqBar2 0.75s ease-in-out infinite alternate !important;
+  animation-delay: -0.25s !important;
+}
+.fab.playing .equalizer-icon .bar:nth-child(3) {
+  animation: eqBar3 0.95s ease-in-out infinite alternate !important;
+  animation-delay: -0.5s !important;
+}
+.fab.playing .equalizer-icon .bar:nth-child(4) {
+  animation: eqBar4 0.8s ease-in-out infinite alternate !important;
+  animation-delay: -0.15s !important;
+}
+
+@keyframes eqBar1 {
+  0%   { height: 4px; }
+  50%  { height: 18px; }
+  100% { height: 7px; }
+}
+@keyframes eqBar2 {
+  0%   { height: 19px; }
+  50%  { height: 6px; }
+  100% { height: 21px; }
+}
+@keyframes eqBar3 {
+  0%   { height: 6px; }
+  50%  { height: 20px; }
+  100% { height: 11px; }
+}
+@keyframes eqBar4 {
+  0%   { height: 15px; }
+  50%  { height: 5px; }
+  100% { height: 17px; }
 }
 .lottie-panel { background: #111827 !important; }
 .lottie-panel .studio-art-label { color: #fff; }
