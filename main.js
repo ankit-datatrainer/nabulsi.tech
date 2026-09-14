@@ -1200,14 +1200,14 @@ function initApp() {
     // Show the button immediately
     musicToggleBtn.classList.add('visible');
 
-    // Set volume strictly to 30% and ensure looping
-    bgAudio.volume = 0.3;
+    // Set volume strictly to 10% and ensure looping
+    bgAudio.volume = 0.1;
     bgAudio.loop = true;
 
-    // Prevent any system/browser default from raising the volume above 30%
+    // Prevent any system/browser default from raising the volume above 10%
     bgAudio.addEventListener('volumechange', () => {
-      if (bgAudio.volume > 0.3) {
-        bgAudio.volume = 0.3;
+      if (bgAudio.volume > 0.1) {
+        bgAudio.volume = 0.1;
       }
     });
 
@@ -1238,41 +1238,27 @@ function initApp() {
     }
 
     function startMusic() {
-      bgAudio.volume = 0.3;
+      bgAudio.volume = 0.1;
       bgAudio.loop = true;
       const playPromise = bgAudio.play();
       if (playPromise !== undefined) {
         playPromise.then(() => {
           musicToggleBtn.classList.add('playing');
           localStorage.setItem(MUSIC_KEY, 'true');
+          ['click', 'pointerdown', 'touchstart', 'keydown'].forEach(evt => {
+            document.removeEventListener(evt, startMusic, true);
+          });
         }).catch(() => {
-          // Autoplay blocked by browser policy until first gesture: listen once across user events
-          const onFirstGesture = () => {
-            if (localStorage.getItem(MUSIC_KEY) !== 'false') {
-              bgAudio.volume = 0.3;
-              bgAudio.loop = true;
-              bgAudio.play().then(() => {
-                musicToggleBtn.classList.add('playing');
-                localStorage.setItem(MUSIC_KEY, 'true');
-              }).catch(() => {});
-            }
-            ['click', 'touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(evt => {
-              window.removeEventListener(evt, onFirstGesture, true);
-            });
-          };
-          ['click', 'touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(evt => {
-            window.addEventListener(evt, onFirstGesture, { once: true, passive: true, capture: true });
+          // Autoplay blocked by browser policy until first gesture:
+          ['click', 'pointerdown', 'touchstart', 'keydown'].forEach(evt => {
+            document.addEventListener(evt, startMusic, { once: true, passive: true, capture: true });
           });
         });
       }
     }
 
-    // If user hasn't explicitly clicked pause, auto-play immediately on load
-    if (!isExplicitlyPaused) {
-      startMusic();
-    } else {
-      musicToggleBtn.classList.remove('playing');
-    }
+    // Always start music when page loads
+    startMusic();
 
     // Continuously save current playback position
     bgAudio.addEventListener('timeupdate', () => {
