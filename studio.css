@@ -168,9 +168,139 @@ body[data-barba] .content-text { color: #111827 !important; font-size: clamp(20p
 .footer-cta .display-xl { font-size: clamp(56px,11vw,170px) !important; }
 .social-icon { background: #111827 !important; color: #fff !important; border-color: #111827 !important; box-shadow: none !important; }
 .social-icon:hover { background: #FF9D50 !important; border-color: #FF9D50 !important; }
-.wa-fab { background: #25D366 !important; color: #fff !important; border-color: #25D366 !important; box-shadow: 0 8px 24px rgba(37,211,102,.35) !important; }
-.wa-fab:hover { background: #20ba5a !important; }
-.wa-fab::before { display: none; }
+/* ===== Real WhatsApp Floating Widget & Animation ===== */
+.wa-fab {
+  position: fixed;
+  left: clamp(16px, 3vw, 28px);
+  bottom: clamp(18px, 3vw, 30px);
+  z-index: 9999;
+  height: 58px;
+  min-width: 58px;
+  max-width: 58px;
+  background: #ffffff !important;
+  border: 1.5px solid rgba(37, 211, 102, 0.45) !important;
+  border-radius: 9999px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: flex-start !important;
+  text-decoration: none !important;
+  box-shadow: 0 10px 28px rgba(37, 211, 102, 0.32), 0 2px 8px rgba(0, 0, 0, 0.06) !important;
+  padding: 4px !important;
+  overflow: hidden !important;
+  cursor: pointer;
+  transition: max-width 0.42s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease, border-color 0.35s ease !important;
+  animation: waFabBreath 2.8s ease-in-out infinite;
+}
+
+.wa-fab::before {
+  content: '' !important;
+  position: absolute;
+  inset: -2px;
+  border-radius: 9999px;
+  border: 2px solid rgba(37, 211, 102, 0.5);
+  pointer-events: none;
+  animation: waWave 2.8s cubic-bezier(0.24, 0, 0.38, 1) infinite;
+  display: block !important;
+}
+
+.wa-fab:hover {
+  max-width: 200px !important;
+  background: #ffffff !important;
+  border-color: #25D366 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 14px 36px rgba(37, 211, 102, 0.48), 0 4px 14px rgba(0, 0, 0, 0.08) !important;
+}
+
+.wa-fab:active {
+  transform: translateY(1px) scale(0.98) !important;
+}
+
+.wa-fab-inner {
+  display: inline-flex;
+  align-items: center;
+  height: 100%;
+  white-space: nowrap;
+}
+
+.wa-fab .wa-logo-img {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  object-fit: contain;
+  display: block;
+  flex-shrink: 0;
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.wa-fab:hover .wa-logo-img {
+  transform: scale(1.08) rotate(-6deg);
+}
+
+.wa-fab .wa-label {
+  display: inline-flex !important;
+  align-items: center;
+  gap: 8px;
+  max-width: 0 !important;
+  opacity: 0 !important;
+  overflow: hidden;
+  white-space: nowrap;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  transition: max-width 0.42s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease, padding 0.35s ease !important;
+  pointer-events: none;
+  background: transparent !important;
+  box-shadow: none !important;
+  position: static !important;
+  transform: none !important;
+}
+
+.wa-fab:hover .wa-label {
+  max-width: 140px !important;
+  opacity: 1 !important;
+  padding-left: 6px !important;
+  padding-right: 14px !important;
+}
+
+.wa-fab .wa-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #25D366;
+  box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7);
+  animation: waDotPulse 1.8s infinite;
+  flex-shrink: 0;
+}
+
+.wa-fab .wa-text {
+  font-family: 'Geist', 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: #111827;
+  letter-spacing: -0.01em;
+  white-space: nowrap;
+}
+
+@keyframes waFabBreath {
+  0%, 100% {
+    box-shadow: 0 8px 24px rgba(37, 211, 102, 0.28), 0 2px 6px rgba(0, 0, 0, 0.05);
+  }
+  50% {
+    box-shadow: 0 12px 32px rgba(37, 211, 102, 0.44), 0 3px 8px rgba(0, 0, 0, 0.08);
+  }
+}
+
+@keyframes waWave {
+  0% { transform: scale(0.96); opacity: 0.8; }
+  50% { transform: scale(1.22); opacity: 0; }
+  100% { transform: scale(1.22); opacity: 0; }
+}
+
+@keyframes waDotPulse {
+  0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+  70% { box-shadow: 0 0 0 6px rgba(37, 211, 102, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+}
 .lottie-panel { background: #111827 !important; }
 .lottie-panel .studio-art-label { color: #fff; }
 .lottie-tagline { color: #fff !important; position: relative; z-index: 1; }
@@ -217,8 +347,19 @@ body[data-barba] .content-text { color: #111827 !important; font-size: clamp(20p
   .footer-grid { gap: 30px; }
   .words__track { scroll-snap-type: x mandatory; overflow-x: auto; }
   .tcard { scroll-snap-align: start; min-width: min(82vw,360px); }
-  .wa-fab { bottom: 88px !important; left: 12px !important; width: 44px !important; height: 44px !important; }
-  .wa-label { display: none !important; }
+  .wa-fab {
+    bottom: 88px !important;
+    left: 12px !important;
+    height: 52px !important;
+    min-width: 52px !important;
+    max-width: 52px !important;
+    padding: 3px !important;
+  }
+  .wa-fab .wa-logo-img {
+    width: 42px !important;
+    height: 42px !important;
+    min-width: 42px !important;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
   *,*::before,*::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
