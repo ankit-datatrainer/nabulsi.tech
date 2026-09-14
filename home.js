@@ -641,26 +641,61 @@
     }
 
     if (musicToggleBtn && bgAudio) {
+      // Set volume to 30%
+      bgAudio.volume = 0.3;
+
       const MUSIC_KEY = 'nabulsi_music_playing';
       const MUSIC_TIME_KEY = 'nabulsi_music_time';
-      const wasPlaying = localStorage.getItem(MUSIC_KEY) === 'true';
+      const isExplicitlyPaused = localStorage.getItem(MUSIC_KEY) === 'false';
       const savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY) || '0');
 
       if (savedTime && !isNaN(savedTime)) {
         bgAudio.currentTime = savedTime;
       }
 
-      if (wasPlaying) {
-        bgAudio.play().then(() => {
-          musicToggleBtn.classList.add('playing');
-        }).catch(() => {});
+      function startMusic() {
+        bgAudio.volume = 0.3;
+        const playPromise = bgAudio.play();
+        if (playPromise !== undefined) {
+          playPromise.then(() => {
+            musicToggleBtn.classList.add('playing');
+            localStorage.setItem(MUSIC_KEY, 'true');
+          }).catch(() => {
+            // Autoplay blocked by browser policy until first gesture: listen once across user events
+            const onFirstGesture = () => {
+              if (localStorage.getItem(MUSIC_KEY) !== 'false') {
+                bgAudio.volume = 0.3;
+                bgAudio.play().then(() => {
+                  musicToggleBtn.classList.add('playing');
+                  localStorage.setItem(MUSIC_KEY, 'true');
+                }).catch(() => {});
+              }
+              ['click', 'touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(evt => {
+                window.removeEventListener(evt, onFirstGesture, true);
+              });
+            };
+            ['click', 'touchstart', 'scroll', 'pointerdown', 'keydown'].forEach(evt => {
+              window.addEventListener(evt, onFirstGesture, { once: true, passive: true, capture: true });
+            });
+          });
+        }
+      }
+
+      // If user hasn't explicitly muted/paused, auto-play immediately when website loads
+      if (!isExplicitlyPaused) {
+        startMusic();
       }
 
       setInterval(() => {
         if (!bgAudio.paused) {
           localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
         }
-      }, 1000);
+      }, 500);
+
+      window.addEventListener('beforeunload', () => {
+        localStorage.setItem(MUSIC_KEY, String(!bgAudio.paused));
+        localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
+      });
 
       bgAudio.addEventListener('play', () => {
         localStorage.setItem(MUSIC_KEY, 'true');
@@ -674,6 +709,7 @@
 
       musicToggleBtn.addEventListener('click', () => {
         if (bgAudio.paused) {
+          bgAudio.volume = 0.3;
           bgAudio.play().then(() => {
             musicToggleBtn.classList.add('playing');
             localStorage.setItem(MUSIC_KEY, 'true');
