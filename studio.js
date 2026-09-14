@@ -27,20 +27,15 @@
     addEventListener('scroll', () => { if (!scrollPending) { scrollPending = true; requestAnimationFrame(progressUpdate); } }, {passive:true});
     addEventListener('resize', progressUpdate); progressUpdate();
 
-    const control = document.createElement('button'); control.type = 'button'; control.className = 'studio-motion';
     const sync = () => {
-      control.textContent = paused ? 'Play motion' : 'Pause motion';
-      control.setAttribute('aria-pressed', String(paused));
-      control.setAttribute('aria-label', paused ? 'Play decorative animations' : 'Pause decorative animations');
       document.body.classList.toggle('studio-paused', paused);
       localAnimations.forEach(a => paused ? a.finish() : null);
       if (window.gsap) window.gsap.globalTimeline.getChildren(true,true,false).forEach(tween => {
         if (tween.repeat() === -1) tween.paused(paused);
       });
     };
-    control.addEventListener('click', () => { paused = !paused; sync(); });
     preference.addEventListener('change', e => { paused = e.matches; sync(); });
-    document.body.append(control); sync();
+    sync();
 
     // Subtle fade in
     if ('IntersectionObserver' in window) {

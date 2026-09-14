@@ -88,8 +88,7 @@ a, button { -webkit-tap-highlight-color: transparent; }
 .hero__sub { color: #4b5563 !important; }
 .studio-kicker { display: inline-flex; gap: 12px; align-items: center; font: 12px/1.5 'Geist Mono',monospace; text-transform: uppercase; letter-spacing: .08em; margin-bottom: 26px; color: #FF9D50 !important; }
 .studio-kicker::before { content: ''; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
-.studio-motion { position: fixed; right: 20px; bottom: 22px; z-index: 950; background: #fff; color: #111827; border: 1px solid rgba(17,24,39,.2); padding: 12px 16px; border-radius: 50px; font: 12px 'Geist Mono',monospace; cursor: pointer; min-height: 44px; }
-.studio-motion:hover { border-color: #FF9D50; color: #FF9D50; }
+.studio-motion { display: none !important; }
 .hero__scroll { left: var(--margin); right: auto; bottom: 28px; transform: none; }
 .ticker,.values { background: #FF9D50 !important; color: #fff !important; padding-block: 26px; border: 0; }
 .ticker__row,.ticker em,.values__row { color: #fff !important; }
@@ -205,7 +204,6 @@ body[data-barba] .content-text { color: #111827 !important; font-size: clamp(20p
   .hero__sub { max-width: 100%; font-size: 16px; }
   .hero__scroll { display: none; }
   .studio-kicker { font-size: 11px; }
-  .studio-motion { bottom: 88px; right: 12px; font-size: 11px; padding: 10px 12px; }
   .dock { bottom: max(14px,env(safe-area-inset-bottom)); }
   .dock__btn { padding: 0 12px; }
   .work { border-radius: 20px 20px 0 0; }
