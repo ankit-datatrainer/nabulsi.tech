@@ -1187,13 +1187,7 @@ function initApp() {
   /* ========== FLOATING ACTION BUTTONS (Back to Top & Music) ========== */
   const backToTopBtn = document.getElementById('back-to-top');
   if (backToTopBtn) {
-    window.addEventListener('scroll', () => {
-      if (window.scrollY > 800) {
-        backToTopBtn.classList.add('visible');
-      } else {
-        backToTopBtn.classList.remove('visible');
-      }
-    }, { passive: true });
+    backToTopBtn.classList.add('visible');
 
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -1268,7 +1262,7 @@ function whatsappFab() {
   a.setAttribute('aria-label', 'Chat on WhatsApp');
   a.innerHTML =
     '<span class="wa-fab-inner">' +
-      '<img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="46" height="46">' +
+      '<img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="56" height="56">' +
       '<span class="wa-label">' +
         '<span class="wa-status-dot"></span>' +
         '<span class="wa-text">Chat with us</span>' +

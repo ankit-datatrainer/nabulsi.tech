@@ -615,13 +615,76 @@
     a.setAttribute("aria-label", "Chat on WhatsApp");
     a.innerHTML =
       '<span class="wa-fab-inner">' +
-        '<img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="46" height="46">' +
+        '<img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="56" height="56">' +
         '<span class="wa-label">' +
           '<span class="wa-status-dot"></span>' +
           '<span class="wa-text">Chat with us</span>' +
         '</span>' +
       '</span>';
     document.body.appendChild(a);
+  }
+
+  /* ------------------------------------------------------------- 14.5 FLOATING ACTIONS (Back to Top & Music) */
+  function initFloatingActions() {
+    const backToTopBtn = document.getElementById('back-to-top');
+    const bgAudio = document.getElementById('bg-audio');
+    const musicToggleBtn = document.getElementById('music-toggle');
+
+    if (backToTopBtn) {
+      backToTopBtn.addEventListener('click', () => {
+        if (window.lenis) {
+          window.lenis.scrollTo(0, { duration: 1.2 });
+        } else {
+          window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+      });
+    }
+
+    if (musicToggleBtn && bgAudio) {
+      const MUSIC_KEY = 'nabulsi_music_playing';
+      const MUSIC_TIME_KEY = 'nabulsi_music_time';
+      const wasPlaying = localStorage.getItem(MUSIC_KEY) === 'true';
+      const savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY) || '0');
+
+      if (savedTime && !isNaN(savedTime)) {
+        bgAudio.currentTime = savedTime;
+      }
+
+      if (wasPlaying) {
+        bgAudio.play().then(() => {
+          musicToggleBtn.classList.add('playing');
+        }).catch(() => {});
+      }
+
+      setInterval(() => {
+        if (!bgAudio.paused) {
+          localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
+        }
+      }, 1000);
+
+      bgAudio.addEventListener('play', () => {
+        localStorage.setItem(MUSIC_KEY, 'true');
+        musicToggleBtn.classList.add('playing');
+      });
+
+      bgAudio.addEventListener('pause', () => {
+        localStorage.setItem(MUSIC_KEY, 'false');
+        musicToggleBtn.classList.remove('playing');
+      });
+
+      musicToggleBtn.addEventListener('click', () => {
+        if (bgAudio.paused) {
+          bgAudio.play().then(() => {
+            musicToggleBtn.classList.add('playing');
+            localStorage.setItem(MUSIC_KEY, 'true');
+          }).catch(() => {});
+        } else {
+          bgAudio.pause();
+          musicToggleBtn.classList.remove('playing');
+          localStorage.setItem(MUSIC_KEY, 'false');
+        }
+      });
+    }
   }
 
   /* ------------------------------------------------------------- 15. BOOT */
@@ -635,6 +698,7 @@
     initMenu();
     initCursor();
     whatsappFab();
+    initFloatingActions();
 
     initLoader(function () {
       initHero();

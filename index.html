@@ -596,13 +596,34 @@
   <!-- ============================ WHATSAPP FLOATING BUTTON ============================ -->
   <a class="wa-fab" href="https://api.whatsapp.com/send/?phone=19012772195&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
     <span class="wa-fab-inner">
-      <img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="46" height="46">
+      <img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="56" height="56">
       <span class="wa-label">
         <span class="wa-status-dot"></span>
         <span class="wa-text">Chat with us</span>
       </span>
     </span>
   </a>
+
+  <!-- Floating Actions (Music & Back to top) -->
+  <div class="floating-actions" id="floating-actions">
+    <button class="fab visible" id="music-toggle" aria-label="Toggle Music" title="Play/Pause Background Music">
+      <div class="equalizer-icon">
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+        <span class="bar"></span>
+      </div>
+    </button>
+    <button class="fab visible" id="back-to-top" aria-label="Back to Top" title="Scroll to Top">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
+  </div>
+
+  <audio id="bg-audio" loop>
+    <source src="assets/blue_song.mp3" type="audio/mpeg">
+  </audio>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
