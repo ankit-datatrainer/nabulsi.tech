@@ -406,10 +406,6 @@
 </head>
 <body>
 
-  <!-- Background Video -->
-  <video class="bg-video" id="bg-video" autoplay loop muted playsinline preload="auto"
-    src="assets/V11-Nabulsi-tech-1.mov">
-  </video>
 
   <!-- Navbar -->
   <nav class="navbar">
@@ -440,13 +436,13 @@
 
   <!-- Hero -->
   <section class="hero" id="hero">
-    <div class="hero-content">
+    <div class="hero-content anim-fade">
       <h1 class="hero-intro">
         Hey there, meet Nabulsi.tech,<br>
         a creative technology studio for ambitious ideas
       </h1>
       <p class="hero-typewriter" id="typewriter"></p>
-      <div class="hero-pills" id="hero-pills">
+      <div class="hero-pills anim-stagger" id="hero-pills">
         <a class="pill" href="contact.html">Pitch us an idea</a>
         <a class="pill" href="mailto:ramia@nabulsi.tech">Come work here</a>
         <a class="pill" href="contact.html">Send a brief hello</a>
@@ -472,36 +468,38 @@
 
     /* ===== VIDEO MOUSE SCRUB ===== */
     const video = document.getElementById('bg-video');
-    const SENSITIVITY = 0.8;
-    let prevX = null;
-    let targetTime = 0;
-    let isSeeking = false;
+    if (video) {
+      const SENSITIVITY = 0.8;
+      let prevX = null;
+      let targetTime = 0;
+      let isSeeking = false;
 
-    video.addEventListener('loadedmetadata', () => {
-      targetTime = 0;
-      video.currentTime = 0;
-    });
+      video.addEventListener('loadedmetadata', () => {
+        targetTime = 0;
+        video.currentTime = 0;
+      });
 
-    window.addEventListener('mousemove', (e) => {
-      if (!video.duration) return;
-      if (prevX === null) { prevX = e.clientX; return; }
-      const delta = e.clientX - prevX;
-      prevX = e.clientX;
-      const offset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
-      targetTime = Math.max(0, Math.min(video.duration, targetTime + offset));
-      if (!isSeeking) {
-        isSeeking = true;
-        video.currentTime = targetTime;
-      }
-    });
+      window.addEventListener('mousemove', (e) => {
+        if (!video.duration) return;
+        if (prevX === null) { prevX = e.clientX; return; }
+        const delta = e.clientX - prevX;
+        prevX = e.clientX;
+        const offset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
+        targetTime = Math.max(0, Math.min(video.duration, targetTime + offset));
+        if (!isSeeking) {
+          isSeeking = true;
+          video.currentTime = targetTime;
+        }
+      });
 
-    video.addEventListener('seeked', () => {
-      if (Math.abs(video.currentTime - targetTime) > 0.01) {
-        video.currentTime = targetTime;
-      } else {
-        isSeeking = false;
-      }
-    });
+      video.addEventListener('seeked', () => {
+        if (Math.abs(video.currentTime - targetTime) > 0.01) {
+          video.currentTime = targetTime;
+        } else {
+          isSeeking = false;
+        }
+      });
+    }
 
     /* ===== TYPEWRITER ===== */
     const typewriterEl = document.getElementById('typewriter');
@@ -528,6 +526,65 @@
     document.getElementById('copy-email').addEventListener('click', () => {
       navigator.clipboard.writeText('ramia@nabulsi.tech');
     });
+  </script>
+
+  <!-- Floating Actions -->
+  <div class="floating-actions">
+    <button class="fab visible" id="music-toggle" aria-label="Toggle Music" title="Play/Pause Background Music">
+      <div class="equalizer-icon">
+        <span class="bar"></span><span class="bar"></span><span class="bar"></span><span class="bar"></span>
+      </div>
+    </button>
+    <button class="fab visible" id="back-to-top" aria-label="Back to Top" title="Scroll to Top">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M12 19V5M5 12l7-7 7 7"/>
+      </svg>
+    </button>
+  </div>
+
+  <audio id="bg-audio" loop preload="auto" autoplay>
+    <source src="assets/blue_song.mp3" type="audio/mpeg">
+  </audio>
+  <script>
+    (function () {
+      var a = document.getElementById('bg-audio');
+      if (!a) return;
+      a.volume = 0.1;
+      a.loop = true;
+      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
+
+      function playAudio() {
+        var p = a.play();
+        if (p !== undefined) {
+          p.then(function () {
+            var btn = document.getElementById('music-toggle');
+            if (btn) btn.classList.add('playing');
+            removeGestures();
+          }).catch(function () {});
+        }
+      }
+
+      var events = ['click', 'pointerdown', 'touchstart', 'touchend', 'mousedown', 'keydown'];
+      function onGesture() {
+        if (a.paused) {
+          playAudio();
+        } else {
+          removeGestures();
+        }
+      }
+      function removeGestures() {
+        events.forEach(function (e) {
+          window.removeEventListener(e, onGesture, true);
+          document.removeEventListener(e, onGesture, true);
+        });
+      }
+      events.forEach(function (e) {
+        window.addEventListener(e, onGesture, { capture: true, passive: true });
+        document.addEventListener(e, onGesture, { capture: true, passive: true });
+      });
+
+      playAudio();
+    })();
   </script>
   <script src="studio.js?v=2026orange"></script>
 </body>

@@ -196,13 +196,13 @@
   </nav>
   <main data-barba="container" data-barba-namespace="app-dev-case-study">
     <!-- Service Hero Image -->
-    <section class="service-hero">
+    <section class="service-hero anim-fade">
       <!-- Using SEO project image for the demo. Will be replaced by dynamic content. -->
       <img src="assets/app_dev_project_1779235802659.png" alt="App Development Showcase" id="hero-img">
     </section>
 
     <!-- Meta Details Section -->
-    <section class="service-meta-section">
+    <section class="service-meta-section anim-swipe-left">
       <div class="container">
         
         <div class="meta-top-row">
@@ -222,7 +222,7 @@
     </section>
 
     <!-- Detailed Content Placeholder -->
-    <section class="service-content" id="project-overview">
+    <section class="service-content anim-reveal" id="project-overview">
       <div class="container">
         <div class="content-grid">
           <div>
@@ -273,7 +273,7 @@
   <footer class="footer-creative">
     <div class="footer-creative-inner">
       <!-- Huge Bold Typography -->
-      <div class="footer-cta reveal">
+      <div class="footer-cta reveal anim-reveal">
         <h2 class="display-xl" style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
           Let's Talk
         </h2>
@@ -344,16 +344,52 @@
     </button>
   </div>
 
-    <audio id="bg-audio" loop preload="auto">
+    <audio id="bg-audio" loop preload="auto" autoplay>
     <source src="assets/blue_song.mp3" type="audio/mpeg">
   </audio>
   <script>
     (function () {
       var a = document.getElementById('bg-audio');
-      if (a) {
-        a.volume = 0.1;
-        a.loop = true;
+      if (!a) return;
+      a.volume = 0.1;
+      a.loop = true;
+      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
+      try { a.currentTime = 0; } catch (e) {}
+
+      function playAudio() {
+        if (a.paused) {
+          try { a.currentTime = 0; } catch (e) {}
+          var p = a.play();
+          if (p !== undefined) {
+            p.then(function () {
+              var btn = document.getElementById('music-toggle');
+              if (btn) btn.classList.add('playing');
+              removeGestures();
+            }).catch(function () {});
+          }
+        } else {
+          var btn = document.getElementById('music-toggle');
+          if (btn) btn.classList.add('playing');
+          removeGestures();
+        }
       }
+
+      var events = ['click', 'pointerdown', 'touchstart', 'mousedown', 'keydown', 'scroll', 'wheel'];
+      function onGesture() {
+        playAudio();
+      }
+      function removeGestures() {
+        events.forEach(function (e) {
+          window.removeEventListener(e, onGesture, true);
+          document.removeEventListener(e, onGesture, true);
+        });
+      }
+      events.forEach(function (e) {
+        window.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+        document.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+      });
+
+      playAudio();
     })();
   </script>
 

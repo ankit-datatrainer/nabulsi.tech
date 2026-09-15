@@ -3348,8 +3348,11 @@ body[data-barba] .content-text { color: var(--ink) !important; font-family: var(
 .footer-link:hover { color: var(--brand) !important; transform: translateX(6px); }
 .footer-logo { font-family: var(--font) !important; font-size: var(--fs-small, 0.75rem) !important; color: var(--ink) !important; letter-spacing: 0.06em !important; text-transform: uppercase; }
 .footer-cta .display-xl { font-family: var(--font) !important; color: var(--ink) !important; font-weight: 500 !important; letter-spacing: var(--ls-tight) !important; }
-.footer-cta a { color: var(--ink) !important; border-color: var(--brand) !important; }
+.footer-cta a { color: var(--ink) !important; border-color: var(--brand) !important; text-decoration: none !important; }
+.footer-cta a:hover { text-decoration: none !important; }
 .footer-cta-emails { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: clamp(16px, 3.5vw, 44px); }
+.footer-cta-emails a, .footer-cta-emails a:hover { text-decoration: none !important; }
+a[href^="mailto:"], a[href^="mailto:"]:hover, a[href^="mailto:"]:focus { text-decoration: none !important; }
 .footer-bottom { font-family: var(--font-mono) !important; color: var(--ink-o50) !important; }
 .social-icon { border-radius: var(--radius-sm) !important; background: #fff !important; box-shadow: none !important; border-color: var(--ink-o20) !important; }
 .social-icon:hover { background: var(--brand) !important; border-color: var(--brand) !important; }

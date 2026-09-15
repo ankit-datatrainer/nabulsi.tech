@@ -37,6 +37,42 @@
     preference.addEventListener('change', e => { paused = e.matches; sync(); });
     sync();
 
+    // Universal Section & Element Animations (Reveal, Fade, Swipe, Stagger)
+    const animSelector = '.anim-reveal, .anim-fade, .anim-swipe-left, .anim-swipe-right, .anim-stagger, [data-anim]';
+    const animElements = document.querySelectorAll(animSelector);
+
+    if (animElements.length > 0) {
+      if (paused || !('IntersectionObserver' in window)) {
+        animElements.forEach(el => el.classList.add('in-view'));
+      } else {
+        const animObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+              animObserver.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.08,
+          rootMargin: '0px 0px -40px 0px'
+        });
+
+        animElements.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight * 0.92 && rect.bottom > 0) {
+            setTimeout(() => el.classList.add('in-view'), 60);
+          } else {
+            animObserver.observe(el);
+          }
+        });
+
+        // Safety fallback: ensure elements become visible after 2.5s
+        setTimeout(() => {
+          animElements.forEach(el => el.classList.add('in-view'));
+        }, 2500);
+      }
+    }
+
     // Subtle fade in
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(entries => entries.forEach(entry => {

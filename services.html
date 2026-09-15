@@ -719,7 +719,7 @@
   <main>
 
     <!-- ===== HERO ===== -->
-    <section class="sv-hero container">
+    <section class="sv-hero container anim-fade">
       <div class="sv-hero-inner">
         <div class="sv-hero-label">
           <span class="sv-hero-dot"></span>
@@ -735,17 +735,9 @@
       </div>
     </section>
 
-    <!-- ===== SHOWREEL VIDEO ===== -->
-    <section class="sv-video-section" style="margin-bottom: clamp(40px, 6vw, 80px);">
-      <div class="sv-video-wrap sv-reveal" data-from="bottom">
-        <video autoplay loop muted playsinline>
-          <source src="assets/nabulsi-showreel.mp4" type="video/mp4">
-        </video>
-      </div>
-    </section>
 
     <!-- ===== NETFLIX-STYLE SERVICES BROWSER ===== -->
-    <section class="nf-browse sv-reveal" data-from="bottom">
+    <section class="nf-browse sv-reveal anim-reveal" data-from="bottom">
       <div class="nf-browse-inner">
         <div class="nf-bar">
           <span class="nf-bar-eyebrow">Browse Services</span>
@@ -788,7 +780,7 @@
     <!-- ===== GROWTH / APPROACH ===== -->
     <section class="sv-growth container">
       <div class="sv-growth-grid">
-        <div class="sv-growth-text">
+        <div class="sv-growth-text anim-swipe-left">
           <span class="tag-acid sv-reveal" data-from="left">Our Approach</span>
           <h2 class="sv-reveal" data-from="left">How We Drive Your Growth</h2>
           <p class="sv-reveal" data-from="left">
@@ -799,7 +791,7 @@
             <span class="btn-label">Explore Methodology <span class="material-symbols-outlined">arrow_forward</span></span>
           </a>
         </div>
-        <div class="sv-growth-img sv-reveal" data-from="right" style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: radial-gradient(circle at center, #1f050b 0%, #0a0104 100%); border-radius: var(--radius-2xl); border: 1px solid rgba(255,69,0,0.15); box-shadow: 0 30px 80px rgba(0,0,0,0.4); overflow: hidden; position: relative; perspective: 1200px;">
+        <div class="sv-growth-img sv-reveal anim-swipe-right" data-from="right" style="display: flex; align-items: center; justify-content: center; width: 100%; aspect-ratio: 4/3; background: radial-gradient(circle at center, #1f050b 0%, #0a0104 100%); border-radius: var(--radius-2xl); border: 1px solid rgba(255,69,0,0.15); box-shadow: 0 30px 80px rgba(0,0,0,0.4); overflow: hidden; position: relative; perspective: 1200px;">
           
           <!-- Background Ambient Glow -->
           <div style="position: absolute; width: 300px; height: 300px; background: rgba(255,69,0,0.2); filter: blur(100px); border-radius: 50%; animation: pulse-glow 4s ease-in-out infinite alternate;"></div>
@@ -1166,7 +1158,7 @@
   <!-- Footer -->
   <footer class="footer-creative">
     <div class="footer-creative-inner">
-      <div class="footer-cta sv-reveal" data-from="bottom">
+      <div class="footer-cta sv-reveal anim-reveal" data-from="bottom">
         <h2 class="display-xl" style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
           Let's Talk
         </h2>
@@ -1230,16 +1222,52 @@
     </button>
   </div>
 
-    <audio id="bg-audio" loop preload="auto">
+    <audio id="bg-audio" loop preload="auto" autoplay>
     <source src="assets/blue_song.mp3" type="audio/mpeg">
   </audio>
   <script>
     (function () {
       var a = document.getElementById('bg-audio');
-      if (a) {
-        a.volume = 0.1;
-        a.loop = true;
+      if (!a) return;
+      a.volume = 0.1;
+      a.loop = true;
+      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
+      try { a.currentTime = 0; } catch (e) {}
+
+      function playAudio() {
+        if (a.paused) {
+          try { a.currentTime = 0; } catch (e) {}
+          var p = a.play();
+          if (p !== undefined) {
+            p.then(function () {
+              var btn = document.getElementById('music-toggle');
+              if (btn) btn.classList.add('playing');
+              removeGestures();
+            }).catch(function () {});
+          }
+        } else {
+          var btn = document.getElementById('music-toggle');
+          if (btn) btn.classList.add('playing');
+          removeGestures();
+        }
       }
+
+      var events = ['click', 'pointerdown', 'touchstart', 'mousedown', 'keydown', 'scroll', 'wheel'];
+      function onGesture() {
+        playAudio();
+      }
+      function removeGestures() {
+        events.forEach(function (e) {
+          window.removeEventListener(e, onGesture, true);
+          document.removeEventListener(e, onGesture, true);
+        });
+      }
+      events.forEach(function (e) {
+        window.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+        document.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+      });
+
+      playAudio();
     })();
   </script>
 

@@ -262,207 +262,115 @@
     [data-theme="dark"] .yeti-stars { opacity:1; }
     ===== END YETI STYLES ===== */
 
-    /* ===== LEFT: LOTTIE PANEL (animated background) ===== */
+    /* ===== LEFT: CORPORATE OFFICE PANEL (AI Generated) ===== */
     .lottie-panel {
       position: relative;
       border-radius: var(--radius-lg);
       overflow: hidden;
       min-height: 620px;
+      height: 620px;
       display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.16);
-      background: linear-gradient(135deg, #FF9D50 0%, #e8883b 50%, #fca966 100%);
-      background-size: 300% 300%;
-      animation: lottieGradientShift 8s ease infinite;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 16px 48px rgba(0, 0, 0, 0.14);
+      background: #111827;
+      border: 1px solid rgba(17, 24, 39, 0.12);
     }
 
-    @keyframes lottieGradientShift {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      50% {
-        background-position: 100% 50%;
-      }
-
-      100% {
-        background-position: 0% 50%;
-      }
-    }
-
-    /* Dark mode gradient */
-    [data-theme="dark"] .lottie-panel {
-      background: linear-gradient(135deg, #FF9D50 0%, #e8883b 50%, #fca966 100%);
-      background-size: 300% 300%;
-      animation: lottieGradientShift 8s ease infinite;
-    }
-
-    /* Floating orbs */
-    .lottie-orb {
-      position: absolute;
-      border-radius: 50%;
-      pointer-events: none;
-      filter: blur(40px);
-      opacity: 0.4;
-      animation: orbFloat 6s ease-in-out infinite;
-    }
-
-    .lottie-orb.orb-1 {
-      width: 220px;
-      height: 220px;
-      background: rgba(255,255,255, 0.25);
-      top: -50px;
-      left: -50px;
-      animation-duration: 7s;
-    }
-
-    .lottie-orb.orb-2 {
-      width: 160px;
-      height: 160px;
-      background: rgba(255, 157, 80, 0.3);
-      bottom: -40px;
-      right: -30px;
-      animation-duration: 9s;
-      animation-delay: 2s;
-    }
-
-    .lottie-orb.orb-3 {
-      width: 120px;
-      height: 120px;
-      background: rgba(255, 157, 80, 0.3);
-      top: 40%;
-      left: 65%;
-      animation-duration: 5s;
-      animation-delay: 1s;
-    }
-
-    @keyframes orbFloat {
-
-      0%,
-      100% {
-        transform: translate(0, 0) scale(1);
-      }
-
-      33% {
-        transform: translate(20px, -30px) scale(1.1);
-      }
-
-      66% {
-        transform: translate(-15px, 15px) scale(0.95);
-      }
-    }
-
-    /* Particle dots */
-    .lottie-particles {
+    .office-panel-img {
       position: absolute;
       inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .lottie-panel:hover .office-panel-img {
+      transform: scale(1.03);
+    }
+
+    .office-panel-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, rgba(17, 24, 39, 0.4) 0%, rgba(17, 24, 39, 0.05) 35%, rgba(17, 24, 39, 0.85) 100%);
       pointer-events: none;
-      overflow: hidden;
     }
 
-    .lottie-particles i {
-      position: absolute;
-      width: 3px;
-      height: 3px;
-      background: rgba(255,255,255, 0.5);
-      border-radius: 50%;
-      animation: particleRise linear infinite;
-    }
-
-    @keyframes particleRise {
-      0% {
-        transform: translateY(0) scale(1);
-        opacity: 0;
-      }
-
-      10% {
-        opacity: 0.6;
-      }
-
-      90% {
-        opacity: 0.6;
-      }
-
-      100% {
-        transform: translateY(-500px) scale(0.3);
-        opacity: 0;
-      }
-    }
-
-    /* Glass overlay ring */
-    .lottie-ring {
-      position: absolute;
-      width: 460px;
-      height: 460px;
-      border-radius: 50%;
-      border: 2px solid rgba(255,255,255, 0.15);
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      animation: ringPulse 4s ease-in-out infinite;
-    }
-
-    .lottie-ring::after {
-      content: '';
-      position: absolute;
-      inset: 24px;
-      border-radius: 50%;
-      border: 1px solid rgba(255,255,255, 0.08);
-    }
-
-    @keyframes ringPulse {
-
-      0%,
-      100% {
-        transform: translate(-50%, -50%) scale(1);
-        opacity: 0.6;
-      }
-
-      50% {
-        transform: translate(-50%, -50%) scale(1.08);
-        opacity: 1;
-      }
-    }
-
-    /* Lottie player wrapper — fills the whole panel */
-    .lottie-anim-wrap {
+    .office-panel-header {
       position: relative;
       z-index: 2;
-      width: clamp(300px, 90%, 520px);
+      padding: 24px 28px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      /* Hidden initially — revealed by GSAP after 4s */
-      opacity: 0;
-      transform: scale(0.6);
+      justify-content: space-between;
+      gap: 12px;
     }
 
-    .lottie-anim-wrap dotlottie-wc {
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.25));
+    .office-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(17, 24, 39, 0.78);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 157, 80, 0.45);
+      padding: 7px 16px;
+      border-radius: 999px;
+      color: #ffffff;
+      font-family: var(--font-label);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
     }
 
-    /* Tagline on the panel */
-    .lottie-tagline {
-      position: absolute;
-      left: clamp(20px, 5%, 40px);
-      bottom: clamp(20px, 5%, 36px);
-      z-index: 3;
+    .office-badge-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #FF9D50;
+      box-shadow: 0 0 10px #FF9D50;
+      animation: badgePulse 2s infinite ease-in-out;
+    }
+
+    @keyframes badgePulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(0.85); }
+    }
+
+    .office-panel-footer {
+      position: relative;
+      z-index: 2;
+      padding: 28px;
+    }
+
+    .office-tagline {
       font-family: var(--font-headline);
       font-weight: 900;
-      font-size: clamp(26px, 4vw, 44px);
-      line-height: 1.02;
+      font-size: clamp(28px, 3.5vw, 42px);
+      line-height: 1.05;
       letter-spacing: -0.02em;
       color: #ffffff;
-      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.35);
-      pointer-events: none;
+      text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
+      margin-bottom: 12px;
     }
 
-    .lottie-tagline span {
-      display: block;
+    .office-tagline .accent {
+      color: #FF9D50;
+    }
+
+    .office-location {
+      font-family: var(--font-body);
+      font-size: 13px;
+      color: rgba(255, 255, 255, 0.85);
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      text-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
     }
 
     /* ===== RIGHT: Cal.com card (theme aware) ===== */
@@ -637,11 +545,6 @@
   <!-- Scroll Progress Bar -->
   <div class="scroll-progress"></div>
 
-  <!-- Background Video (mouse-scrub) -->
-  <video class="contact-video-bg" id="contact-video" autoplay loop muted playsinline preload="auto"
-    src="assets/nabulsi-showreel.mp4">
-  </video>
-  <div class="contact-video-overlay"></div>
 
   <!-- Mobile Menu -->
   <div class="mobile-menu" id="mobile-menu">
@@ -683,89 +586,41 @@
         <div class="contact-grid">
 
           <!-- Row 1: Full-width heading -->
-          <div class="contact-head-row">
+          <div class="contact-head-row anim-fade">
             <span class="contact-tag">Get In Touch</span>
             <h1 class="contact-heading">Let's Build Bold Together</h1>
           </div>
 
-          <!-- Row 2: Yeti (left) + Cal card (right) -->
+          <!-- Row 2: Corporate office (left) + Cal card (right) -->
           <div class="contact-content-row">
 
-            <!-- ===== YETI PANEL HTML (COMMENTED OUT – UNCOMMENT TO REVERT) =====
-            <div class="yeti-panel">
-              <div class="yeti-cloud c1"></div>
-              <div class="yeti-cloud c2"></div>
-              <div class="yeti-cloud c3"></div>
-              <div class="yeti-stars" id="yeti-stars"></div>
-              <div class="yeti-stage">
-                <svg id="yeti" viewBox="0 0 320 340" xmlns="http://www.w3.org/2000/svg" aria-label="Nabulsi.tech Yeti">
-                  <ellipse cx="160" cy="330" rx="86" ry="12" fill="rgba(0,0,0,0.12)"/>
-                  <path d="M70 215 q-34 8 -30 58 q2 24 24 22 q16 -2 18 -22 z" fill="#ffffff"/>
-                  <path d="M250 215 q34 8 30 58 q-2 24 -24 22 q-16 -2 -18 -22 z" fill="#ffffff"/>
-                  <path d="M112 96 q-12 -34 -34 -40 q18 22 16 50 z" fill="#dfeaf2"/>
-                  <path d="M208 96 q12 -34 34 -40 q-18 22 -16 50 z" fill="#dfeaf2"/>
-                  <ellipse cx="160" cy="222" rx="108" ry="112" fill="#ffffff"/>
-                  <ellipse cx="160" cy="252" rx="78" ry="74" fill="#eaf4fb"/>
-                  <ellipse cx="120" cy="322" rx="26" ry="16" fill="#cfe6f5"/>
-                  <ellipse cx="200" cy="322" rx="26" ry="16" fill="#cfe6f5"/>
-                  <ellipse cx="160" cy="168" rx="82" ry="74" fill="#bfe3fb"/>
-                  <ellipse cx="160" cy="150" rx="82" ry="56" fill="#ffffff"/>
-                  <circle cx="118" cy="186" r="13" fill="#a9d8f5" opacity="0.6"/>
-                  <circle cx="202" cy="186" r="13" fill="#a9d8f5" opacity="0.6"/>
-                  <ellipse cx="134" cy="166" rx="22" ry="26" fill="#0f2a44"/>
-                  <ellipse cx="186" cy="166" rx="22" ry="26" fill="#0f2a44"/>
-                  <g class="yeti-pupil" data-eye="l">
-                    <circle cx="134" cy="166" r="20" fill="#11334f"/>
-                    <circle cx="140" cy="160" r="6.5" fill="#ffffff"/>
-                    <circle cx="129" cy="174" r="3" fill="#ffffff" opacity="0.7"/>
-                  </g>
-                  <g class="yeti-pupil" data-eye="r">
-                    <circle cx="186" cy="166" r="20" fill="#11334f"/>
-                    <circle cx="192" cy="160" r="6.5" fill="#ffffff"/>
-                    <circle cx="181" cy="174" r="3" fill="#ffffff" opacity="0.7"/>
-                  </g>
-                  <ellipse class="yeti-lid" cx="134" cy="166" rx="23" ry="27" fill="#bfe3fb"/>
-                  <ellipse class="yeti-lid" cx="186" cy="166" rx="23" ry="27" fill="#bfe3fb"/>
-                  <ellipse cx="160" cy="196" rx="7" ry="5" fill="#7fa8c4"/>
-                  <path d="M142 206 q18 18 36 0" stroke="#7fa8c4" stroke-width="4" fill="none" stroke-linecap="round"/>
-                </svg>
-              </div>
-              <div class="yeti-tagline">
-                <span>EXPLORE.</span>
-                <span>LEARN.</span>
-                <span>GROW.</span>
-              </div>
-            </div>
-            ===== END YETI HTML ===== -->
+            <!-- Left: Corporate Office Panel (AI Generated) -->
+            <div class="lottie-panel anim-swipe-left">
+              <img src="assets/corporate-office.jpg" alt="Nabulsi.tech Corporate Office Headquarters" class="office-panel-img" loading="eager" />
+              <div class="office-panel-overlay"></div>
 
-            <!-- Left: Lottie Animation panel -->
-            <div class="lottie-panel">
-              <!-- Animated orbs -->
-              <div class="lottie-orb orb-1"></div>
-              <div class="lottie-orb orb-2"></div>
-              <div class="lottie-orb orb-3"></div>
-
-              <!-- Particles -->
-              <div class="lottie-particles" id="lottie-particles"></div>
-
-              <!-- Glass ring -->
-              <div class="lottie-ring"></div>
-
-              <!-- Lottie animation -->
-              <div class="lottie-anim-wrap">
-                <dotlottie-wc src="https://lottie.host/2801a26b-0bcc-4af8-b8f7-f8c7a25d3909/CPegSNQvdT.lottie" autoplay
-                  loop></dotlottie-wc>
+              <div class="office-panel-header">
+                <div class="office-badge">
+                  <span class="office-badge-dot"></span>
+                  <span>Corporate Office · United States</span>
+                </div>
               </div>
 
-              <div class="lottie-tagline">
-                <span>EXPLORE.</span>
-                <span>LEARN.</span>
-                <span>GROW.</span>
+              <div class="office-panel-footer">
+                <div class="office-tagline">
+                  <span>EXPLORE.</span>
+                  <span class="accent">CREATE.</span>
+                  <span>SCALE.</span>
+                </div>
+                <div class="office-location">
+                  <span class="material-symbols-outlined" style="font-size:16px;color:#FF9D50;">business</span>
+                  <span>Nabulsi.tech Headquarters &amp; Studio</span>
+                </div>
               </div>
             </div>
 
             <!-- Right: Cal.com card -->
-            <div class="contact-form-col">
+            <div class="contact-form-col anim-swipe-right">
               <div class="contact-cal-header" style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;gap:12px;flex-wrap:wrap;">
                 <div style="display:flex;align-items:center;gap:8px;">
                   <span style="width:8px;height:8px;border-radius:50%;background:var(--color-primary);box-shadow:0 0 8px var(--color-primary);display:inline-block;"></span>
@@ -789,18 +644,10 @@
 
   </main>
 
-  <!-- Mouse hint -->
-  <div class="contact-mouse-hint" id="mouse-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-      <path d="M5 12h14M12 5l-3 3 3 3" />
-    </svg>
-    Move mouse to explore
-  </div>
-
   <!-- Footer -->
   <footer class="footer-creative">
     <div class="footer-creative-inner">
-      <div class="footer-cta reveal">
+      <div class="footer-cta reveal anim-reveal">
         <h2 class="display-xl"
           style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
           Let's Talk
@@ -889,21 +736,54 @@
     </button>
   </div>
 
-    <audio id="bg-audio" loop preload="auto">
+    <audio id="bg-audio" loop preload="auto" autoplay>
     <source src="assets/blue_song.mp3" type="audio/mpeg">
   </audio>
   <script>
     (function () {
       var a = document.getElementById('bg-audio');
-      if (a) {
-        a.volume = 0.1;
-        a.loop = true;
+      if (!a) return;
+      a.volume = 0.1;
+      a.loop = true;
+      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
+      try { a.currentTime = 0; } catch (e) {}
+
+      function playAudio() {
+        if (a.paused) {
+          try { a.currentTime = 0; } catch (e) {}
+          var p = a.play();
+          if (p !== undefined) {
+            p.then(function () {
+              var btn = document.getElementById('music-toggle');
+              if (btn) btn.classList.add('playing');
+              removeGestures();
+            }).catch(function () {});
+          }
+        } else {
+          var btn = document.getElementById('music-toggle');
+          if (btn) btn.classList.add('playing');
+          removeGestures();
+        }
       }
+
+      var events = ['click', 'pointerdown', 'touchstart', 'mousedown', 'keydown', 'scroll', 'wheel'];
+      function onGesture() {
+        playAudio();
+      }
+      function removeGestures() {
+        events.forEach(function (e) {
+          window.removeEventListener(e, onGesture, true);
+          document.removeEventListener(e, onGesture, true);
+        });
+      }
+      events.forEach(function (e) {
+        window.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+        document.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+      });
+
+      playAudio();
     })();
   </script>
-
-  <!-- Lottie Web Component -->
-  <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.9.14/dist/dotlottie-wc.js" type="module"></script>
 
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
@@ -916,7 +796,6 @@
       'use strict';
       if (typeof gsap === 'undefined' || typeof ScrollTrigger === 'undefined') return;
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      // The shared controller owns scrolling; no second Lenis instance here.
 
       // Contact page entrance timeline
       const tl = gsap.timeline({ defaults: { ease: 'power4.out' } });
@@ -924,73 +803,12 @@
         .fromTo('.lottie-panel', { x: -80, opacity: 0, scale: 0.96 }, { x: 0, opacity: 1, scale: 1, duration: 1.2 }, '-=0.6')
         .fromTo('.contact-cal-card', { x: 80, opacity: 0, scale: 0.96 }, { x: 0, opacity: 1, scale: 1, duration: 1.2, clearProps: 'transform' }, '-=1.0');
 
-      // Delayed Lottie animation reveal — waits 4 seconds, then scales up beautifully
-      gsap.to('.lottie-anim-wrap', {
-        opacity: 1,
-        scale: 1,
-        duration: 1.6,
-        delay: 4,
-        ease: 'elastic.out(1, 0.5)',
-      });
-
-      // Ring also reveals with the animation
-      gsap.fromTo('.lottie-ring',
-        { scale: 0.4, opacity: 0 },
-        { scale: 1, opacity: 0.6, duration: 1.4, delay: 4.2, ease: 'power3.out' }
-      );
-
       // Footer reveals
       gsap.utils.toArray('.reveal').forEach(el => {
         gsap.fromTo(el, { y: 60, opacity: 0 }, {
           y: 0, opacity: 1, duration: 1.2, ease: 'power3.out',
           scrollTrigger: { trigger: el, start: 'top 88%', toggleActions: 'play none none none' }
         });
-      });
-    })();
-  </script>
-  <script>
-    /* ===== VIDEO MOUSE-SCRUB ===== */
-    (function () {
-      const video = document.getElementById('contact-video');
-      const hint = document.getElementById('mouse-hint');
-      const SENSITIVITY = 0.8;
-      let prevX = null;
-      let targetTime = 0;
-      let isSeeking = false;
-      let hasMoved = false;
-
-      video.addEventListener('loadedmetadata', function () {
-        targetTime = 0;
-        video.currentTime = 0;
-      });
-
-      window.addEventListener('mousemove', function (e) {
-        if (!video.duration) return;
-
-        // Fade out hint after first move
-        if (!hasMoved && hint) {
-          hasMoved = true;
-          setTimeout(function () { hint.classList.add('faded'); }, 1500);
-        }
-
-        if (prevX === null) { prevX = e.clientX; return; }
-        var delta = e.clientX - prevX;
-        prevX = e.clientX;
-        var offset = (delta / window.innerWidth) * SENSITIVITY * video.duration;
-        targetTime = Math.max(0, Math.min(video.duration, targetTime + offset));
-
-        if (!isSeeking) {
-          isSeeking = true;
-          video.currentTime = targetTime;
-        }
-      });
-
-      video.addEventListener('seeked', function () {
-        if (Math.abs(video.currentTime - targetTime) > 0.01) {
-          video.currentTime = targetTime;
-        } else {
-          isSeeking = false;
-        }
       });
 
       /* ===== CONTACT TYPEWRITER ===== */

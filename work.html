@@ -222,13 +222,13 @@
   <main data-barba="container" data-barba-namespace="work" class="container">
 
     <!-- HERO -->
-    <header class="work-hero">
+    <header class="work-hero anim-fade">
       <div class="work-hero-grid">
         <h1 class="studio-work-title">
           <span class="split-line stagger-1"><span class="split-line-inner display-xl"><span class="prismatic-text">Selected</span></span></span>
           <span class="split-line stagger-2"><span class="split-line-inner display-xl">Works</span></span>
         </h1>
-        <div class="reveal" data-from="right">
+        <div class="reveal anim-swipe-right" data-from="right">
           <p class="body-lg work-hero-desc">
             We architect digital tension — building uncompromising brand experiences that demand attention in a saturated landscape.
           </p>
@@ -237,7 +237,7 @@
     </header>
 
     <!-- ===== 3D WORKS SHOWCASE ===== -->
-    <section class="wshow reveal" data-from="bottom" style="margin-bottom: var(--space-stack-md);">
+    <section class="wshow reveal anim-reveal" data-from="bottom" style="margin-bottom: var(--space-stack-md);">
       <div class="wshow-bg" id="wshow-bg"></div>
       <div class="wshow-stage">
         <div class="wshow-track" id="wshow-track"></div>
@@ -404,12 +404,12 @@
     <!-- STATEMENT -->
     <section class="statement-section">
       <div class="divider" style="margin-bottom:64px;"></div>
-      <div class="reveal" data-from="left">
+      <div class="reveal anim-swipe-left" data-from="left">
         <p class="statement-text">
           These are not just projects, they are stories of our clients, our work, and the impact we made.
         </p>
       </div>
-      <div class="statement-link reveal" data-from="left">
+      <div class="statement-link reveal anim-swipe-left delay-1" data-from="left">
         <a href="about.html" class="link-underline label-caps arrow-link">
           Learn More About Us
           <span class="material-symbols-outlined">arrow_forward</span>
@@ -424,7 +424,7 @@
   <footer class="footer-creative">
     <div class="footer-creative-inner">
       <!-- Huge Bold Typography -->
-      <div class="footer-cta reveal">
+      <div class="footer-cta reveal anim-reveal">
         <h2 class="display-xl" style="font-size: clamp(60px, 15vw, 200px); line-height: 1; letter-spacing: -0.05em; margin-bottom: 24px; text-transform: uppercase;">
           Let's Talk
         </h2>
@@ -495,16 +495,52 @@
     </button>
   </div>
   
-    <audio id="bg-audio" loop preload="auto">
+    <audio id="bg-audio" loop preload="auto" autoplay>
     <source src="assets/blue_song.mp3" type="audio/mpeg">
   </audio>
   <script>
     (function () {
       var a = document.getElementById('bg-audio');
-      if (a) {
-        a.volume = 0.1;
-        a.loop = true;
+      if (!a) return;
+      a.volume = 0.1;
+      a.loop = true;
+      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
+      try { a.currentTime = 0; } catch (e) {}
+
+      function playAudio() {
+        if (a.paused) {
+          try { a.currentTime = 0; } catch (e) {}
+          var p = a.play();
+          if (p !== undefined) {
+            p.then(function () {
+              var btn = document.getElementById('music-toggle');
+              if (btn) btn.classList.add('playing');
+              removeGestures();
+            }).catch(function () {});
+          }
+        } else {
+          var btn = document.getElementById('music-toggle');
+          if (btn) btn.classList.add('playing');
+          removeGestures();
+        }
       }
+
+      var events = ['click', 'pointerdown', 'touchstart', 'mousedown', 'keydown', 'scroll', 'wheel'];
+      function onGesture() {
+        playAudio();
+      }
+      function removeGestures() {
+        events.forEach(function (e) {
+          window.removeEventListener(e, onGesture, true);
+          document.removeEventListener(e, onGesture, true);
+        });
+      }
+      events.forEach(function (e) {
+        window.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+        document.addEventListener(e, onGesture, { capture: true, once: true, passive: true });
+      });
+
+      playAudio();
     })();
   </script>
 

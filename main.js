@@ -1200,9 +1200,17 @@ function initApp() {
     // Show the button immediately
     musicToggleBtn.classList.add('visible');
 
+    // Clear any legacy saved playback time so music always starts from the beginning (0:00)
+    try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
+
     // Set volume strictly to 10% and ensure looping
     bgAudio.volume = 0.1;
     bgAudio.loop = true;
+
+    // Sync button state if already playing
+    if (!bgAudio.paused) {
+      musicToggleBtn.classList.add('playing');
+    }
 
     // Prevent any system/browser default from raising the volume above 10%
     bgAudio.addEventListener('volumechange', () => {
@@ -1211,30 +1219,21 @@ function initApp() {
       }
     });
 
-    // --- Cross-page persistence via localStorage ---
-    const MUSIC_KEY = 'nabulsi_music_playing';
-    const MUSIC_TIME_KEY = 'nabulsi_music_time';
-    const isExplicitlyPaused = localStorage.getItem(MUSIC_KEY) === 'false';
-    const savedTime = parseFloat(localStorage.getItem(MUSIC_TIME_KEY) || '0');
+    const gestureEvents = ['click', 'pointerdown', 'touchstart', 'touchend', 'mousedown', 'keydown'];
 
-    // Safely apply saved playback timestamp across page loads
-    const applySavedTime = () => {
-      try {
-        if (savedTime && !isNaN(savedTime) && isFinite(savedTime)) {
-          if (bgAudio.duration && savedTime >= bgAudio.duration) {
-            bgAudio.currentTime = 0;
-          } else {
-            bgAudio.currentTime = savedTime;
-          }
-        }
-      } catch (e) {}
-    };
+    function removeGestureListeners() {
+      gestureEvents.forEach(evt => {
+        window.removeEventListener(evt, handleGesture, true);
+        document.removeEventListener(evt, handleGesture, true);
+      });
+    }
 
-    if (bgAudio.readyState >= 1) {
-      applySavedTime();
-    } else {
-      bgAudio.addEventListener('loadedmetadata', applySavedTime, { once: true });
-      bgAudio.addEventListener('canplay', applySavedTime, { once: true });
+    function handleGesture() {
+      if (bgAudio.paused) {
+        startMusic();
+      } else {
+        removeGestureListeners();
+      }
     }
 
     function startMusic() {
@@ -1244,64 +1243,40 @@ function initApp() {
       if (playPromise !== undefined) {
         playPromise.then(() => {
           musicToggleBtn.classList.add('playing');
-          localStorage.setItem(MUSIC_KEY, 'true');
-          ['click', 'pointerdown', 'touchstart', 'keydown'].forEach(evt => {
-            document.removeEventListener(evt, startMusic, true);
-          });
+          removeGestureListeners();
         }).catch(() => {
-          // Autoplay blocked by browser policy until first gesture:
-          ['click', 'pointerdown', 'touchstart', 'keydown'].forEach(evt => {
-            document.addEventListener(evt, startMusic, { once: true, passive: true, capture: true });
-          });
+          // Keep gesture listeners attached until user interacts
         });
       }
     }
 
-    // Always start music when page loads
-    startMusic();
-
-    // Continuously save current playback position
-    bgAudio.addEventListener('timeupdate', () => {
-      if (!bgAudio.paused && bgAudio.currentTime > 0) {
-        localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
-      }
+    // Keep gesture listeners attached so the very first click/tap immediately starts audio
+    gestureEvents.forEach(evt => {
+      window.addEventListener(evt, handleGesture, { capture: true, passive: true });
+      document.addEventListener(evt, handleGesture, { capture: true, passive: true });
     });
 
-    const persistState = () => {
-      if (bgAudio) {
-        localStorage.setItem(MUSIC_KEY, String(!bgAudio.paused));
-        localStorage.setItem(MUSIC_TIME_KEY, String(bgAudio.currentTime));
-      }
-    };
-    window.addEventListener('beforeunload', persistState);
-    window.addEventListener('pagehide', persistState);
+    // Always attempt to start music immediately when page loads
+    startMusic();
 
     bgAudio.addEventListener('play', () => {
-      localStorage.setItem(MUSIC_KEY, 'true');
       musicToggleBtn.classList.add('playing');
+      removeGestureListeners();
     });
 
     bgAudio.addEventListener('pause', () => {
-      localStorage.setItem(MUSIC_KEY, 'false');
       musicToggleBtn.classList.remove('playing');
     });
 
     // Toggle on click
     musicToggleBtn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       if (!bgAudio.paused) {
-        // Currently playing → pause
         bgAudio.pause();
         musicToggleBtn.classList.remove('playing');
-        localStorage.setItem(MUSIC_KEY, 'false');
       } else {
-        // Currently paused → play
-        bgAudio.volume = 0.3;
-        bgAudio.loop = true;
-        bgAudio.play().then(() => {
-          musicToggleBtn.classList.add('playing');
-          localStorage.setItem(MUSIC_KEY, 'true');
-        }).catch(e => console.log('Audio play failed:', e));
+        startMusic();
       }
     });
   }
@@ -1382,9 +1357,13 @@ function smoothBgTransitions() {
   }).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    initApp();
+  });
+} else {
   initApp();
-});
+}
 
 /* ============================================
    PRO-LEVEL UPGRADES: LENIS, BARBA.JS, THREE.JS
