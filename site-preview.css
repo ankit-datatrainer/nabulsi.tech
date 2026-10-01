@@ -157,7 +157,8 @@
   position: relative;
   aspect-ratio: 16 / 10;
   overflow: hidden;
-  background: #16161d;
+  /* pages set background-image to the cached thumb as a loading placeholder */
+  background: #16161d top center / 100% auto no-repeat;
 }
 .wk-browser__page {
   position: absolute;
@@ -473,6 +474,13 @@ html .lp .lp__viewport iframe {
 .lp__note button { margin-left: 6px; color: var(--wk-brand); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; }
 
 html.lp-open, html.lp-open body { overflow: hidden !important; }
+
+/* copy that differs between pointer and touch devices */
+.on-touch { display: none; }
+@media (hover: none) {
+  .on-hover { display: none; }
+  .on-touch { display: inline; }
+}
 
 /* ---------- responsive ---------- */
 @media (max-width: 1180px) {

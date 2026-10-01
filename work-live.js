@@ -35,9 +35,26 @@
   function chrome(domain, dark) {
     return '<div class="wk-chrome' + (dark ? ' wk-chrome--dark' : '') + '" aria-hidden="true"><i></i><i></i><i></i><span>' + esc(domain) + '</span></div>';
   }
+  function catCount() {
+    var seen = {};
+    DATA.forEach(function (d) { seen[d.cat] = 1; });
+    return Object.keys(seen).length;
+  }
   /* main.js owns the page's Lenis instance (a top-level `let lenis`) */
   function getLenis() {
     try { return (typeof lenis !== 'undefined' && lenis) || null; } catch (e) { return null; }
+  }
+  /* Lenis caches the page height (ResizeObserver, debounced); after the pin
+     changes length it would clamp scrollTo() to the old height. */
+  function remeasureScroll() {
+    var l = getLenis();
+    if (l && typeof l.resize === 'function') l.resize();
+  }
+  /* document offset that ignores transforms (reveal tweens offset the panels) */
+  function docTop(el) {
+    var y = 0;
+    for (var n = el; n; n = n.offsetParent) y += n.offsetTop;
+    return y;
   }
 
   /* ------------------------------------------------------------ RENDER */
@@ -47,13 +64,16 @@
     var cols = [[], [], []];
     DATA.forEach(function (d, i) { cols[i % 3].push(d); });
     /* no lazy-loading: inside the 3D plane Chrome misjudges visibility and never loads them */
-    wall.innerHTML = cols.map(function (col) {
+    /* seconds per tile, per column (the original 4-tile columns ran 46s / 52s / 40s) */
+    var PACE = [11.5, 13, 10];
+    wall.innerHTML = cols.map(function (col, c) {
       var tiles = col.map(function (d) {
         return '<div class="wk-tile" data-preview="' + d.slug + '">' + chrome(d.domain) +
           '<img src="' + IMG + d.slug + '-thumb.webp" alt="" width="800" height="500" decoding="async"></div>';
       }).join('');
-      /* doubled so the vertical loop is seamless */
-      return '<div class="wk-wall__col"><div class="wk-wall__track">' + tiles + tiles + '</div></div>';
+      /* doubled so the vertical loop is seamless; duration keeps the drift speed constant */
+      return '<div class="wk-wall__col"><div class="wk-wall__track" style="animation-duration:' + (col.length * PACE[c]).toFixed(1) + 's">' +
+        tiles + tiles + '</div></div>';
     }).join('');
   }
 
@@ -62,12 +82,14 @@
     if (!band) return;
     var set = '<span>' + DATA.map(function (d) { return esc(d.name) + ' <b>&#10022;</b>'; }).join(' ') + '</span>';
     band.innerHTML = set + set;
+    /* ~5s per name keeps the original drift speed whatever the count */
+    band.style.animationDuration = (DATA.length * 5) + 's';
   }
 
-  function renderPanels() {
+  function renderPanels(list) {
     var track = $('#wk-track');
     if (!track) return;
-    track.innerHTML = DATA.map(function (d, i) {
+    track.innerHTML = list.map(function (d, i) {
       return '' +
         '<article class="wk-panel" id="site-' + d.slug + '" style="--accent:' + d.accent + '" aria-label="' + esc(d.name) + ' — our work">' +
           '<div class="wk-panel__info">' +
@@ -85,7 +107,8 @@
           '<div class="wk-panel__media">' +
             '<div class="wk-browser" role="button" tabindex="0" data-preview="' + d.slug + '" aria-label="Open the live preview of ' + esc(d.name) + '">' +
               chrome(d.domain, true) +
-              '<div class="wk-browser__screen">' +
+              /* the (already cached) thumb stands in while the full capture loads */
+              '<div class="wk-browser__screen" style="background-image:url(' + IMG + d.slug + '-thumb.webp)">' +
                 '<img class="wk-browser__page" src="' + IMG + d.slug + '-full.webp" alt="' + esc(d.name) + ' website, designed and built by Nabulsi.tech" width="1080" loading="lazy" decoding="async">' +
                 '<span class="wk-browser__scrollhint" aria-hidden="true"><b></b></span>' +
                 '<span class="wk-browser__cta" aria-hidden="true"><i></i>Click to explore live</span>' +
@@ -127,7 +150,6 @@
 
   renderWall();
   renderBand();
-  renderPanels();
   renderIndex();
 
   /* ------------------------------------------------------------ HERO */
@@ -137,7 +159,8 @@
     var counters = $$('[data-wk-count]', hero);
 
     function countUp(el, delay) {
-      var target = parseInt(el.getAttribute('data-wk-count'), 10) || 0;
+      var key = el.getAttribute('data-wk-count');
+      var target = key === 'total' ? DATA.length : key === 'cats' ? catCount() : (parseInt(key, 10) || 0);
       if (!hasGsap || reduce) { el.textContent = target; return; }
       el.textContent = '0';
       var o = { v: 0 };
@@ -200,15 +223,43 @@
   }
 
   /* ------------------------------------------------------ LIVE SHOWCASE */
+  /* The slider shows one set at a time (Featured, All, or an industry) so the
+     pinned scroll stays a sensible length; picking a chip rebuilds it. */
   var showcaseTween = null;
+  var showcaseList = [];
+  var showcaseMM = null;
+  var showcaseFilter = 'featured';
+  var SHORT = window.NABULSI_WORK_CATS_SHORT || {};
+
+  function listFor(f) {
+    if (f === 'all') return DATA.slice();
+    if (f === 'featured') {
+      var feat = DATA.filter(function (d) { return d.featured; });
+      return feat.length ? feat : DATA.slice();
+    }
+    return DATA.filter(function (d) { return d.cat === f; });
+  }
+
+  function renderChips() {
+    var wrap = $('#wk-live-chips');
+    if (!wrap) return;
+    var counts = {};
+    DATA.forEach(function (d) { counts[d.cat] = (counts[d.cat] || 0) + 1; });
+    var chips = [['featured', 'Featured', listFor('featured').length], ['all', 'All', DATA.length]];
+    Object.keys(CATS).forEach(function (k) { if (counts[k]) chips.push([k, SHORT[k] || CATS[k], counts[k]]); });
+    wrap.innerHTML = chips.map(function (c) {
+      var on = c[0] === showcaseFilter;
+      return '<button class="wk-chip' + (on ? ' is-on' : '') + '" type="button" data-show="' + c[0] + '" aria-pressed="' + on + '">' +
+        esc(c[1]) + '<sup>' + c[2] + '</sup></button>';
+    }).join('');
+  }
 
   function initShowcase() {
     var section = $('#wk-live');
     var track = $('#wk-track');
     if (!section || !track) return;
-    var panels = $$('.wk-panel', track);
-    var n = panels.length;
     var cur = $('#wk-cur');
+    var total = $('#wk-total');
     var now = $('#wk-now');
     var bar = $('#wk-bar');
     var last = -1;
@@ -216,12 +267,131 @@
     function setActive(i) {
       if (i === last) return;
       last = i;
-      var d = DATA[i];
+      var d = showcaseList[i];
+      if (!d) return;
       if (cur) cur.textContent = pad(i + 1);
       if (now) now.textContent = d.name;
       section.style.setProperty('--accent', d.accent);
     }
-    setActive(0);
+
+    function build() {
+      if (showcaseMM) { showcaseMM.revert(); showcaseMM = null; }
+      showcaseTween = null;
+      showcaseList = listFor(showcaseFilter);
+      renderPanels(showcaseList);
+      if (window.NabulsiPreview) window.NabulsiPreview.bindBrowsers(track);
+      if (total) total.textContent = pad(showcaseList.length);
+      if (bar) bar.style.transform = 'scaleX(0)';
+      last = -1;
+      setActive(0);
+      track.style.transform = '';
+      if (track.parentNode) track.parentNode.scrollLeft = 0;
+
+      if (!hasST || reduce) return;
+      var panels = $$('.wk-panel', track);
+      var n = panels.length;
+      showcaseMM = gsap.matchMedia();
+
+      /* Desktop: pin and slide the projects sideways as the page scrolls */
+      showcaseMM.add('(min-width: 900px)', function () {
+        section.classList.add('is-pinned');
+        var distance = function () { return Math.max(0, track.scrollWidth - window.innerWidth); };
+        showcaseTween = gsap.to(track, {
+          x: function () { return -distance(); },
+          ease: 'none',
+          scrollTrigger: {
+            id: 'wk-live',
+            trigger: section,
+            start: 'top top',
+            end: function () { return '+=' + distance(); },
+            pin: true,
+            scrub: 0.9,
+            anticipatePin: 1,
+            /* refresh before everything below it, even when rebuilt after them */
+            refreshPriority: 1,
+            invalidateOnRefresh: true,
+            onUpdate: function (self) {
+              if (bar) bar.style.transform = 'scaleX(' + self.progress.toFixed(4) + ')';
+              setActive(Math.min(n - 1, Math.round(self.progress * (n - 1))));
+            }
+          }
+        });
+
+        panels.forEach(function (p) {
+          gsap.fromTo(p.querySelector('.wk-browser'),
+            { rotationY: -26, scale: 0.84, xPercent: 10, transformOrigin: '0% 50%' },
+            {
+              rotationY: 0, scale: 1, xPercent: 0, ease: 'none',
+              scrollTrigger: { trigger: p, containerAnimation: showcaseTween, start: 'left 100%', end: 'left 25%', scrub: true }
+            });
+          gsap.fromTo(p.querySelectorAll('.wk-panel__info > *'),
+            { x: 90, opacity: 0 },
+            {
+              x: 0, opacity: 1, stagger: 0.06, ease: 'none',
+              scrollTrigger: { trigger: p, containerAnimation: showcaseTween, start: 'left 92%', end: 'left 40%', scrub: true }
+            });
+          /* opacity only — the phone's CSS float animation owns its transform */
+          gsap.fromTo(p.querySelector('.wk-phone'),
+            { opacity: 0 },
+            {
+              opacity: 1, ease: 'none',
+              scrollTrigger: { trigger: p, containerAnimation: showcaseTween, start: 'left 80%', end: 'left 30%', scrub: true }
+            });
+        });
+
+        return function () { showcaseTween = null; section.classList.remove('is-pinned'); };
+      });
+
+      /* Small screens: stacked panels that rise in */
+      showcaseMM.add('(max-width: 899px)', function () {
+        panels.forEach(function (p, i) {
+          gsap.from(p, {
+            y: 70, opacity: 0, duration: 1.1, ease: 'expo.out',
+            scrollTrigger: {
+              trigger: p, start: 'top 88%', once: true,
+              onEnter: function () { setActive(i); }
+            }
+          });
+        });
+      });
+    }
+
+    /* switch sets: rebuild from the top of the section so nobody lands mid-slide */
+    function setFilter(f, opts) {
+      opts = opts || {};
+      if (!f || f === showcaseFilter) return;
+      showcaseFilter = f;
+      $$('.wk-chip', section).forEach(function (c) {
+        var on = c.getAttribute('data-show') === f;
+        c.classList.toggle('is-on', on);
+        c.setAttribute('aria-pressed', on ? 'true' : 'false');
+      });
+      var st = hasST && ScrollTrigger.getById('wk-live');
+      var inPin = !!(st && window.pageYOffset > st.start + 2);
+      build();
+      if (hasST) {
+        /* the rebuilt pin is now the newest trigger; re-sort so it measures first */
+        if (ScrollTrigger.sort) ScrollTrigger.sort();
+        ScrollTrigger.refresh();
+      }
+      remeasureScroll();
+      var nst = hasST && ScrollTrigger.getById('wk-live');
+      if (inPin && nst && !opts.noScroll) {
+        var l = getLenis();
+        if (l) l.scrollTo(nst.start + 1, { immediate: true, force: true });
+        else window.scrollTo(0, nst.start + 1);
+      }
+      /* desktop only: on phones build()'s own per-panel reveal already plays */
+      if (hasGsap && !reduce && !opts.noScroll && showcaseTween) {
+        gsap.from($$('.wk-panel', track), { opacity: 0, y: 40, duration: 0.9, stagger: 0.06, ease: 'expo.out', clearProps: 'opacity,transform' });
+      }
+    }
+    initShowcase.setFilter = setFilter;
+
+    section.addEventListener('click', function (e) {
+      var chip = e.target.closest('.wk-chip');
+      if (chip) setFilter(chip.getAttribute('data-show'));
+    });
 
     /* Section heading reveal */
     if (hasST && !reduce) {
@@ -231,70 +401,8 @@
       });
     }
 
-    if (!hasST || reduce) return;
-
-    var mm = gsap.matchMedia();
-
-    /* Desktop: pin and slide the projects sideways as the page scrolls */
-    mm.add('(min-width: 900px)', function () {
-      section.classList.add('is-pinned');
-      var distance = function () { return Math.max(0, track.scrollWidth - window.innerWidth); };
-      showcaseTween = gsap.to(track, {
-        x: function () { return -distance(); },
-        ease: 'none',
-        scrollTrigger: {
-          id: 'wk-live',
-          trigger: section,
-          start: 'top top',
-          end: function () { return '+=' + distance(); },
-          pin: true,
-          scrub: 0.9,
-          anticipatePin: 1,
-          invalidateOnRefresh: true,
-          onUpdate: function (self) {
-            if (bar) bar.style.transform = 'scaleX(' + self.progress.toFixed(4) + ')';
-            setActive(Math.min(n - 1, Math.round(self.progress * (n - 1))));
-          }
-        }
-      });
-
-      panels.forEach(function (p) {
-        gsap.fromTo(p.querySelector('.wk-browser'),
-          { rotationY: -26, scale: 0.84, xPercent: 10, transformOrigin: '0% 50%' },
-          {
-            rotationY: 0, scale: 1, xPercent: 0, ease: 'none',
-            scrollTrigger: { trigger: p, containerAnimation: showcaseTween, start: 'left 100%', end: 'left 25%', scrub: true }
-          });
-        gsap.fromTo(p.querySelectorAll('.wk-panel__info > *'),
-          { x: 90, opacity: 0 },
-          {
-            x: 0, opacity: 1, stagger: 0.06, ease: 'none',
-            scrollTrigger: { trigger: p, containerAnimation: showcaseTween, start: 'left 92%', end: 'left 40%', scrub: true }
-          });
-        /* opacity only — the phone's CSS float animation owns its transform */
-        gsap.fromTo(p.querySelector('.wk-phone'),
-          { opacity: 0 },
-          {
-            opacity: 1, ease: 'none',
-            scrollTrigger: { trigger: p, containerAnimation: showcaseTween, start: 'left 80%', end: 'left 30%', scrub: true }
-          });
-      });
-
-      return function () { showcaseTween = null; section.classList.remove('is-pinned'); };
-    });
-
-    /* Small screens: stacked panels that rise in */
-    mm.add('(max-width: 899px)', function () {
-      panels.forEach(function (p) {
-        gsap.from(p, {
-          y: 70, opacity: 0, duration: 1.1, ease: 'expo.out',
-          scrollTrigger: {
-            trigger: p, start: 'top 88%', once: true,
-            onEnter: function () { setActive(panels.indexOf(p)); }
-          }
-        });
-      });
-    });
+    renderChips();
+    build();
   }
 
   /* ------------------------------------------------------------ INDEX */
@@ -369,8 +477,10 @@
     /* sits beside the cursor, flipping to the left near the right edge */
     function aim(e) {
       var w = float.offsetWidth;
+      var h = float.offsetHeight;
       tx = e.clientX + 36 + w > window.innerWidth - 12 ? e.clientX - 36 - w : e.clientX + 36;
-      ty = e.clientY;
+      /* stay below the fixed navbar and above the bottom edge */
+      ty = Math.min(Math.max(e.clientY, 92 + h / 2 + 12), window.innerHeight - h / 2 - 12);
     }
     gsap.set(float, { xPercent: 0, yPercent: -50, scale: 0.6 });
     list.addEventListener('mousemove', aim, { passive: true });
@@ -392,22 +502,32 @@
   function initDeepLink() {
     var m = /^#site-([\w-]+)$/.exec(window.location.hash);
     if (!m) return;
-    var i = bySlug(m[1]);
-    if (i < 0) return;
+    if (bySlug(m[1]) < 0) return;
     var go = function () {
+      var inSet = function () {
+        for (var k = 0; k < showcaseList.length; k++) if (showcaseList[k].slug === m[1]) return k;
+        return -1;
+      };
+      /* not in the current set (e.g. not featured): show everything */
+      if (inSet() < 0 && initShowcase.setFilter) initShowcase.setFilter('all', { noScroll: true });
+      var i = Math.max(0, inSet());
+      /* the pin may just have changed length: let Lenis see the new page height */
+      remeasureScroll();
       var st = hasST && ScrollTrigger.getById('wk-live');
       var y;
       if (st && showcaseTween) {
-        y = st.start + (st.end - st.start) * (DATA.length > 1 ? i / (DATA.length - 1) : 0);
+        y = st.start + (st.end - st.start) * (showcaseList.length > 1 ? i / (showcaseList.length - 1) : 0);
       } else {
         var el = document.getElementById('site-' + m[1]);
         if (!el) return;
-        y = el.getBoundingClientRect().top + window.pageYOffset - 90;
+        /* layout offset, not getBoundingClientRect: the panel may still carry its
+           70px reveal offset; 90px clears the fixed navbar */
+        y = docTop(el) - 90;
         /* unpinned desktop: the panels sit in a sideways strip */
         var vp = el.closest('.wk-live__viewport');
         if (vp && vp.scrollWidth > vp.clientWidth) {
           vp.scrollLeft = el.offsetLeft - (vp.clientWidth - el.offsetWidth) / 2;
-          y = document.getElementById('wk-live').getBoundingClientRect().top + window.pageYOffset;
+          y = docTop(document.getElementById('wk-live'));
         }
       }
       var l = getLenis();
@@ -420,9 +540,7 @@
   }
 
   initHero();
-  initShowcase();
-  /* hover-scroll mockups + live preview modal: site-preview.js */
-  if (window.NabulsiPreview) window.NabulsiPreview.bindBrowsers();
+  initShowcase();   /* binds the hover-scroll mockups itself (site-preview.js) */
   initIndex();
   initDeepLink();
 

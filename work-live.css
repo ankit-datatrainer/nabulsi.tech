@@ -274,6 +274,33 @@
   margin: 0;
 }
 .wk-live__hint b { color: #fff; font-weight: 600; }
+.wk-live__side {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  max-width: min(880px, 100%);
+}
+.wk-live__side .wk-live__hint { flex-direction: row; align-items: center; gap: 16px; max-width: none; }
+.wk-live__chips { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 6px; }
+.wk-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 34px;
+  padding: 0 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, .16);
+  background: rgba(255, 255, 255, .03);
+  font: 500 12.5px/1 var(--font-headline, 'Geist', sans-serif);
+  color: rgba(255, 255, 255, .74);
+  white-space: nowrap;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
+}
+.wk-chip sup { top: 0; font: 500 10px/1 var(--font-label, 'Geist Mono', monospace); color: var(--wk-brand); }
+.wk-chip:hover { border-color: var(--wk-brand); color: #fff; }
+.wk-chip.is-on { background: #fff; border-color: #fff; color: var(--wk-ink); }
+.wk-chip.is-on sup { color: var(--wk-brand-deep); }
 .wk-mouse {
   display: inline-flex;
   align-items: center;
@@ -345,11 +372,11 @@
 .wk-panel__info { position: relative; min-width: 0; }
 .wk-panel__num {
   display: block;
-  font: 500 clamp(64px, 7vw, 120px)/.8 var(--font-headline, 'Geist', sans-serif);
+  font: 500 clamp(52px, 5.4vw, 96px)/.8 var(--font-headline, 'Geist', sans-serif);
   letter-spacing: -.07em;
   color: transparent;
   -webkit-text-stroke: 1px rgba(255, 255, 255, .28);
-  margin-bottom: clamp(14px, 2vh, 26px);
+  margin-bottom: clamp(10px, 1.6vh, 20px);
 }
 .wk-panel__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 14px; }
 .wk-panel__cat {
@@ -359,10 +386,11 @@
   color: rgba(255, 255, 255, .6);
 }
 .wk-panel__name {
-  font: 500 clamp(30px, 3.1vw, 54px)/1 var(--font-headline, 'Geist', sans-serif);
+  font: 500 clamp(28px, 2.7vw, 48px)/1.02 var(--font-headline, 'Geist', sans-serif);
   letter-spacing: -.055em;
   color: #fff;
   margin: 0 0 14px;
+  text-wrap: balance;
 }
 .wk-panel__desc {
   font-size: clamp(14px, 1vw, 16px);
@@ -586,6 +614,8 @@
 @media (min-width: 900px) {
   /* The pinned stage is exactly one screen tall */
   .wk-live__stage { height: 100vh; height: 100svh; }
+  /* the last panel stops clear of the floating music / back-to-top buttons */
+  .wk-live__track { padding-right: max(var(--wk-gutter), 110px); }
   /* clear the floating WhatsApp / music / back-to-top buttons */
   .wk-live__hud { padding-left: max(var(--wk-gutter), 112px); padding-right: max(var(--wk-gutter), 112px); }
   /* No pin (reduced motion, or GSAP unavailable): a native swipe strip instead */
@@ -600,8 +630,13 @@
   .wk-live:not(.is-pinned) .wk-live__hud { display: none; }
   .wk-live:not(.is-pinned) .wk-mouse { display: none; }
   .wk-browser { max-width: calc((100svh - 430px) * 1.6); }
+  .wk-panel__desc { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; }
+  /* one row of tags; the rest are clipped rather than pushing the buttons out */
+  .wk-tags { max-height: 30px; overflow: hidden; }
 }
 @media (min-width: 900px) and (max-height: 800px) {
+  /* keep the floating phone inside the panel frame */
+  .wk-phone { bottom: 3%; width: clamp(84px, 15%, 160px); }
   .wk-panel__num { font-size: 56px; margin-bottom: 10px; }
   .wk-tags { display: none; }
   .wk-panel__desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
@@ -609,7 +644,28 @@
   .wk-live__title { font-size: clamp(32px, 3.6vw, 56px); }
   .wk-browser { max-width: calc((100svh - 380px) * 1.6); }
 }
+/* real laptop windows (1280x720 / 1366x768 screens minus browser chrome) */
+@media (min-width: 900px) and (max-height: 720px) {
+  .wk-live__stage { padding-top: 88px; padding-bottom: 12px; }
+  .wk-live__head { margin-bottom: 10px; }
+  .wk-live__head .wk-kicker { margin-bottom: 6px; }
+  .wk-live__title { font-size: clamp(28px, 3vw, 42px); }
+  .wk-live__side .wk-live__hint { display: none; }
+  .wk-panel { padding: 18px 26px; }
+  .wk-panel__num { font-size: 40px; margin-bottom: 6px; }
+  .wk-panel__meta { margin-bottom: 8px; }
+  .wk-panel__name { font-size: clamp(24px, 2.2vw, 36px); margin-bottom: 8px; }
+  .wk-panel__desc { -webkit-line-clamp: 2; margin-bottom: 12px; }
+  .wk-panel__credit { display: none; }
+  .wk-panel__actions .wk-btn { min-height: 40px; }
+  .wk-browser { max-width: calc((100svh - 300px) * 1.6); }
+  .wk-live__hud { padding-top: 8px; }
+}
 @media (max-width: 1180px) {
+  /* chips take the full row under the title; the hint sentence makes way */
+  .wk-live__side { flex-basis: 100%; align-items: flex-start; }
+  .wk-live__chips { justify-content: flex-start; }
+  .wk-live__side .wk-live__hint { display: none; }
   .wk-hero__copy { max-width: min(600px, 56vw); }
   .wk-wall { width: 58vw; right: -12vw; opacity: .9; }
   .wk-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
@@ -636,6 +692,10 @@
 
   .wk-live__stage { min-height: 0; padding: 80px 0 60px; }
   .wk-live__hint { align-items: flex-start; text-align: left; }
+  .wk-live__side { align-items: stretch; max-width: 100%; }
+  /* one swipeable row of chips on phones */
+  .wk-live__chips { flex-wrap: nowrap; justify-content: flex-start; overflow-x: auto; margin: 0 calc(var(--wk-gutter) * -1); padding: 2px var(--wk-gutter); scrollbar-width: none; }
+  .wk-live__chips::-webkit-scrollbar { display: none; }
   .wk-live__viewport { display: block; }
   .wk-live__track { flex-direction: column; gap: 28px; }
   .wk-panel { width: 100%; grid-template-columns: 1fr; padding: 18px 18px 24px; border-radius: 22px; }

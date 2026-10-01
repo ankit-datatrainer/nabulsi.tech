@@ -46,7 +46,7 @@
           '<div class="hw-card__info">' +
             '<div class="hw-card__meta"><span class="hw-card__num">' + pad(i + 1) + '<small>/' + pad(featured.length) + '</small></span><span class="wk-badge">Our work</span></div>' +
             '<h3 class="hw-card__name">' + esc(d.name) + '</h3>' +
-            '<p class="hw-card__cat">' + esc(d.label) + '<i></i>' + esc(d.type) + '</p>' +
+            '<p class="hw-card__cat"><span>' + esc(d.label) + '</span><span class="hw-card__type">' + esc(d.type) + '</span></p>' +
             '<p class="hw-card__desc">' + esc(d.desc) + '</p>' +
             '<ul class="hw-card__tags">' + d.tags.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
             '<div class="hw-card__actions">' +
@@ -58,7 +58,7 @@
             '<div class="hw-tilt">' +
               '<div class="wk-browser" role="button" tabindex="0" data-preview="' + d.slug + '" aria-label="Open the live preview of ' + esc(d.name) + '">' +
                 '<div class="wk-chrome wk-chrome--dark" aria-hidden="true"><i></i><i></i><i></i><span>' + esc(d.domain) + '</span></div>' +
-                '<div class="wk-browser__screen">' +
+                '<div class="wk-browser__screen" style="background-image:url(' + IMG + d.slug + '-thumb.webp)">' +
                   '<img class="wk-browser__page" src="' + IMG + d.slug + '-full.webp" alt="' + esc(d.name) + ' website, designed and built by Nabulsi.tech" width="1080" loading="lazy" decoding="async">' +
                   '<span class="wk-browser__scrollhint" aria-hidden="true"><b></b></span>' +
                   '<span class="hw-glare" aria-hidden="true"></span>' +
@@ -73,11 +73,13 @@
       '</article>';
   }).join('');
 
+  /* 6 fits whole rows at 1, 2 and 3 columns */
+  var MORE_VISIBLE = 6;
   var more = document.getElementById('hw-more');
   if (more) {
-    more.innerHTML = rest.map(function (d) {
+    more.innerHTML = rest.map(function (d, i) {
       return '' +
-        '<article class="hw-mini" style="--accent:' + d.accent + '">' +
+        '<article class="hw-mini' + (i >= MORE_VISIBLE ? ' is-extra' : '') + '" style="--accent:' + d.accent + '">' +
           '<button class="hw-mini__shot" type="button" data-preview="' + d.slug + '" aria-label="Preview ' + esc(d.name) + ' live">' +
             '<span class="wk-chrome" aria-hidden="true"><i></i><i></i><i></i><span>' + esc(d.domain) + '</span></span>' +
             '<span class="hw-mini__img"><img src="' + IMG + d.slug + '-thumb.webp" alt="' + esc(d.name) + ' website" width="800" height="500" loading="lazy" decoding="async"></span>' +
@@ -89,6 +91,32 @@
           '</div>' +
         '</article>';
     }).join('');
+
+    /* the rest of the sites wait behind a "show all" so the home page stays tight */
+    var extra = rest.length - MORE_VISIBLE;
+    if (extra > 0) {
+      var wrap = document.createElement('div');
+      wrap.className = 'hw-more__expand';
+      wrap.innerHTML = '<button class="hw-more__btn" type="button" aria-expanded="false" aria-controls="hw-more">' +
+        '<span>Show ' + extra + ' more live sites</span><i aria-hidden="true">+</i></button>';
+      more.parentNode.insertBefore(wrap, more.nextSibling);
+      var btn = wrap.querySelector('button');
+      btn.addEventListener('click', function () {
+        var open = !more.classList.contains('is-expanded');
+        more.classList.toggle('is-expanded', open);
+        btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        btn.querySelector('span').textContent = open ? 'Show fewer' : 'Show ' + extra + ' more live sites';
+        if (open && hasGsap && !reduce) {
+          gsap.fromTo($$('.hw-mini.is-extra', more), { y: 50, opacity: 0 },
+            { y: 0, opacity: 1, duration: 0.9, stagger: 0.05, ease: 'expo.out', clearProps: 'transform,opacity' });
+        }
+        if (!open) {
+          var top = more.getBoundingClientRect().top + window.pageYOffset - 120;
+          if (window.lenis) window.lenis.scrollTo(top, { duration: 1 }); else window.scrollTo({ top: top, behavior: 'smooth' });
+        }
+        if (hasST) ScrollTrigger.refresh();
+      });
+    }
   }
 
   if (window.NabulsiPreview) window.NabulsiPreview.bindBrowsers(stack);
@@ -165,7 +193,7 @@
     });
   });
 
-  gsap.from($$('.hw-mini'), {
+  gsap.from($$('.hw-mini:not(.is-extra)'), {
     y: 60, opacity: 0, duration: 1.1, stagger: 0.08, ease: 'expo.out',
     scrollTrigger: { trigger: '#hw-more', start: 'top 85%', once: true }
   });

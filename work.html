@@ -184,8 +184,8 @@
     }
   </style>
   <link rel="stylesheet" href="studio.css?v=2026orange" />
-  <link rel="stylesheet" href="site-preview.css?v=1" />
-  <link rel="stylesheet" href="work-live.css?v=2" />
+  <link rel="stylesheet" href="site-preview.css?v=2" />
+  <link rel="stylesheet" href="work-live.css?v=3" />
 </head>
 <body data-barba="wrapper">
 
@@ -243,7 +243,7 @@
             <span class="wk-line"><span>our <em>work.<svg class="wk-hero__scribble" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 17 C 70 7, 150 5, 296 11"/></svg></em></span></span>
           </h1>
           <p class="wk-hero__lede">
-            Twelve live websites for caf&eacute;s, restaurants, SaaS products, academies and agencies &mdash; designed, built
+            <span data-work-total>25</span> live websites for food brands, D2C stores, fintech and SaaS products, academies, consultancies and agencies &mdash; designed, built
             and launched by Nabulsi.tech. Scroll through every one of them right here, no new tabs needed.
           </p>
           <div class="wk-hero__cta">
@@ -253,8 +253,8 @@
             <a class="wk-btn wk-btn--ghost" href="contact.html">Start a project</a>
           </div>
           <dl class="wk-stats">
-            <div><dt><span data-wk-count="12">12</span></dt><dd>Live websites</dd></div>
-            <div><dt><span data-wk-count="4">4</span></dt><dd>Industries</dd></div>
+            <div><dt><span data-wk-count="total" data-work-total>25</span></dt><dd>Live websites</dd></div>
+            <div><dt><span data-wk-count="cats" data-work-cats>6</span></dt><dd>Industries</dd></div>
             <div><dt><span data-wk-count="100">100</span><small>%</small></dt><dd>Designed &amp; built in-house</dd></div>
           </dl>
         </div>
@@ -273,13 +273,16 @@
       <div class="wk-live__stage">
         <div class="wk-live__head">
           <div>
-            <p class="wk-kicker"><span class="wk-kicker__dot"></span>Live showcase &middot; 12 websites</p>
+            <p class="wk-kicker"><span class="wk-kicker__dot"></span>Live showcase &middot; <span data-work-total>25</span> websites</p>
             <h2 class="wk-live__title" id="wk-live-title">Slide through<br /><em>every launch.</em></h2>
           </div>
-          <p class="wk-live__hint">
-            <span class="wk-mouse"><i></i>Keep scrolling</span>
-            <span><b>Hover</b> a screen to scroll the site. <b>Click</b> it to open the real website right here.</span>
-          </p>
+          <div class="wk-live__side">
+            <div class="wk-live__chips" id="wk-live-chips" role="group" aria-label="Choose which projects to show"></div>
+            <p class="wk-live__hint">
+              <span class="wk-mouse"><i></i>Keep scrolling</span>
+              <span><b>Hover</b> a screen to scroll the site &middot; <b>click</b> to open it live, right here.</span>
+            </p>
+          </div>
         </div>
 
         <div class="wk-live__viewport">
@@ -287,7 +290,7 @@
         </div>
 
         <div class="wk-live__hud" aria-hidden="true">
-          <span class="wk-live__count"><b id="wk-cur">01</b> / 12</span>
+          <span class="wk-live__count"><b id="wk-cur">01</b> / <span id="wk-total">12</span></span>
           <span class="wk-live__bar"><i id="wk-bar"></i></span>
           <span class="wk-live__now" id="wk-now">Sweet Eye Coffee</span>
         </div>
@@ -306,6 +309,19 @@
           <li><a href="https://awsclubgeu.in/">AWS Student Builder Group (GEU)</a></li>
           <li><a href="https://www.5igoya.com/">5i Goya</a></li>
           <li><a href="https://shaktiwebsolution.com/">Shakti Web Solution</a></li>
+          <li><a href="https://finvoq.com/">Finvoq</a></li>
+          <li><a href="https://4knatural.com/">4K Natural</a></li>
+          <li><a href="https://sleeplinemattress.in/">Sleepline Mattress</a></li>
+          <li><a href="https://hanoncosmichealer.com/">Hanon Cosmic Healer</a></li>
+          <li><a href="https://rajbhog.peculiex.com/">Rajbhog</a></li>
+          <li><a href="https://velorahubmedia.com/">Velora</a></li>
+          <li><a href="https://peculiex.com/">Peculiex</a></li>
+          <li><a href="https://puneetgems.com/">Puneet Gems</a></li>
+          <li><a href="https://aeon-cereals.vercel.app/">Aeon Cereals</a></li>
+          <li><a href="https://autoparts.peculiex.com/">MotoMart India</a></li>
+          <li><a href="https://diversepathwais.org/">Diverse Pathwais</a></li>
+          <li><a href="https://twobrothersindiashop.com/">Two Brothers India Farms</a></li>
+          <li><a href="https://aumnamahral.com/">AumNamah</a></li>
         </ul>
       </noscript>
     </section>
@@ -316,8 +332,8 @@
         <div class="wk-index__head">
           <div>
             <p class="wk-kicker"><span class="wk-kicker__dot"></span>Project index</p>
-            <h2 class="wk-index__title" id="wk-index-title">All our work<sup>12</sup></h2>
-            <p class="wk-index__lede">Every site below is our work. Hover for a peek, click a row to preview it live, or jump straight to the website.</p>
+            <h2 class="wk-index__title" id="wk-index-title">All our work<sup data-work-total>25</sup></h2>
+            <p class="wk-index__lede">Every site below is our work. <span class="on-hover">Hover for a peek, click a row</span><span class="on-touch">Tap a row</span> to preview it live, or jump straight to the website.</p>
           </div>
           <div class="wk-filters" id="wk-filters" role="group" aria-label="Filter projects by industry"></div>
         </div>
@@ -651,9 +667,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
   <script src="main.js?v=2"></script>
-  <script src="work-data.js?v=1"></script>
-  <script src="site-preview.js?v=1"></script>
-  <script src="work-live.js?v=2"></script>
+  <script src="work-data.js?v=2"></script>
+  <script src="site-preview.js?v=2"></script>
+  <script src="work-live.js?v=3"></script>
   <script>
   (function() {
     'use strict';

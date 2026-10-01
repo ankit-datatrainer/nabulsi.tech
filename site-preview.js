@@ -110,9 +110,20 @@
     setMode(d.embed ? 'live' : 'snap');
   }
 
+  /* phones get the phone-width capture; the device toggle is hidden there */
+  function mobileView() {
+    return state.device === 'mobile' || window.matchMedia('(max-width: 600px)').matches;
+  }
+
   function snapSrc() {
     var d = DATA[state.i];
-    return IMG + d.slug + (state.device === 'mobile' && !d.embed ? '-mobile-full.webp' : '-full.webp');
+    return IMG + d.slug + (mobileView() && !d.embed ? '-mobile-full.webp' : '-full.webp');
+  }
+
+  function liveNote() {
+    /* live-embed sites only have a desktop capture, so don't offer it in mobile view */
+    return 'You&rsquo;re browsing the <b>live website</b> right here &mdash; scroll and click freely.' +
+      (mobileView() ? '' : ' <button type="button" data-lp-to="snap">Show full-page capture</button>');
   }
 
   function setMode(mode) {
@@ -128,8 +139,7 @@
 
     if (mode === 'live') {
       label.textContent = 'Live site';
-      note.innerHTML = 'You&rsquo;re browsing the <b>live website</b> right here &mdash; scroll and click freely. ' +
-        '<button type="button" data-lp-to="snap">Show full-page capture</button>';
+      note.innerHTML = liveNote();
       loader.classList.remove('is-done');
       frame.title = d.name + ' — live website preview';
       frame.src = d.url;
@@ -156,7 +166,10 @@
       b.classList.toggle('is-on', on);
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
     });
-    if (state.mode === 'snap') $('#lp-snap-img').src = snapSrc();
+    var d = DATA[state.i];
+    if (state.mode === 'snap' && d && d.embed && dev === 'mobile') setMode('live');
+    else if (state.mode === 'snap') $('#lp-snap-img').src = snapSrc();
+    else $('#lp-note').innerHTML = liveNote();
   }
 
   function open(slug) {
@@ -190,6 +203,11 @@
   }
 
   var frame = $('#lp-frame');
+  /* once a visitor clicks into the site, keys go to the iframe; hand focus back
+     when the pointer leaves it so Escape / arrow keys keep working */
+  $('.lp__viewport', lp).addEventListener('mouseleave', function () {
+    if (document.activeElement === frame) $('#lp-close').focus({ preventScroll: true });
+  });
   frame.addEventListener('load', function () {
     var src = frame.getAttribute('src');
     if (src && src !== 'about:blank' && state.mode === 'live') {
@@ -228,6 +246,12 @@
       else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
     }
   });
+
+  /* site counts wherever a page shows them, so copy never goes stale */
+  var cats = {};
+  DATA.forEach(function (d) { cats[d.cat] = 1; });
+  $$('[data-work-total]').forEach(function (el) { el.textContent = DATA.length; });
+  $$('[data-work-cats]').forEach(function (el) { el.textContent = Object.keys(cats).length; });
 
   window.NabulsiPreview = { open: open, close: close, bindBrowsers: bindBrowsers };
 })();

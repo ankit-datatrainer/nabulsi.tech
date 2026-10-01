@@ -2160,7 +2160,8 @@ button {
   text-overflow: ellipsis;
   border-top: 1px solid rgba(17, 24, 39, .06);
 }
-.hero__reel-cap::after { content: '\2197'; color: #FF9D50; font-weight: 500; }
+.hero__reel-cap::after { content: '\2197'; flex: none; color: #FF9D50; font-weight: 500; }
+.hero__reel-name { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .hero__reel-item:hover { transform: translateY(-6px); box-shadow: 0 24px 40px -22px rgba(255, 157, 80, .7); }
 
 /* The reel's track is max-content wide; keep it from sizing the hero's grid column */
@@ -2311,7 +2312,9 @@ button {
   text-transform: uppercase;
   color: color-mix(in srgb, var(--accent) 55%, #fff);
 }
-.hw-card__cat i { width: 4px; height: 4px; border-radius: 50%; background: rgba(255, 255, 255, .35); }
+/* the separator travels with the type, so a wrap never strands it at a line end */
+.hw-card__type { display: inline-flex; align-items: center; gap: 10px; }
+.hw-card__type::before { content: ''; width: 4px; height: 4px; border-radius: 50%; background: rgba(255, 255, 255, .35); }
 .hw-card__desc {
   max-width: 440px;
   margin: 0 0 18px;
@@ -2492,6 +2495,43 @@ button {
   .hw-card__num { font-size: 44px; }
   .hw-more__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
+/* both work CTAs share one centred column under the grid */
+.work .work__more { justify-content: center; max-width: min(100%, 1320px); margin-top: clamp(28px, 3vw, 44px); }
+@media (max-width: 1000px) { .hero__title { margin-inline: auto; } }
+
+.hw-mini.is-extra { display: none; }
+.hw-more__grid.is-expanded .hw-mini.is-extra { display: block; }
+.hw-more__expand { display: flex; justify-content: center; margin-top: clamp(34px, 4vw, 54px); }
+.hw-more__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  min-height: 54px;
+  padding: 0 10px 0 26px;
+  border-radius: 99px;
+  border: 1px solid rgba(17, 24, 39, .16);
+  background: #fff;
+  font: 600 14px/1 'Geist', sans-serif;
+  letter-spacing: -.01em;
+  color: #111827;
+  transition: border-color .35s ease, box-shadow .5s cubic-bezier(.16, 1, .3, 1), transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.hw-more__btn i {
+  display: grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #FF9D50;
+  color: #fff;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  transition: transform .5s cubic-bezier(.16, 1, .3, 1);
+}
+.hw-more__btn:hover { border-color: #FF9D50; transform: translateY(-2px); box-shadow: 0 18px 34px -20px rgba(255, 157, 80, .8); }
+.hw-more__btn[aria-expanded="true"] i { transform: rotate(45deg); }
+
 @media (max-width: 560px) {
   .hw-card__actions .wk-btn { flex: 1 1 auto; }
   .hw-more__grid { grid-template-columns: 1fr; }

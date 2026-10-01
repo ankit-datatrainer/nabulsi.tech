@@ -8,8 +8,26 @@
   DATA.forEach(function (d) { map[d.slug] = d; });
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  /* ---------- reel: clone one set so translateX(-50%) loops seamlessly */
+  function esc(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+    });
+  }
+
+  /* ---------- reel: every site from the data (the static HTML is the no-JS fallback) */
   var track = document.getElementById('hero-reel');
+  if (track && DATA.length) {
+    track.innerHTML = DATA.map(function (d) {
+      return '<a class="hero__reel-item" href="work.html#site-' + d.slug + '">' +
+        '<span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>' + esc(d.domain) + '</em></span>' +
+        '<img src="assets/work/' + d.slug + '-thumb.webp" alt="' + esc(d.name) + ' website" loading="lazy" width="800" height="500" />' +
+        '<span class="hero__reel-cap"><span class="hero__reel-name">' + esc(d.name) + '</span></span></a>';
+    }).join('');
+    /* constant drift speed however many sites there are */
+    track.style.animationDuration = (DATA.length * 4.6) + 's';
+  }
+
+  /* ---------- reel: clone one set so translateX(-50%) loops seamlessly */
   if (track && !reduce) {
     Array.prototype.slice.call(track.children).forEach(function (item) {
       var clone = item.cloneNode(true);
@@ -52,7 +70,7 @@
         /* relabel mid-wipe, once the new site covers most of the frame */
         setTimeout(function () {
           if (url) url.textContent = d.domain;
-          if (name) name.textContent = d.name;
+          if (name) name.textContent = d.short || d.name;
         }, 550);
         fig.href = 'work.html#site-' + d.slug;
         fig.setAttribute('aria-label', d.name + ' website — our work');
