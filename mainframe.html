@@ -551,7 +551,6 @@
       if (!a) return;
       a.volume = 0.1;
       a.loop = true;
-      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
 
       function playAudio() {
         var p = a.play();

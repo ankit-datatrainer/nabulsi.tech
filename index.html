@@ -27,8 +27,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Geist:wght@100..900&family=Geist+Mono:wght@100..900&display=swap"
     rel="stylesheet" />
 
-  <link rel="stylesheet" href="home.css?v=2026orange" />
+  <link rel="stylesheet" href="home.css?v=2026live" />
   <link rel="stylesheet" href="studio.css?v=2026orange" />
+  <link rel="stylesheet" href="site-preview.css?v=1" />
 </head>
 
 <body>
@@ -56,31 +57,51 @@
     <!-- ============================ HERO ============================ -->
     <section class="hero" id="hero">
 
-      <!-- Floating framed work imagery -->
-      <div class="hero__fig hero__fig--1" data-depth="0.05">
+      <!-- Floating browser frames: live websites we built. Each frame cycles
+           through its data-cycle list (hero-sites.js); clicking opens the work page. -->
+      <a class="hero__fig hero__fig--1 hero__site" data-depth="0.05" data-cycle="sweeteye,skillonit,trosidex"
+        href="work.html#site-sweeteye" aria-label="Sweet Eye Coffee website — our work">
         <span class="frame"></span>
-        <figure><img src="assets/clients/logan-1x1.jpg" alt="Admissions campaign creative designed for Logan College"
-            width="900" height="900" /></figure>
-      </div>
-
-      <div class="hero__fig hero__fig--2" data-depth="0.09">
-        <span class="frame"></span>
-        <figure><img src="assets/clients/kanak-1x1.jpg" alt="Branded marketing graphic designed for Kanak Cargo"
-            width="900" height="900" /></figure>
-      </div>
-
-      <div class="hero__fig hero__fig--3" data-depth="0.07">
-        <span class="frame"></span>
-        <figure><img src="assets/clients/dias-16x9.jpg"
-            alt="Campaign creative produced for Delhi Institute of Advanced Studies" width="1400" height="788" />
+        <figure>
+          <span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>sweeteyecoffee.com</em></span>
+          <span class="hero__shot"><img src="assets/work/sweeteye-thumb.webp"
+              alt="Sweet Eye Coffee website, designed and built by Nabulsi.tech" width="800" height="500" /></span>
         </figure>
-      </div>
+        <span class="hero__site-tag"><b>Our work</b><span>Sweet Eye Coffee</span></span>
+      </a>
 
-      <div class="hero__fig hero__fig--4" data-depth="0.04">
+      <a class="hero__fig hero__fig--2 hero__site" data-depth="0.09" data-cycle="hotchili,aaghaz,5igoya"
+        href="work.html#site-hotchili" aria-label="The Hot Chili website — our work">
         <span class="frame"></span>
-        <figure><img src="assets/clients/dist-16x9.jpg" alt="Admission campaign creative for DIST Science &amp; Tech"
-            width="1400" height="788" /></figure>
-      </div>
+        <figure>
+          <span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>thehotchili.com</em></span>
+          <span class="hero__shot"><img src="assets/work/hotchili-thumb.webp"
+              alt="The Hot Chili website, designed and built by Nabulsi.tech" width="800" height="500" /></span>
+        </figure>
+        <span class="hero__site-tag"><b>Our work</b><span>The Hot Chili</span></span>
+      </a>
+
+      <a class="hero__fig hero__fig--3 hero__site" data-depth="0.07" data-cycle="hrmsmaster,incerties,awsclub"
+        href="work.html#site-hrmsmaster" aria-label="HRMS Master website — our work">
+        <span class="frame"></span>
+        <figure>
+          <span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>hrmsmaster.in</em></span>
+          <span class="hero__shot"><img src="assets/work/hrmsmaster-thumb.webp"
+              alt="HRMS Master website, designed and built by Nabulsi.tech" width="800" height="500" /></span>
+        </figure>
+        <span class="hero__site-tag"><b>Our work</b><span>HRMS Master</span></span>
+      </a>
+
+      <a class="hero__fig hero__fig--4 hero__site" data-depth="0.04" data-cycle="auraweb,soluphilex,shakti"
+        href="work.html#site-auraweb" aria-label="AuraWeb website — our work">
+        <span class="frame"></span>
+        <figure>
+          <span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>auraweb.tech</em></span>
+          <span class="hero__shot"><img src="assets/work/auraweb-thumb.webp"
+              alt="AuraWeb website, designed and built by Nabulsi.tech" width="800" height="500" /></span>
+        </figure>
+        <span class="hero__site-tag"><b>Our work</b><span>AuraWeb</span></span>
+      </a>
 
       <!-- Wireframe skeleton decoration -->
       <div class="skel hero__skel--a" aria-hidden="true">
@@ -118,15 +139,24 @@
           <a class="btn magnetic" href="contact.html" data-cursor="hot"><span>Start a project</span></a>
         </div>
 
-        <!-- Small-screen imagery strip: carries the work visuals when the
-             floating hero figures are dropped on narrow viewports. -->
-        <div class="hero__strip-figs">
-          <figure><img src="assets/clients/logan-1x1.jpg" alt="Admissions campaign creative for Logan College"
-              loading="lazy" width="900" height="900" /></figure>
-          <figure><img src="assets/clients/dias-1x1.jpg" alt="Campaign creative for Delhi Institute of Advanced Studies"
-              loading="lazy" width="900" height="900" /></figure>
-          <figure><img src="assets/clients/kanak-1x1.jpg" alt="Branded marketing graphic for Kanak Cargo" loading="lazy"
-              width="900" height="900" /></figure>
+        <!-- Sliding reel of the websites we built. On small screens it carries
+             the work visuals once the floating frames are dropped. -->
+        <div class="hero__reel" aria-label="Websites designed and built by Nabulsi.tech">
+          <p class="hero__reel-label"><span></span>Our work &mdash; live websites</p>
+          <div class="hero__reel-track" id="hero-reel">
+            <a class="hero__reel-item" href="work.html#site-sweeteye"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>sweeteyecoffee.com</em></span><img src="assets/work/sweeteye-thumb.webp" alt="Sweet Eye Coffee website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">Sweet Eye Coffee</span></a>
+            <a class="hero__reel-item" href="work.html#site-hrmsmaster"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>hrmsmaster.in</em></span><img src="assets/work/hrmsmaster-thumb.webp" alt="HRMS Master website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">HRMS Master</span></a>
+            <a class="hero__reel-item" href="work.html#site-auraweb"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>auraweb.tech</em></span><img src="assets/work/auraweb-thumb.webp" alt="AuraWeb website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">AuraWeb</span></a>
+            <a class="hero__reel-item" href="work.html#site-skillonit"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>skillonit.com</em></span><img src="assets/work/skillonit-thumb.webp" alt="Skillonit website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">Skillonit</span></a>
+            <a class="hero__reel-item" href="work.html#site-hotchili"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>thehotchili.com</em></span><img src="assets/work/hotchili-thumb.webp" alt="The Hot Chili website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">The Hot Chili</span></a>
+            <a class="hero__reel-item" href="work.html#site-incerties"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>incertiesportfolio.na3.digital</em></span><img src="assets/work/incerties-thumb.webp" alt="Incertis website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">Incertis</span></a>
+            <a class="hero__reel-item" href="work.html#site-soluphilex"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>soluphilex.com</em></span><img src="assets/work/soluphilex-thumb.webp" alt="SoluphileX website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">SoluphileX</span></a>
+            <a class="hero__reel-item" href="work.html#site-aaghaz"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>aaghaz.ai</em></span><img src="assets/work/aaghaz-thumb.webp" alt="Aaghaz.ai website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">Aaghaz.ai</span></a>
+            <a class="hero__reel-item" href="work.html#site-trosidex"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>trosidex.com</em></span><img src="assets/work/trosidex-thumb.webp" alt="Trosidex Technologies website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">Trosidex Technologies</span></a>
+            <a class="hero__reel-item" href="work.html#site-awsclub"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>awsclubgeu.in</em></span><img src="assets/work/awsclub-thumb.webp" alt="AWS Student Builder Group website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">AWS Student Builder Group</span></a>
+            <a class="hero__reel-item" href="work.html#site-5igoya"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>5igoya.com</em></span><img src="assets/work/5igoya-thumb.webp" alt="5i Goya website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">5i Goya</span></a>
+            <a class="hero__reel-item" href="work.html#site-shakti"><span class="hero__bar" aria-hidden="true"><i></i><i></i><i></i><em>shaktiwebsolution.com</em></span><img src="assets/work/shakti-thumb.webp" alt="Shakti Web Solution website" loading="lazy" width="800" height="500" /><span class="hero__reel-cap">Shakti Web Solution</span></a>
+          </div>
         </div>
       </div>
 
@@ -187,137 +217,58 @@
     </section>
 
     <!-- ============================ WORK ============================ -->
+    <!-- Live websites we built. Cards are rendered from work-data.js by
+         home-work.js: they stack as you scroll, scroll their site on hover and
+         open the real website in the live preview (site-preview.js). -->
     <section class="work" id="work">
       <div class="shell">
-        <div class="work__grid">
-
-          <!-- Column A -->
-          <div class="work__col work__col--a">
-
-            <div class="work__head">
-              <div class="skel" aria-hidden="true">
-                <i style="width: 34%"></i>
-                <i style="width: 62%"></i>
-                <i style="width: 48%"></i>
-                <i style="width: 86%"></i>
-                <i style="width: 40%"></i>
-                <i style="width: 70%"></i>
-                <i style="width: 30%"></i>
-              </div>
-              <h2 class="work__title pixel" id="work-title">work</h2>
-            </div>
-
-            <a class="wcard reveal-y" href="branding-case-study.html" data-cursor="view">
-              <span class="wcard__frame"></span>
-              <div class="wcard__media">
-                <img src="assets/clients/dias-16x9.jpg" alt="Campaign creative for Delhi Institute of Advanced Studies"
-                  loading="lazy" width="1400" height="788" />
-                <span class="wcard__tint"></span>
-                <span class="wcard__tag">360&deg; Digital</span>
-              </div>
-              <div class="wcard__foot">
-                <span class="wcard__name">
-                  Delhi Institute of Advanced Studies
-                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                    <path d="M1 9L9 1M9 1H3M9 1v6" />
-                  </svg>
-                </span>
-                <span class="wcard__year">&rsquo;26</span>
-              </div>
-            </a>
-
-            <a class="wcard reveal-y" href="graphic-design-case-study.html" data-cursor="view">
-              <span class="wcard__frame"></span>
-              <div class="wcard__media">
-                <img src="assets/clients/logan-16x9.jpg" alt="Admissions campaign creative for Logan College"
-                  loading="lazy" width="1400" height="788" />
-                <span class="wcard__tint"></span>
-                <span class="wcard__tag">Education Branding</span>
-              </div>
-              <div class="wcard__foot">
-                <span class="wcard__name">
-                  Logan College
-                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                    <path d="M1 9L9 1M9 1H3M9 1v6" />
-                  </svg>
-                </span>
-                <span class="wcard__year">&rsquo;25</span>
-              </div>
-            </a>
-
-            <a class="wcard reveal-y" href="video-editing-case-study.html" data-cursor="view">
-              <span class="wcard__frame"></span>
-              <div class="wcard__media">
-                <img src="assets/clients/gratification-16x9.jpg"
-                  alt="Social storytelling creative for Gratification Consultants" loading="lazy" width="1400"
-                  height="788" />
-                <span class="wcard__tint"></span>
-                <span class="wcard__tag">Aviation &amp; Aerospace</span>
-              </div>
-              <div class="wcard__foot">
-                <span class="wcard__name">
-                  Gratification Consultants
-                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                    <path d="M1 9L9 1M9 1H3M9 1v6" />
-                  </svg>
-                </span>
-                <span class="wcard__year">&rsquo;25</span>
-              </div>
-            </a>
+        <div class="hw-head">
+          <div class="work__head">
+            <h2 class="work__title pixel" id="work-title">work</h2>
           </div>
-
-          <!-- Column B -->
-          <div class="work__col work__col--b">
-
+          <div class="hw-head__side">
             <p class="work__lede reveal-y">
-              Different industries and similar challenges. Same process and unique
-              solutions. Have a look and read about it.
+              Live websites we designed, built and launched. Hover a screen to scroll the site &mdash;
+              click it to explore the real thing without leaving this page.
             </p>
-
-            <a class="wcard reveal-y" href="web-dev-case-study.html" data-cursor="view">
-              <span class="wcard__frame"></span>
-              <div class="wcard__media">
-                <img src="assets/clients/dist-16x9.jpg" alt="Admission campaign creative for DIST Science and Tech"
-                  loading="lazy" width="1400" height="788" />
-                <span class="wcard__tint"></span>
-                <span class="wcard__tag">Web Platform</span>
-              </div>
-              <div class="wcard__foot">
-                <span class="wcard__name">
-                  DIST Science &amp; Tech
-                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                    <path d="M1 9L9 1M9 1H3M9 1v6" />
-                  </svg>
-                </span>
-                <span class="wcard__year">&rsquo;26</span>
-              </div>
-            </a>
-
-            <a class="wcard reveal-y" href="app-dev-case-study.html" data-cursor="view">
-              <span class="wcard__frame"></span>
-              <div class="wcard__media">
-                <img src="assets/clients/person-16x9.jpg" alt="Learning platform built for Person to Personality"
-                  loading="lazy" width="1400" height="788" />
-                <span class="wcard__tint"></span>
-                <span class="wcard__tag">Personal Branding</span>
-              </div>
-              <div class="wcard__foot">
-                <span class="wcard__name">
-                  Person to Personality
-                  <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true">
-                    <path d="M1 9L9 1M9 1H3M9 1v6" />
-                  </svg>
-                </span>
-                <span class="wcard__year">&rsquo;25</span>
-              </div>
-            </a>
+            <ul class="hw-head__facts reveal-y">
+              <li><b>12</b> live websites</li>
+              <li><b>4</b> industries</li>
+            </ul>
           </div>
         </div>
+
+        <div class="hw-stack" id="hw-stack" data-featured="sweeteye,hrmsmaster,auraweb,skillonit,hotchili,soluphilex"></div>
+
+        <div class="hw-more">
+          <div class="hw-more__head reveal-y">
+            <p class="hw-more__label"><span></span>More live work</p>
+            <p class="hw-more__hint">Tap any site to preview it live</p>
+          </div>
+          <div class="hw-more__grid" id="hw-more"></div>
+        </div>
+
+        <noscript>
+          <ul class="hw-noscript">
+            <li><a href="https://sweeteyecoffee.com/">Sweet Eye Coffee</a></li>
+            <li><a href="https://www.hrmsmaster.in/">HRMS Master</a></li>
+            <li><a href="https://auraweb.tech/">AuraWeb</a></li>
+            <li><a href="https://www.skillonit.com/">Skillonit</a></li>
+            <li><a href="https://thehotchili.com/">The Hot Chili</a></li>
+            <li><a href="https://soluphilex.com/">SoluphileX</a></li>
+            <li><a href="https://incertiesportfolio.na3.digital/">Incertis</a></li>
+            <li><a href="https://www.aaghaz.ai/">Aaghaz.ai</a></li>
+            <li><a href="https://trosidex.com/">Trosidex Technologies</a></li>
+            <li><a href="https://awsclubgeu.in/">AWS Student Builder Group</a></li>
+            <li><a href="https://www.5igoya.com/">5i Goya</a></li>
+            <li><a href="https://shaktiwebsolution.com/">Shakti Web Solution</a></li>
+          </ul>
+        </noscript>
 
         <div class="work__more">
           <div class="cta-wrap">
             <span class="frame"></span>
-            <a class="btn btn--paper magnetic" href="work.html" data-cursor="hot"><span>More projects</span></a>
+            <a class="btn btn--paper magnetic" href="work.html" data-cursor="hot"><span>View all 12 projects</span></a>
           </div>
         </div>
       </div>
@@ -533,7 +484,7 @@
             <a href="https://www.linkedin.com/company/94871943/" target="_blank" rel="noopener noreferrer">LinkedIn</a>
             <a href="https://www.facebook.com/profile.php?id=61566352892673" target="_blank"
               rel="noopener noreferrer">Facebook</a>
-            <a href="https://api.whatsapp.com/send/?phone=19012772195&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0"
+            <a href="https://api.whatsapp.com/send/?phone=19016507684&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0"
               target="_blank" rel="noopener noreferrer">WhatsApp</a>
           </div>
           <span>Based in Arlington, TN 38002, USA</span>
@@ -558,8 +509,8 @@
           <h4>Say hello</h4>
           <a href="mailto:ramia@nabulsi.tech">ramia@nabulsi.tech</a>
           <a href="mailto:ankit@nabulsi.tech">ankit@nabulsi.tech</a>
-          <a href="tel:+19012772195">+1 (901) 277-2195</a>
-          <a href="https://api.whatsapp.com/send/?phone=19012772195&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0"
+          <a href="tel:+19016507684">+1 (901) 650-7684</a>
+          <a href="https://api.whatsapp.com/send/?phone=19016507684&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0"
             target="_blank" rel="noopener noreferrer">WhatsApp us</a>
         </div>
         <div class="menu__block">
@@ -594,7 +545,7 @@
   </nav>
 
   <!-- ============================ WHATSAPP FLOATING BUTTON ============================ -->
-  <a class="wa-fab" href="https://api.whatsapp.com/send/?phone=19012772195&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
+  <a class="wa-fab" href="https://api.whatsapp.com/send/?phone=19016507684&amp;text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&amp;type=phone_number&amp;app_absent=0" target="_blank" rel="noopener noreferrer" aria-label="Chat on WhatsApp">
     <span class="wa-fab-inner">
       <img src="assets/whatsapp-logo.png" alt="WhatsApp" class="wa-logo-img" width="56" height="56">
       <span class="wa-label">
@@ -630,12 +581,9 @@
       if (!a) return;
       a.volume = 0.1;
       a.loop = true;
-      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
-      try { a.currentTime = 0; } catch (e) {}
 
       function playAudio() {
         if (a.paused) {
-          try { a.currentTime = 0; } catch (e) {}
           var p = a.play();
           if (p !== undefined) {
             p.then(function () {
@@ -673,7 +621,11 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js"></script>
-  <script src="home.js?v=2026orange"></script>
+  <script src="home.js?v=2026live"></script>
+  <script src="work-data.js?v=1"></script>
+  <script src="hero-sites.js?v=1"></script>
+  <script src="site-preview.js?v=1"></script>
+  <script src="home-work.js?v=1"></script>
   <script src="studio.js?v=2026orange"></script>
 </body>
 

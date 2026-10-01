@@ -50,6 +50,8 @@
       smoothWheel: true,
       touchMultiplier: 1.6
     });
+    /* shared: back-to-top and the live website preview (site-preview.js) pause/drive it */
+    window.lenis = lenis;
 
     if (hasST) {
       lenis.on("scroll", ScrollTrigger.update);
@@ -609,7 +611,7 @@
     if (document.querySelector(".wa-fab")) return;
     var a = document.createElement("a");
     a.className = "wa-fab";
-    a.href = "https://api.whatsapp.com/send/?phone=19012772195&text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&type=phone_number&app_absent=0";
+    a.href = "https://api.whatsapp.com/send/?phone=19016507684&text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&type=phone_number&app_absent=0";
     a.target = "_blank";
     a.rel = "noopener noreferrer";
     a.setAttribute("aria-label", "Chat on WhatsApp");
@@ -646,9 +648,6 @@
     }
 
     if (musicToggleBtn && bgAudio) {
-      // Clear legacy saved playback time so music always starts from the beginning (0:00)
-      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
-
       // Set volume strictly to 10% and ensure looping
       bgAudio.volume = 0.1;
       bgAudio.loop = true;

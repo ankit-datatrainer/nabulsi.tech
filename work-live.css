@@ -1,0 +1,679 @@
+/* ==========================================================================
+   NABULSI.TECH — WORK PAGE: LIVE WEBSITE SHOWCASE
+   Hero wall · horizontal slide showcase · project index
+   (buttons, mockups and the live preview modal live in site-preview.css)
+   ========================================================================== */
+
+/* ==========================================================================
+   1. HERO
+   ========================================================================== */
+.wk-hero {
+  position: relative;
+  min-height: 100svh;
+  display: flex;
+  align-items: center;
+  padding: clamp(120px, 15vh, 170px) 0 clamp(90px, 11vh, 130px);
+  background: #fff;
+  overflow: clip;
+  isolation: isolate;
+}
+.wk-hero__bg {
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(17, 24, 39, .045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(17, 24, 39, .045) 1px, transparent 1px);
+  background-size: 88px 88px;
+  -webkit-mask-image: radial-gradient(120% 90% at 30% 40%, #000 30%, transparent 80%);
+  mask-image: radial-gradient(120% 90% at 30% 40%, #000 30%, transparent 80%);
+}
+.wk-hero__glow {
+  position: absolute;
+  z-index: -1;
+  width: 70vw;
+  height: 70vw;
+  max-width: 1100px;
+  max-height: 1100px;
+  right: -18vw;
+  top: -22vw;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 157, 80, .28), rgba(255, 157, 80, .08) 55%, transparent 72%);
+  filter: blur(10px);
+  pointer-events: none;
+}
+.wk-hero__inner {
+  position: relative;
+  z-index: 3;
+  width: 100%;
+  max-width: 1680px;
+  margin: 0 auto;
+  padding: 0 var(--wk-gutter);
+}
+.wk-hero__copy { max-width: min(640px, 48vw); }
+
+.wk-hero__title {
+  font-family: var(--font-headline, 'Geist', sans-serif);
+  font-size: clamp(58px, 8.4vw, 148px);
+  font-weight: 500;
+  line-height: .92;
+  letter-spacing: -.07em;
+  color: var(--wk-ink);
+  margin: 0 0 clamp(22px, 2.4vw, 34px);
+}
+.wk-line { display: block; overflow: hidden; padding-bottom: .18em; margin-bottom: -.18em; }
+.wk-line > span { display: inline-block; white-space: nowrap; }
+.wk-hero__title em {
+  position: relative;
+  font-style: normal;
+  color: var(--wk-brand);
+}
+.wk-hero__scribble {
+  position: absolute;
+  left: -2%;
+  bottom: -.12em;
+  width: 104%;
+  height: .3em;
+  overflow: visible;
+  pointer-events: none;
+}
+.wk-hero__scribble path {
+  fill: none;
+  stroke: var(--wk-brand);
+  stroke-width: 6;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+}
+.wk-hero__lede {
+  max-width: 520px;
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.65;
+  color: var(--wk-ink-2);
+  margin: 0 0 34px;
+}
+.wk-hero__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: clamp(38px, 5vh, 56px); }
+
+.wk-stats {
+  display: flex;
+  gap: clamp(22px, 3.4vw, 54px);
+  margin: 0;
+  padding-top: 26px;
+  border-top: 1px solid var(--wk-line);
+}
+.wk-stats div { min-width: 0; }
+.wk-stats dt {
+  font-family: var(--font-headline, 'Geist', sans-serif);
+  font-size: clamp(30px, 3vw, 46px);
+  font-weight: 500;
+  letter-spacing: -.05em;
+  line-height: 1;
+  color: var(--wk-ink);
+}
+.wk-stats dt small { font-size: .55em; color: var(--wk-brand); margin-left: 2px; letter-spacing: 0; }
+.wk-stats dd {
+  margin: 8px 0 0;
+  font: 500 11px/1.4 var(--font-label, 'Geist Mono', monospace);
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: #6b7280;
+}
+
+/* The 3D wall of live sites */
+.wk-wall {
+  position: absolute;
+  z-index: 1;
+  top: -6%;
+  bottom: -6%;
+  right: -4vw;
+  width: 60vw;
+  perspective: 1800px;
+  perspective-origin: 30% 50%;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, #000 20%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  -webkit-mask-composite: source-in;
+  mask-image: linear-gradient(to right, transparent 0%, #000 20%), linear-gradient(to bottom, transparent 0%, #000 12%, #000 88%, transparent 100%);
+  mask-composite: intersect;
+}
+.wk-wall__tilt {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.wk-wall__plane {
+  position: absolute;
+  inset: -14% -10% -14% 6%;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.4vw, 24px);
+  transform: rotateX(22deg) rotateY(-26deg) rotateZ(9deg);
+  transform-style: preserve-3d;
+  will-change: transform;
+}
+.wk-wall__col { position: relative; overflow: visible; }
+.wk-wall__track {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(14px, 1.4vw, 24px);
+  animation: wkColUp 46s linear infinite;
+  will-change: transform;
+}
+.wk-wall__col:nth-child(2) .wk-wall__track { animation-name: wkColDown; animation-duration: 52s; }
+.wk-wall__col:nth-child(3) .wk-wall__track { animation-duration: 40s; }
+@keyframes wkColUp { from { transform: translateY(0); } to { transform: translateY(-50%); } }
+@keyframes wkColDown { from { transform: translateY(-50%); } to { transform: translateY(0); } }
+.wk-wall:hover .wk-wall__track { animation-play-state: paused; }
+
+.wk-tile {
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(17, 24, 39, .1);
+  box-shadow: 0 30px 60px -28px rgba(17, 24, 39, .35), 0 2px 6px rgba(17, 24, 39, .05);
+  transition: transform .6s var(--wk-ease), box-shadow .6s var(--wk-ease);
+}
+.wk-tile img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; background: #f3f4f6; }
+.wk-tile:hover { transform: translateZ(40px) scale(1.03); box-shadow: 0 40px 80px -30px rgba(255, 157, 80, .55); }
+
+/* ==========================================================================
+   2. NAME BAND
+   ========================================================================== */
+.wk-band {
+  position: relative;
+  overflow: hidden;
+  background: var(--wk-brand);
+  color: #fff;
+  padding: clamp(22px, 2.4vw, 34px) 0;
+}
+.wk-band__track {
+  display: flex;
+  width: max-content;
+  animation: wkBand 60s linear infinite;
+}
+.wk-band__track span {
+  display: inline-flex;
+  align-items: center;
+  gap: clamp(22px, 2.6vw, 44px);
+  padding-right: clamp(22px, 2.6vw, 44px);
+  font: 600 clamp(24px, 2.8vw, 42px)/1 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.03em;
+  white-space: nowrap;
+}
+.wk-band__track b { font-weight: 400; font-size: .6em; opacity: .85; }
+@keyframes wkBand { to { transform: translateX(-50%); } }
+
+/* ==========================================================================
+   3. LIVE SHOWCASE (dark, pinned horizontal slide)
+   ========================================================================== */
+.wk-live {
+  --accent: var(--wk-brand);
+  position: relative;
+  background: var(--wk-night);
+  color: #fff;
+  overflow: clip;
+  isolation: isolate;
+}
+.wk-live__glow {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(60% 55% at 72% 58%, color-mix(in srgb, var(--accent) 26%, transparent), transparent 70%),
+    radial-gradient(40% 40% at 10% 100%, rgba(255, 157, 80, .12), transparent 70%);
+  transition: background .9s ease;
+}
+.wk-live__grain {
+  position: absolute;
+  z-index: -1;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, .035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, .035) 1px, transparent 1px);
+  background-size: 88px 88px;
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+}
+.wk-live__stage {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh;
+  padding: clamp(96px, 12vh, 124px) 0 clamp(18px, 3vh, 30px);
+}
+.wk-live__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px 40px;
+  flex-wrap: wrap;
+  padding: 0 var(--wk-gutter);
+  margin-bottom: clamp(18px, 3vh, 34px);
+}
+.wk-live__head .wk-kicker { margin-bottom: 12px; }
+.wk-live__title {
+  font: 500 clamp(36px, 4.6vw, 76px)/.95 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.06em;
+  color: #fff;
+  margin: 0;
+}
+.wk-live__title em { font-style: normal; color: var(--wk-brand); }
+.wk-live__hint {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+  max-width: 340px;
+  text-align: right;
+  font-size: 14px;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, .6);
+  margin: 0;
+}
+.wk-live__hint b { color: #fff; font-weight: 600; }
+.wk-mouse {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font: 500 11px/1 var(--font-label, 'Geist Mono', monospace);
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--wk-brand);
+}
+.wk-mouse i {
+  position: relative;
+  width: 18px;
+  height: 28px;
+  border: 1.5px solid currentColor;
+  border-radius: 10px;
+}
+.wk-mouse i::after {
+  content: '';
+  position: absolute;
+  left: 50%;
+  top: 5px;
+  width: 3px;
+  height: 6px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: currentColor;
+  animation: wkWheel 1.8s ease-in-out infinite;
+}
+@keyframes wkWheel { 0% { transform: translateY(0); opacity: 1; } 80%, 100% { transform: translateY(9px); opacity: 0; } }
+
+.wk-live__viewport { position: relative; flex: 1; min-height: 0; display: flex; }
+.wk-live__track {
+  display: flex;
+  align-items: stretch;
+  gap: clamp(28px, 3.5vw, 64px);
+  padding: 0 var(--wk-gutter);
+  will-change: transform;
+}
+
+.wk-panel {
+  --accent: var(--wk-brand);
+  position: relative;
+  flex: none;
+  width: min(1260px, 84vw);
+  display: grid;
+  grid-template-columns: minmax(0, .82fr) minmax(0, 1.55fr);
+  align-items: center;
+  gap: clamp(24px, 3.4vw, 60px);
+  padding: clamp(22px, 2.6vw, 40px);
+  border-radius: 30px;
+  background: linear-gradient(150deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015) 60%);
+  border: 1px solid rgba(255, 255, 255, .08);
+  overflow: hidden;
+  isolation: isolate;
+}
+.wk-panel::before {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 60%;
+  aspect-ratio: 1;
+  right: -12%;
+  bottom: -30%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 34%, transparent), transparent);
+  opacity: .8;
+  pointer-events: none;
+}
+.wk-panel__info { position: relative; min-width: 0; }
+.wk-panel__num {
+  display: block;
+  font: 500 clamp(64px, 7vw, 120px)/.8 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.07em;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, .28);
+  margin-bottom: clamp(14px, 2vh, 26px);
+}
+.wk-panel__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 14px; margin-bottom: 14px; }
+.wk-panel__cat {
+  font: 500 11px/1.3 var(--font-label, 'Geist Mono', monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .6);
+}
+.wk-panel__name {
+  font: 500 clamp(30px, 3.1vw, 54px)/1 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.055em;
+  color: #fff;
+  margin: 0 0 14px;
+}
+.wk-panel__desc {
+  font-size: clamp(14px, 1vw, 16px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, .66);
+  margin: 0 0 18px;
+  max-width: 440px;
+}
+.wk-tags { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 clamp(18px, 2.6vh, 28px); padding: 0; }
+.wk-tags li {
+  padding: 7px 12px;
+  border-radius: 99px;
+  border: 1px solid rgba(255, 255, 255, .14);
+  font-size: 12px;
+  line-height: 1;
+  color: rgba(255, 255, 255, .82);
+}
+.wk-panel__actions { display: flex; flex-wrap: wrap; gap: 10px; }
+.wk-panel__actions .wk-btn { min-height: 46px; padding: 0 20px; font-size: 13px; }
+.wk-panel__credit {
+  display: block;
+  margin-top: 18px;
+  font: 500 10.5px/1.4 var(--font-label, 'Geist Mono', monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .4);
+}
+.wk-panel__credit b { color: var(--wk-brand); font-weight: 500; }
+
+.wk-panel__media {
+  position: relative;
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+  perspective: 1600px;
+}
+
+.wk-live__hud {
+  display: flex;
+  align-items: center;
+  gap: clamp(14px, 2vw, 28px);
+  padding: clamp(14px, 2.4vh, 24px) var(--wk-gutter) 0;
+  font: 500 12px/1 var(--font-label, 'Geist Mono', monospace);
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, .55);
+}
+.wk-live__count b { color: #fff; font-weight: 500; font-size: 15px; }
+.wk-live__bar { flex: 1; height: 2px; border-radius: 2px; background: rgba(255, 255, 255, .12); overflow: hidden; }
+.wk-live__bar i { display: block; height: 100%; width: 100%; background: var(--wk-brand); transform-origin: left; transform: scaleX(0); }
+.wk-live__now { min-width: 190px; text-align: right; color: #fff; }
+
+/* ==========================================================================
+   4. PROJECT INDEX
+   ========================================================================== */
+.wk-index {
+  position: relative;
+  background: #fff;
+  padding: var(--space-stack-lg, 140px) 0 clamp(80px, 9vw, 140px);
+}
+.wk-index__inner { max-width: 1680px; margin: 0 auto; padding: 0 var(--wk-gutter); }
+.wk-index__head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 28px;
+  margin-bottom: clamp(30px, 4vw, 56px);
+}
+.wk-index__title {
+  font: 500 clamp(44px, 6.4vw, 112px)/.92 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.07em;
+  color: var(--wk-ink);
+  margin: 0;
+}
+.wk-index__title sup {
+  font-size: .28em;
+  letter-spacing: 0;
+  vertical-align: top;
+  position: relative;
+  top: .3em;
+  margin-left: .2em;
+  color: var(--wk-brand);
+  font-family: var(--font-label, 'Geist Mono', monospace);
+}
+.wk-index__lede { max-width: 440px; color: var(--wk-ink-2); font-size: 16px; line-height: 1.6; margin: 18px 0 0; }
+
+.wk-filters { display: flex; flex-wrap: wrap; gap: 8px; }
+.wk-filter {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 42px;
+  padding: 0 16px;
+  border-radius: 99px;
+  border: 1px solid rgba(17, 24, 39, .14);
+  font: 500 13px/1 var(--font-headline, 'Geist', sans-serif);
+  color: var(--wk-ink);
+  background: #fff;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
+}
+.wk-filter sup { font: 500 10px/1 var(--font-label, 'Geist Mono', monospace); color: var(--wk-brand); top: 0; }
+.wk-filter:hover { border-color: var(--wk-brand); }
+.wk-filter.is-on { background: var(--wk-ink); color: #fff; border-color: var(--wk-ink); }
+
+.wk-list { margin: 0; padding: 0; border-bottom: 1px solid var(--wk-line); }
+.wk-row {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  border-top: 1px solid var(--wk-line);
+  isolation: isolate;
+}
+.wk-row::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: #fff7f0;
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform .55s var(--wk-ease);
+}
+.wk-row:hover::before, .wk-row:focus-within::before { transform: scaleY(1); transform-origin: top; }
+.wk-row.is-hidden { display: none; }
+.wk-row__main {
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1.5fr) minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+  padding: clamp(20px, 2.2vw, 30px) 12px;
+  text-align: left;
+  color: var(--wk-ink);
+  background: none;
+  border: 0;
+  cursor: pointer;
+}
+.wk-row__num { font: 500 12px/1 var(--font-label, 'Geist Mono', monospace); color: #9ca3af; }
+.wk-row__name {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font: 500 clamp(22px, 2.4vw, 40px)/1.05 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.05em;
+  transition: transform .55s var(--wk-ease), color .35s ease;
+}
+.wk-row__name img { display: none; }
+.wk-row:hover .wk-row__name { transform: translateX(12px); color: var(--wk-brand-deep); }
+.wk-row__cat, .wk-row__type { font-size: 14px; color: var(--wk-ink-2); }
+.wk-row__type { font: 500 11px/1.4 var(--font-label, 'Geist Mono', monospace); letter-spacing: .1em; text-transform: uppercase; color: #6b7280; }
+.wk-row__visit {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-right: 12px;
+  padding: 11px 16px;
+  border-radius: 99px;
+  border: 1px solid rgba(17, 24, 39, .14);
+  font: 600 12px/1 var(--font-headline, 'Geist', sans-serif);
+  color: var(--wk-ink);
+  white-space: nowrap;
+  background: #fff;
+  transition: background .35s ease, color .35s ease, border-color .35s ease;
+}
+.wk-row__visit svg { width: 12px; height: 12px; transition: transform .45s var(--wk-ease); }
+.wk-row__visit:hover { background: var(--wk-brand); border-color: var(--wk-brand); color: #fff; }
+.wk-row__visit:hover svg { transform: translate(2px, -2px); }
+
+.wk-float {
+  position: fixed;
+  z-index: 60;
+  left: 0;
+  top: 0;
+  width: clamp(280px, 26vw, 420px);
+  border-radius: 14px;
+  overflow: hidden;
+  background: #fff;
+  border: 1px solid rgba(17, 24, 39, .1);
+  box-shadow: 0 40px 80px -30px rgba(17, 24, 39, .45);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(0, -50%) scale(.6);
+  will-change: transform, opacity;
+}
+.wk-float__screen { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: #f3f4f6; }
+.wk-float__screen img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+
+/* ==========================================================================
+   5. BRAND WORK HEADING (sits above the existing coverflow)
+   ========================================================================== */
+.wk-brandhead {
+  /* sits above the coverflow's tint layer, which bleeds 10% upward */
+  position: relative;
+  z-index: 2;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px 40px;
+  padding-top: clamp(40px, 6vw, 90px);
+  margin-bottom: clamp(20px, 3vw, 40px);
+  border-top: 1px solid var(--wk-line);
+}
+.wk-brandhead h2 {
+  font: 500 clamp(36px, 4.6vw, 76px)/.95 var(--font-headline, 'Geist', sans-serif);
+  letter-spacing: -.06em;
+  color: var(--wk-ink);
+  margin: 0;
+}
+.wk-brandhead h2 em { font-style: normal; color: var(--wk-brand); }
+.wk-brandhead > p { max-width: 420px; color: var(--wk-ink-2); font-size: 16px; line-height: 1.6; margin: 0; }
+
+.wk-noscript { display: flex; flex-wrap: wrap; gap: 10px 24px; padding: 0 var(--wk-gutter) 60px; }
+.wk-noscript a { color: #fff; text-decoration: underline; }
+
+/* ==========================================================================
+   7. RESPONSIVE
+   ========================================================================== */
+@media (min-width: 900px) {
+  /* The pinned stage is exactly one screen tall */
+  .wk-live__stage { height: 100vh; height: 100svh; }
+  /* clear the floating WhatsApp / music / back-to-top buttons */
+  .wk-live__hud { padding-left: max(var(--wk-gutter), 112px); padding-right: max(var(--wk-gutter), 112px); }
+  /* No pin (reduced motion, or GSAP unavailable): a native swipe strip instead */
+  .wk-live:not(.is-pinned) .wk-live__viewport {
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    scrollbar-color: var(--wk-brand) transparent;
+  }
+  .wk-live:not(.is-pinned) .wk-panel { scroll-snap-align: center; }
+  .wk-live:not(.is-pinned) .wk-live__hud { display: none; }
+  .wk-live:not(.is-pinned) .wk-mouse { display: none; }
+  .wk-browser { max-width: calc((100svh - 430px) * 1.6); }
+}
+@media (min-width: 900px) and (max-height: 800px) {
+  .wk-panel__num { font-size: 56px; margin-bottom: 10px; }
+  .wk-tags { display: none; }
+  .wk-panel__desc { display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .wk-live__head { margin-bottom: 14px; }
+  .wk-live__title { font-size: clamp(32px, 3.6vw, 56px); }
+  .wk-browser { max-width: calc((100svh - 380px) * 1.6); }
+}
+@media (max-width: 1180px) {
+  .wk-hero__copy { max-width: min(600px, 56vw); }
+  .wk-wall { width: 58vw; right: -12vw; opacity: .9; }
+  .wk-panel { grid-template-columns: minmax(0, 1fr) minmax(0, 1.3fr); }
+}
+
+@media (max-width: 899px) {
+  .wk-hero { min-height: 0; display: flex; flex-direction: column; align-items: stretch; padding: 120px 0 0; }
+  .wk-hero__inner { order: 1; }
+  .wk-wall { order: 2; }
+  .wk-hero__copy { max-width: 100%; }
+  .wk-hero__title { font-size: clamp(54px, 14vw, 96px); }
+  .wk-wall {
+    position: relative;
+    inset: auto;
+    right: auto;
+    width: auto;
+    height: 440px;
+    margin: 40px -20px 0;
+    opacity: 1;
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 80%, transparent 100%);
+    mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 80%, transparent 100%);
+  }
+  .wk-wall__plane { inset: -20% -30% -20% -10%; transform: rotateX(24deg) rotateY(-12deg) rotateZ(12deg); }
+
+  .wk-live__stage { min-height: 0; padding: 80px 0 60px; }
+  .wk-live__hint { align-items: flex-start; text-align: left; }
+  .wk-live__viewport { display: block; }
+  .wk-live__track { flex-direction: column; gap: 28px; }
+  .wk-panel { width: 100%; grid-template-columns: 1fr; padding: 18px 18px 24px; border-radius: 22px; }
+  .wk-panel__media { order: -1; }
+  .wk-panel__num { font-size: 56px; margin-bottom: 12px; }
+  .wk-live__hud { display: none; }
+  .wk-mouse { display: none; }
+
+  .wk-row__main { grid-template-columns: 64px minmax(0, 1fr); gap: 4px 14px; padding: 16px 4px; }
+  .wk-row__num { display: none; }
+  .wk-row__name { grid-column: 1 / -1; display: contents; }
+  .wk-row__name img {
+    display: block;
+    grid-row: span 2;
+    width: 64px;
+    aspect-ratio: 1;
+    object-fit: cover;
+    object-position: top left;
+    border-radius: 10px;
+    border: 1px solid var(--wk-line);
+  }
+  .wk-row__name span { font-size: 22px; align-self: end; }
+  .wk-row__cat { align-self: start; font-size: 13px; }
+  .wk-row__type { display: none; }
+  .wk-row__visit { margin-right: 4px; padding: 10px 12px; }
+  .wk-row__visit span { display: none; }
+  .wk-float { display: none; }
+
+}
+
+@media (max-width: 560px) {
+  .wk-hero__cta .wk-btn { flex: 1 1 auto; }
+  .wk-stats { gap: 18px; }
+  .wk-stats dd { font-size: 10px; letter-spacing: .06em; }
+  .wk-wall { height: 360px; }
+  .wk-panel__actions .wk-btn { flex: 1 1 auto; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wk-wall__track, .wk-band__track { animation: none !important; }
+}

@@ -184,6 +184,8 @@
     }
   </style>
   <link rel="stylesheet" href="studio.css?v=2026orange" />
+  <link rel="stylesheet" href="site-preview.css?v=1" />
+  <link rel="stylesheet" href="work-live.css?v=2" />
 </head>
 <body data-barba="wrapper">
 
@@ -219,22 +221,119 @@
     </div>
   </nav>
 
-  <main data-barba="container" data-barba-namespace="work" class="container">
+  <main data-barba="container" data-barba-namespace="work">
 
-    <!-- HERO -->
-    <header class="work-hero anim-fade">
-      <div class="work-hero-grid">
-        <h1 class="studio-work-title">
-          <span class="split-line stagger-1"><span class="split-line-inner display-xl"><span class="prismatic-text">Selected</span></span></span>
-          <span class="split-line stagger-2"><span class="split-line-inner display-xl">Works</span></span>
-        </h1>
-        <div class="reveal anim-swipe-right" data-from="right">
-          <p class="body-lg work-hero-desc">
-            We architect digital tension — building uncompromising brand experiences that demand attention in a saturated landscape.
+    <!-- ===== HERO — a live wall of the websites we built ===== -->
+    <header class="wk-hero" id="wk-hero">
+      <div class="wk-hero__bg" aria-hidden="true"></div>
+      <div class="wk-hero__glow" aria-hidden="true"></div>
+
+      <!-- Filled from work-data.js by work-live.js -->
+      <div class="wk-wall" aria-hidden="true">
+        <div class="wk-wall__tilt">
+          <div class="wk-wall__plane" id="wk-wall-plane"></div>
+        </div>
+      </div>
+
+      <div class="wk-hero__inner">
+        <div class="wk-hero__copy">
+          <p class="wk-kicker"><span class="wk-kicker__dot"></span>Selected works &mdash; live on the web</p>
+          <h1 class="wk-hero__title">
+            <span class="wk-line"><span>This is</span></span>
+            <span class="wk-line"><span>our <em>work.<svg class="wk-hero__scribble" viewBox="0 0 300 24" preserveAspectRatio="none" aria-hidden="true"><path pathLength="1" d="M4 17 C 70 7, 150 5, 296 11"/></svg></em></span></span>
+          </h1>
+          <p class="wk-hero__lede">
+            Twelve live websites for caf&eacute;s, restaurants, SaaS products, academies and agencies &mdash; designed, built
+            and launched by Nabulsi.tech. Scroll through every one of them right here, no new tabs needed.
           </p>
+          <div class="wk-hero__cta">
+            <a class="wk-btn wk-btn--solid" href="#wk-live">Explore the work
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M8 3v10M3.5 8.5L8 13l4.5-4.5"/></svg>
+            </a>
+            <a class="wk-btn wk-btn--ghost" href="contact.html">Start a project</a>
+          </div>
+          <dl class="wk-stats">
+            <div><dt><span data-wk-count="12">12</span></dt><dd>Live websites</dd></div>
+            <div><dt><span data-wk-count="4">4</span></dt><dd>Industries</dd></div>
+            <div><dt><span data-wk-count="100">100</span><small>%</small></dt><dd>Designed &amp; built in-house</dd></div>
+          </dl>
         </div>
       </div>
     </header>
+
+    <!-- ===== CLIENT NAME BAND ===== -->
+    <div class="wk-band" aria-hidden="true">
+      <div class="wk-band__track" id="wk-band-track"></div>
+    </div>
+
+    <!-- ===== LIVE SHOWCASE — pinned, slides sideways on scroll ===== -->
+    <section class="wk-live" id="wk-live" aria-labelledby="wk-live-title">
+      <div class="wk-live__glow" aria-hidden="true"></div>
+      <div class="wk-live__grain" aria-hidden="true"></div>
+      <div class="wk-live__stage">
+        <div class="wk-live__head">
+          <div>
+            <p class="wk-kicker"><span class="wk-kicker__dot"></span>Live showcase &middot; 12 websites</p>
+            <h2 class="wk-live__title" id="wk-live-title">Slide through<br /><em>every launch.</em></h2>
+          </div>
+          <p class="wk-live__hint">
+            <span class="wk-mouse"><i></i>Keep scrolling</span>
+            <span><b>Hover</b> a screen to scroll the site. <b>Click</b> it to open the real website right here.</span>
+          </p>
+        </div>
+
+        <div class="wk-live__viewport">
+          <div class="wk-live__track" id="wk-track"></div>
+        </div>
+
+        <div class="wk-live__hud" aria-hidden="true">
+          <span class="wk-live__count"><b id="wk-cur">01</b> / 12</span>
+          <span class="wk-live__bar"><i id="wk-bar"></i></span>
+          <span class="wk-live__now" id="wk-now">Sweet Eye Coffee</span>
+        </div>
+      </div>
+      <noscript>
+        <ul class="wk-noscript">
+          <li><a href="https://sweeteyecoffee.com/">Sweet Eye Coffee</a></li>
+          <li><a href="https://www.hrmsmaster.in/">HRMS Master</a></li>
+          <li><a href="https://auraweb.tech/">AuraWeb</a></li>
+          <li><a href="https://www.skillonit.com/">Skillonit</a></li>
+          <li><a href="https://thehotchili.com/">The Hot Chili</a></li>
+          <li><a href="https://incertiesportfolio.na3.digital/">Incertis</a></li>
+          <li><a href="https://soluphilex.com/">SoluphileX</a></li>
+          <li><a href="https://www.aaghaz.ai/">Aaghaz.ai</a></li>
+          <li><a href="https://trosidex.com/">Trosidex Technologies</a></li>
+          <li><a href="https://awsclubgeu.in/">AWS Student Builder Group (GEU)</a></li>
+          <li><a href="https://www.5igoya.com/">5i Goya</a></li>
+          <li><a href="https://shaktiwebsolution.com/">Shakti Web Solution</a></li>
+        </ul>
+      </noscript>
+    </section>
+
+    <!-- ===== PROJECT INDEX ===== -->
+    <section class="wk-index" id="wk-index" aria-labelledby="wk-index-title">
+      <div class="wk-index__inner">
+        <div class="wk-index__head">
+          <div>
+            <p class="wk-kicker"><span class="wk-kicker__dot"></span>Project index</p>
+            <h2 class="wk-index__title" id="wk-index-title">All our work<sup>12</sup></h2>
+            <p class="wk-index__lede">Every site below is our work. Hover for a peek, click a row to preview it live, or jump straight to the website.</p>
+          </div>
+          <div class="wk-filters" id="wk-filters" role="group" aria-label="Filter projects by industry"></div>
+        </div>
+        <ol class="wk-list" id="wk-list"></ol>
+      </div>
+    </section>
+
+    <div class="container">
+
+    <div class="wk-brandhead">
+      <div>
+        <p class="wk-kicker"><span class="wk-kicker__dot"></span>Beyond the web</p>
+        <h2>Brand, campaign <em>&amp; social work.</em></h2>
+      </div>
+      <p>Identity systems, admissions campaigns, social storytelling and print collateral for institutions and growing businesses.</p>
+    </div>
 
     <!-- ===== 3D WORKS SHOWCASE ===== -->
     <section class="wshow reveal anim-reveal" data-from="bottom" style="margin-bottom: var(--space-stack-md);">
@@ -417,7 +516,14 @@
       </div>
     </section>
 
+    </div><!-- /container -->
   </main>
+
+  <!-- Project index: preview that trails the cursor -->
+  <div class="wk-float" id="wk-float" aria-hidden="true">
+    <div class="wk-chrome"><i></i><i></i><i></i><span></span></div>
+    <div class="wk-float__screen"><img alt="" /></div>
+  </div>
 
   <!-- Footer -->
   <!-- ===== CREATIVE FOOTER ===== -->
@@ -446,7 +552,7 @@
         <div class="footer-col">
           <h4 class="footer-heading">Socials</h4>
           <div class="footer-social-icons">
-            <a href="https://api.whatsapp.com/send/?phone=19012772195&text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
+            <a href="https://api.whatsapp.com/send/?phone=19016507684&text=Hi%20Nabulsi.tech!%20I%27m%20interested%20in%20your%20digital%20agency%20services%20and%20would%20like%20to%20discuss%20a%20project%20inquiry.%20Could%20we%20connect%3F&type=phone_number&app_absent=0" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="WhatsApp">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
             </a>
             <a href="https://www.facebook.com/profile.php?id=61566352892673" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Facebook">
@@ -504,12 +610,9 @@
       if (!a) return;
       a.volume = 0.1;
       a.loop = true;
-      try { localStorage.removeItem('nabulsi_music_time'); } catch (e) {}
-      try { a.currentTime = 0; } catch (e) {}
 
       function playAudio() {
         if (a.paused) {
-          try { a.currentTime = 0; } catch (e) {}
           var p = a.play();
           if (p !== undefined) {
             p.then(function () {
@@ -548,45 +651,14 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
   <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
   <script src="main.js?v=2"></script>
+  <script src="work-data.js?v=1"></script>
+  <script src="site-preview.js?v=1"></script>
+  <script src="work-live.js?v=2"></script>
   <script>
   (function() {
     'use strict';
-    // Lenis smooth scroll
-    const lenis = new Lenis({ duration: 1.4, easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smoothWheel: true });
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => lenis.raf(time * 1000));
-    gsap.ticker.lagSmoothing(0);
-
-    // ====== HERO BOUNCING TITLE + RIGHT-TO-LEFT PARAGRAPH ======
-    // Set initial hidden state for title lines
-    gsap.set('.work-hero .split-line-inner', { y: '110%', opacity: 0 });
-    gsap.set('.work-hero-desc', { x: 120, opacity: 0 });
-
-    const heroTL = gsap.timeline({ defaults: { ease: 'power4.out' }, delay: 0.3 });
-
-    // "Selected" bounces in
-    heroTL.to('.work-hero .stagger-1 .split-line-inner', {
-      y: '0%',
-      opacity: 1,
-      duration: 1.4,
-      ease: 'elastic.out(1, 0.5)'
-    });
-
-    // "Works" bounces in
-    heroTL.to('.work-hero .stagger-2 .split-line-inner', {
-      y: '0%',
-      opacity: 1,
-      duration: 1.4,
-      ease: 'elastic.out(1, 0.5)'
-    }, '-=1.0');
-
-    // Paragraph slides in from RIGHT to LEFT
-    heroTL.to('.work-hero-desc', {
-      x: 0,
-      opacity: 1,
-      duration: 1.2,
-      ease: 'power3.out'
-    }, '-=0.8');
+    // Smooth scroll (Lenis) is started once by main.js; the hero + live
+    // showcase animations live in work-live.js.
 
     // Directional scroll reveals for .reveal elements
     gsap.utils.toArray('.reveal').forEach(el => {
@@ -823,6 +895,8 @@
 
     // Keyboard
     window.addEventListener('keydown', e => {
+      // the live website preview owns the arrow keys while it is open
+      if (document.documentElement.classList.contains('lp-open')) return;
       if (e.key === 'ArrowLeft') go(active - 1, 'prev');
       else if (e.key === 'ArrowRight') go(active + 1, 'next');
     });

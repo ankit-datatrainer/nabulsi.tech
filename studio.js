@@ -5,7 +5,88 @@
   let paused = preference.matches;
   const localAnimations = [];
 
+  const initPersistentMusic = () => {
+    const audio = document.getElementById('bg-audio');
+    const button = document.getElementById('music-toggle');
+    if (!audio || audio.dataset.persistenceReady === 'true') return;
+
+    const stateKey = 'nabulsi_music_state_v2';
+    audio.dataset.persistenceReady = 'true';
+    audio.volume = 0.1;
+    audio.loop = true;
+
+    const readState = () => {
+      try {
+        return JSON.parse(localStorage.getItem(stateKey)) || {};
+      } catch (_) {
+        return {};
+      }
+    };
+
+    const writeState = (playing = !audio.paused) => {
+      try {
+        localStorage.setItem(stateKey, JSON.stringify({
+          time: Number.isFinite(audio.currentTime) ? audio.currentTime : 0,
+          playing,
+          savedAt: Date.now()
+        }));
+      } catch (_) {}
+    };
+
+    const restorePosition = () => {
+      const state = readState();
+      let position = Number(state.time) || 0;
+      if (state.playing && state.savedAt) {
+        position += Math.max(0, (Date.now() - Number(state.savedAt)) / 1000);
+      }
+      if (Number.isFinite(audio.duration) && audio.duration > 0) {
+        position %= audio.duration;
+      }
+      if (position > 0) {
+        try { audio.currentTime = position; } catch (_) {}
+      }
+      return state;
+    };
+
+    const attemptPlayback = () => {
+      const result = audio.play();
+      if (result && typeof result.catch === 'function') {
+        result.catch(() => {
+          // Browsers may require a gesture before unmuted audio can begin.
+          button?.classList.remove('playing');
+        });
+      }
+    };
+
+    restorePosition();
+    if (audio.readyState < 1) {
+      audio.addEventListener('loadedmetadata', restorePosition, { once: true });
+    }
+
+    // Every page load should attempt playback, even if a previous page was paused.
+    // Browsers that permit audible autoplay will start immediately.
+    attemptPlayback();
+    if (audio.readyState < 3) {
+      audio.addEventListener('canplay', attemptPlayback, { once: true });
+    }
+
+    audio.addEventListener('play', () => {
+      button?.classList.add('playing');
+      writeState(true);
+    });
+    audio.addEventListener('pause', () => {
+      button?.classList.remove('playing');
+      writeState(false);
+    });
+    audio.addEventListener('timeupdate', () => writeState(!audio.paused));
+    addEventListener('pagehide', () => writeState(!audio.paused));
+    document.addEventListener('visibilitychange', () => {
+      if (document.visibilityState === 'hidden') writeState(!audio.paused);
+    });
+  };
+
   const ready = () => {
+    initPersistentMusic();
     const main = document.querySelector('main') || document.querySelector('.hero');
     if (main) {
       if (!main.id) main.id = 'studio-main';
